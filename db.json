@@ -1,0 +1,144 @@
+{
+	"offers": [
+		{
+			"id": "Antwerp_1",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_1.jpg",
+			"price": "109",
+			"rating": "4.4",
+			"concept": "apartment",
+			"descriptionShort": "Charming apartment in a good location",
+			"information": "This apartment has 1 bedroom, 1 bathroom, bed linen, towels, a flat-screen TV with cable channels, a dining area, a fully equipped kitchen, and a balcony with garden views. Private parking is available."
+		},
+		{
+			"id": "Antwerp_2",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_2.jpg",
+			"price": "125",
+			"rating": "4.9",
+			"concept": "maison",
+			"descriptionShort": "Cozy, comfortable and family friendly in Antwerp",
+			"information": "It is a cozy and bright home, fully equipped for holidays.\n The interior is comfortable and practical with comfortable beds and nice details. The living room is furnished with a large sofa (bed) and a comfortable armchair. Also here is a television which can be incorporated as desired TV programs for later viewing."
+		},
+		{
+			"id": "Antwerp_3",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_3.jpg",
+			"price": "102",
+			"rating": "4.5",
+			"concept": "studio",
+			"descriptionShort": "The Light Studio",
+			"information": "The Light Studio is located at the second floor of the building and you can check-in yourself with a codelock. The studio is decorated by Stekkie Amsterdam and has a unique colorful style on its own. The studio has everything you need; a boxspring queen size bed, a fully equipped kitchen, a TV with channels from every country in the world, and a bathroom with a rain shower. Super location to explore Antwerp!"
+		},
+		{
+			"id": "Antwerp_4",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_4.jpg",
+			"price": "113",
+			"rating": "4.1",
+			"concept": "apartment",
+			"descriptionShort": "Superior apartment",
+			"information": "Make yourself at home in one of the 3 rooms. Kitchens are equipped with the following equipment: refrigerator and oven. To keep you entertained, the rooms are equipped with flat-screen TVs (cable TV), and free wireless internet access will keep you connected. Featured amenities include separate seating areas and microwave ovens. Rooms are cleaned once per stay.\n It features a terrace where you can relax and enjoy the view, as well as other amenities including complimentary wireless Internet access and tour/ticket assistance."
+		},
+		{
+			"id": "Antwerp_5",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_5.jpg",
+			"price": "107",
+			"rating": "4.6",
+			"concept": "3-star hotel",
+			"descriptionShort": "Aparthotel Hecke",
+			"information": "Make yourself at home in one of the 5 individually furnished rooms. Feather comforters and premium linens will make your sleep more comfortable. All rooms have a sofa bed (double). Free wired and wireless internet access is provided. Private bathrooms, showers. Free toiletries and a hairdryer are provided."
+		},
+		{
+			"id": "Antwerp_6",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_6.jpg",
+			"price": "112",
+			"rating": "3.8",
+			"concept": "apartment",
+			"descriptionShort": "Modern apartment",
+			"information": "Our apartment is located on the ground floor. It has a modern and cozy appearance and is fully equipped. The bathroom has recently been renewed and has a beautiful, modern concrete-circle look, with underfloor heating. In our apartment you will sleep in peace. We have 2 bedrooms; a front room with a single and a double bed, and a rear room with a double bed."
+		},
+		{
+			"id": "Antwerp_7",
+			"city": "Antwerp",
+			"imageIntro": "images/apartments/Antwerp_7.jpg",
+			"price": "98",
+			"rating": "4.4",
+			"concept": "studio",
+			"descriptionShort": "The Card Room Studio",
+			"information": "The studio has everything you need; a queen size boxspring bed, a fully equipped kitchen, a separate bathroom with shower and a lot of storage space. Although the space is relatively small, it gives you a super cosy home-feeling!"
+		},
+		{
+			"id": "Bruges_8",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_1.jpg",
+			"price": "131",
+			"rating": "4.8",
+			"concept": "maison",
+			"descriptionShort": "Huize Amoras",
+			"information": "The holiday home has 2 bedrooms, a flat-screen TV with cable channels, an equipped kitchen with a dishwasher and a fridge, a washing machine, and 2 bathrooms with a shower. A terrace is available."
+		},
+		{
+			"id": "Bruges_9",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_2.jpg",
+			"price": "123",
+			"rating": "5.0",
+			"concept": "maison",
+			"descriptionShort": "Maison National",
+			"information": "Make yourself at home in one of the 8 individually decorated guestrooms, featuring microwaves and flat-screen televisions. Select Comfort mattresses, down comforters and premium linens will make your sleep more comfortable. All rooms have a sofa bed. Digital TV and an iPod docking station keep you entertained, while complimentary wireless Internet access keeps you connected. Partially open bathrooms with separate bathtubs and showers. Bathrooms feature deep soaking bathtubs and complimentary toiletries.\n It features a terrace where you can relax and enjoy the view, as well as other amenities including complimentary wireless Internet access and tour/ticket assistance."
+		},
+		{
+			"id": "Bruges_10",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_3.jpg",
+			"price": "125",
+			"rating": "4.8",
+			"concept":"4-star hotel",
+			"descriptionShort": "G-STAY Bruges",
+			"information": "It offers non-smoking rooms, a garden, free high-speed Wi-Fi and a fitness centre. The hotel provides laundry services. Check-in and check-out is done by yourself. Guests can relax on the terrace. The area is popular for cycling. You can rent a bike or car at the hotel."
+		},
+		{
+			"id": "Bruges_11",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_4.jpg",
+			"price": "121",
+			"rating": "4.6",
+			"concept": "apartment",
+			"descriptionShort": "Smartflat Design",
+			"information": "The apartment feature a sofa, a seating area, a flat-screen TV with cable channels, a well-equipped kitchen with a dining area, and a private bathroom with a hairdryer. A dishwasher, microwave, refrigerator, kettle and coffee machine are included."
+		},
+		{
+			"id": "Bruges_12",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_5.jpg",
+			"price": "118",
+			"rating": "4.5",
+			"concept": "maison",
+			"descriptionShort": "Cozy maison",
+			"information": "It is a cozy and bright home, fully equipped for holidays.\n The interior is comfortable and practical with comfortable beds and nice details. The living room is furnished with a large sofa (bed) and a comfortable armchair. Also here is a television which can be incorporated as desired TV programs for later viewing."
+		},
+		{
+			"id": "Bruges_13",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_6.jpg",
+			"price": "117",
+			"rating": "4.8",
+			"concept": "apartment",
+			"descriptionShort": "Belga Apartment",
+			"information": "It offers free Wi-Fi and a bar. The units come with parquet floors and feature a fully equipped kitchen with a microwave, a flat-screen TV with cable channels, and a private bathroom with a shower and a hairdryer. A refrigerator, stovetop, kettle and coffee machine are included."
+		},
+		{
+			"id": "Bruges_14",
+			"city": "Bruges",
+			"imageIntro": "images/apartments/Bruges_7.jpg",
+			"price": "95",
+			"rating": "4.1",
+			"concept": "apartment",
+			"descriptionShort": "Artful and tastefully design apartment",
+			"information": "The apartment has a kitchen with a dishwasher and a microwave, a flat-screen TV with cable channels, ironing facilities, a desk and a seating area with a sofa. Featuring a shower, private bathroom also comes with a hairdryer and free toiletries."
+		}
+	]
+}
