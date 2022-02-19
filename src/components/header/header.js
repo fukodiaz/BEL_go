@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
+import FilterCities from '../filter-cities';
+
 import styles from './header.m.less';
 import imgTab from './back-main-tablet.jpg';
 import imgDesk from './back-main-desktop.jpg';
@@ -15,22 +17,9 @@ export default class Header extends Component {
 				<picture>
 						<source media="(min-width: 1280px)" srcSet={imgDesk} />
 						<source media="(min-width: 768px)" srcSet={imgTab} />
-						<img src={imgTab} alt="логотип &#171;Седоны&#187;" />
+						<img src={imgTab} alt="Belgian atmosphere" />
 				</picture>
-				<ul className={styles.navigation}>
-					<li>
-						<Link to='antwerp'>Antwerp</Link>
-					</li>
-					<li>
-						<Link to='bruges'>Bruges</Link>
-					</li>
-					<li>
-						<Link to='charleroi'>Charleroi</Link>
-					</li>
-					<li>
-						<Link to='liege'>Liege</Link>
-					</li>
-				</ul>
+				<FilterCities />
 			</header>
 		);
 	}

@@ -17,7 +17,13 @@ const fetchOffers = (methodService, dispatch) => () => {
 		.catch(error => dispatch(offersError(error)));
 };
 
+const changeFilterCities = (payload) => ({
+	type: 'CHANGE_FILTER_CITIES',
+	payload
+});
+
 
 export {
-	fetchOffers
+	fetchOffers,
+	changeFilterCities
 };

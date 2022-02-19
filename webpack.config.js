@@ -1,6 +1,6 @@
 let path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const conf = {
@@ -110,10 +110,10 @@ const conf = {
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: 'main.css'
-		}),
-		new HtmlWebpackPlugin({
-			template: 'index.html'
 		})
+		// new HtmlWebpackPlugin({
+		// 	template: 'index.html'
+		// })
 	]
 };
 

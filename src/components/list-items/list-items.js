@@ -19,28 +19,26 @@ class ListItems extends Component {
 	createListItems = (data) => {
 		const {id, ...otherData} = data;
 		return (
-			<li key={id}>
+			<li key={id} className={styles.itemOffered}>
 				<OfferedItem {...otherData} 
 						onOpenDetailPage={() => console.log(id)} />
 			</li>
 		);
 	}
 	render() {
-		const {listOffers, loading, error} = this.props;
-
+		const {visibleListOffers, loading, error} = this.props;
+		console.log(visibleListOffers, 4);
 		if (loading) {
-			console.log(loading);
 			return <p>Loading...</p>;
 		}
 
 		if (error) {
-			console.log(error, 5555);
 			return <ErrorIndicator />;
 		}
 
 		return (
-			<ul className={styles.resetList}>
-				{listOffers.map(this.createListItems)}
+			<ul className={styles.listOffers}>
+				{visibleListOffers.map(this.createListItems)}
 			</ul>
 		);
 	}
@@ -51,8 +49,8 @@ const mapMethodsToProps = (belgoService) => ({
 	getListOffers: belgoService.getListOffers
 });
 
-const mapStateToProps = ({listOffers, error, loading}) => ({
-	listOffers, error, loading
+const mapStateToProps = ({visibleListOffers, error, loading}) => ({
+	visibleListOffers, error, loading
 });
 
 const mapDispatchToProps = (dispatch, {getListOffers}) => {

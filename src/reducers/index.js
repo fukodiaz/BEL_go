@@ -1,7 +1,15 @@
 const initialState = {
 	listOffers: [],
 	error: false,
-	loading: true
+	loading: true,
+
+	filterCities: 'Antwerp',
+	visibleListOffers: []
+
+};
+
+const filter = (offers, filter) => {
+	return offers.filter( offer => offer.city === filter);
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,11 +24,13 @@ const reducer = (state = initialState, action) => {
 			}
 
 		case 'FETCH_OFFERS_SUCCESS':
+			const visibleListOffers = filter(action.payload, state.filterCities);
 			return {
 				...state,
 				listOffers: action.payload,
 				loading: false,
-				error: false
+				error: false,
+				visibleListOffers: visibleListOffers
 			}
 		
 		case 'FETCH_OFFERS_FAILURE':
@@ -29,6 +39,14 @@ const reducer = (state = initialState, action) => {
 				loading: false,
 				listOffers: [],
 				error: action.payload
+			}
+
+		case 'CHANGE_FILTER_CITIES':
+			const newVisibleListOffers = filter(state.listOffers, action.payload);
+			return {
+				...state,
+				filterCities: action.payload,
+				visibleListOffers: newVisibleListOffers
 			}
 
 		default: 
