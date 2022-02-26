@@ -1,5 +1,7 @@
 import React from 'react';
 
+import RatingItem from '../rating-item';
+
 import styles from './offered-item.m.less';
 
 const OfferedItem = (props) => {
@@ -16,7 +18,7 @@ const OfferedItem = (props) => {
 				<b>&#8364;{price}</b>
 				<span>/night</span>
 			</p>
-			<p>{rating}</p>
+			<RatingItem rating={rating} />
 			<p>{descriptionShort}</p>
 			<p>{concept}</p>
 		</div>

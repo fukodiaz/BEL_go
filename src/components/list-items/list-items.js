@@ -13,7 +13,6 @@ class ListItems extends Component {
 
 	componentDidMount() {
 		this.props.fetchOffers();
-		console.log(this.props.listOffers);
 	}
 
 	createListItems = (data) => {
@@ -27,7 +26,7 @@ class ListItems extends Component {
 	}
 	render() {
 		const {visibleListOffers, loading, error} = this.props;
-		console.log(visibleListOffers, 4);
+	
 		if (loading) {
 			return <p>Loading...</p>;
 		}

@@ -2,38 +2,22 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {changeFilterCities} from '../../actions';
+import {compose} from '../hoc';
+import { withBelgoService } from '../hoc';
+import {fetchDataCities, changeFilterCities} from '../../actions';
 
 import styles from './filter-cities.m.less';
 
 class FilterCities extends Component {
 	cities = [
-		{
-			id: 'antwerp',
-			label: 'Antwerp'
-		},
-		{
-			id: 'bruges',
-			label: 'Bruges'
-		},
-		{
-			id: 'charleroi',
-			label: 'Charleroi'
-		},
-		{
-			id: 'liege',
-			label: 'Liege'
-		}
+		{ id: 'antwerp', label: 'Antwerp' },
+		{ id: 'bruges', label: 'Bruges' },
+		{ id: 'charleroi', label: 'Charleroi' },
+		{ id: 'liege', label: 'Liege' }
 	];
 
 	componentDidMount() {
-		console.log(this.props.isActiveFilter);
-	}
-
-	componentDidUpdate({isActiveFilter}) {
-		if (this.props.isActiveFilter !== isActiveFilter) {
-			console.log(this.props.isActiveFilter);
-		}
+		this.props.fetchDataCities();
 	}
 
 	render() {
@@ -58,12 +42,20 @@ class FilterCities extends Component {
 	}
 }
 
+const mapMethodsToProps = (belgoService) => ({
+	getDataCities: belgoService.getDataCities
+});
+
 const mapStateToProps = ({filterCities}) => ({
 	isActiveFilter: filterCities
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	onChangeFilterCities: (filter) => dispatch(changeFilterCities(filter))
+const mapDispatchToProps = (dispatch, {getDataCities}) => ({
+	onChangeFilterCities: (filter) => dispatch(changeFilterCities(filter)),
+	fetchDataCities: fetchDataCities(getDataCities, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterCities);
+export default compose(
+	withBelgoService(mapMethodsToProps),
+	connect(mapStateToProps, mapDispatchToProps)
+)(FilterCities);

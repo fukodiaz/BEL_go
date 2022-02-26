@@ -17,13 +17,42 @@ const fetchOffers = (methodService, dispatch) => () => {
 		.catch(error => dispatch(offersError(error)));
 };
 
+//dataCities
+
+const dataCitiesRequested = () => ({type: 'FETCH_DATA_CITIES_REQUEST'});
+
+const dataCitiesLoaded = (payload) => ({
+		type: 'FETCH_DATA_CITIES_SUCCESS',
+		payload
+});
+
+const dataCitiesError = (payload) => ({
+	type: 'FETCH_DATA_CITIES_FAILURE',
+	payload
+});
+
+const fetchDataCities = (methodService, dispatch) => () => {
+	dispatch(dataCitiesRequested());
+	methodService()
+		.then(data => dispatch(dataCitiesLoaded(data)))
+		.catch(error => dispatch(dataCitiesError(error)));
+};
+
+
 const changeFilterCities = (payload) => ({
 	type: 'CHANGE_FILTER_CITIES',
+	payload
+});
+
+const changeFilterCategory = (payload) => ({
+	type: 'CHANGE_FILTER_CATEGORY',
 	payload
 });
 
 
 export {
 	fetchOffers,
-	changeFilterCities
+	changeFilterCities,
+	changeFilterCategory,
+	fetchDataCities
 };

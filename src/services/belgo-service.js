@@ -18,5 +18,10 @@ export default class BelgoService {
 		return res;
 	};
 
+	getDataCities = async () => {
+		const res = await this.getResource(`/dataCities`);
+		return res;
+	};
+
 
 }
