@@ -29,7 +29,7 @@ class Map extends Component {
 							return <MapTemplate 	key={label} 
 														center={center} 
 														dataSpots={dataSpots} 
-														styles={styles.map} />;
+														/>;
 						}
 					})
 				} 

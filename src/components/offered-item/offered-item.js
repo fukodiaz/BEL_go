@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import RatingItem from '../rating-item';
 
@@ -6,14 +7,14 @@ import styles from './offered-item.m.less';
 
 const OfferedItem = (props) => {
 
-	const {onOpenDetailPage, imageIntro, price, rating, 
-			concept, descriptionShort } = props;
+	const { imageIntro, price, rating, 
+			concept, descriptionShort, id } = props;
 
 	return (
 		<div>
-			<a onClick={onOpenDetailPage}>
+			<Link to={id}>
 				<img src={imageIntro} alt="photo of the proposed building" />
-			</a>
+			</Link>
 			<p>
 				<b>&#8364;{price}</b>
 				<span>/night</span>

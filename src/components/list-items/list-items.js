@@ -16,11 +16,9 @@ class ListItems extends Component {
 	}
 
 	createListItems = (data) => {
-		const {id, ...otherData} = data;
 		return (
-			<li key={id} className={styles.itemOffered}>
-				<OfferedItem {...otherData} 
-						onOpenDetailPage={() => console.log(id)} />
+			<li key={data.id} className={styles.itemOffered}>
+				<OfferedItem {...data} />
 			</li>
 		);
 	}
