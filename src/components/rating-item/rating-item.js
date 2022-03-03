@@ -4,6 +4,7 @@ import styles from './rating-item.m.less';
 
 const RatingItem = ({ rating }) => {
 	const ratingActiveWidth = {width: `${rating / 0.05}%`}; 
+	
 	return (
 		<div className={styles.rating}>
 			<div className={styles.ratingContainer}>

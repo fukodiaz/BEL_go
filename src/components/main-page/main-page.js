@@ -3,7 +3,7 @@ import React from 'react';
 import ListItems from '../list-items';
 import FilterCategory from '../filter-category';
 import InnerHeading from '../inner-heading';
-import Map from '../map';
+import MapMainPage from '../map-main-page';
 
 import styles from './main-page.m.less';
 
@@ -19,7 +19,7 @@ const MainPage = () => {
 				</div>
 			</div>
 			<div className={styles.mapWrapper}>
-				<Map />
+				<MapMainPage />
 			</div>
 		</main>
 	);

@@ -4,6 +4,7 @@
 			"id": "Antwerp_1",
 			"city": "Antwerp",
 			"imageIntro": "images/apartments/Antwerp_1.jpg",
+			"imageDetails": "images/apartments/Antwerp_1b.jpg",
 			"price": "109",
 			"rating": "4.4",
 			"concept": "apartment",
@@ -81,8 +82,8 @@
 			"concept": "studio",
 			"descriptionShort": "The Card Room Studio",
 			"information": "The studio has everything you need; a queen size boxspring bed, a fully equipped kitchen, a separate bathroom with shower and a lot of storage space. Although the space is relatively small, it gives you a super cosy home-feeling!",
-			"lat": "51.180761",
-			"lng": "4.385301"
+			"lat": "51.211605",
+			"lng": "4.435214"
 		},
 		{
 			"id": "Bruges_8",

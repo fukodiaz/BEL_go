@@ -1,34 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 
 import styles from './map-template.m.less';
 
-const MapTemplate = ({center, dataSpots}) => {
-
-	useEffect(() => {
-		const header = document.querySelector('header');
-		const heightHeader = window.getComputedStyle(header).height.replace(/[^\d.]/ig, '');
-		//const marginHeader = window.getComputedStyle(header).marginBottom.replace(/[^\d.]/ig, '');
-		const mapContainer = document.querySelector('[class^="mapContainer"]');
-		
-		const onScroll = () => {
-			if (window.pageYOffset > +heightHeader) {
-				mapContainer.style.top = `${window.pageYOffset - +heightHeader}px`;
-			} else {
-				mapContainer.style.top = 0;
-			}
-		};
-
-		window.addEventListener('scroll', onScroll);
-		return () => window.removeEventListener('scroll', onScroll);
-	});
+const MapTemplate = ({center, dataSpots, activeCity, stylesMapContainer}) => {
 	
+	const zoom = activeCity === 'Antwerp' ? 11 : 12;
+
 	return (
 		<MapContainer center={center} 
-							zoom={12}
+							zoom={zoom}
 							scrollWheelZoom={false}
-							className={styles.mapContainer}>
+							className={stylesMapContainer}>
 						
 			<TileLayer attribution='&copy; 
 				<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
