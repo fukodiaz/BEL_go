@@ -53,7 +53,7 @@ const PageDetails = (props) => {
 												className={styles.offerImage} />
 									</a>
 									<div className={styles.mapBox}>
-										<p>Location</p>
+										<p className={styles.labelMap}>Location</p>
 										<Map stylesMapContainer={styles.mapContainer} />
 									</div>
 								</div>
