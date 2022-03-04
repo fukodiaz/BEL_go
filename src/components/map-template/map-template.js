@@ -26,7 +26,7 @@ const MapTemplate = ({center, dataSpots, activeCity, stylesMapContainer}) => {
 						<Marker 	key={id}
 									position={position}>
 							<Popup className={styles.popup}>
-								<Link to={id}>
+								<Link to={`/${id}`}>
 									<img src={imageIntro} alt="offer image" />
 								</Link>
 								<p className={styles.price}>
