@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
 import FilterCities from '../filter-cities';
+import LogoHeader from '../logo-header';
+import UserNavigation from '../user-navigation';
 
 import styles from './header.m.less';
 import imgTab from './back-main-tablet.jpg';
@@ -19,6 +21,8 @@ export default class Header extends Component {
 						<source media="(min-width: 768px)" srcSet={imgTab} />
 						<img src={imgTab} alt="Belgian atmosphere" />
 				</picture>
+				<LogoHeader />
+				<UserNavigation />
 				<FilterCities />
 			</header>
 		);

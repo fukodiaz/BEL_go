@@ -93,7 +93,7 @@ const conf = {
 			},
 
 			{
-				test: /\.(png|jpg|jpeg)$/,
+				test: /\.(png|jpg|jpeg|svg)$/,
 				use: [
 					{
 						loader: 'file-loader',

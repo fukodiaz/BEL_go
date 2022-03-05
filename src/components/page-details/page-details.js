@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import Map from '../map';
-import RatingItem from '../rating-item';
+import ItemDetails from '../item-details';
 
 import styles from './page-details.m.less';
 
-const PageDetails = (props) => {
+const PageDetails = ({visibleListOffers}) => {
 
 	const {id: idPage} = useParams();
-	const {dataCities, visibleListOffers, activeCity} = props;
-
 	const [flag, setFlag] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +21,7 @@ const PageDetails = (props) => {
 		
 		const onScroll = () => {
 			if (window.pageYOffset > offset) {
-				setFlag((flag) => flag = true);
+				setFlag(true);
 				if (flag) {
 					motileBox.style.top = `${window.pageYOffset - offset}px`;
 				}
@@ -42,44 +39,10 @@ const PageDetails = (props) => {
 		<div className={styles.boxDetails}>
 			{
 				visibleListOffers.map((data) =>{
-					const {imageDetails, id, price, rating, concept, descriptionShort, information} = data;
+					const { id } = data;
 
 					if (idPage === id) {
-						return (
-							<div key={id} className={styles.mainContainer}>
-								<div className={styles.firstContainter}>
-									<a href="#" className={styles.linkImage}>
-										<img 	src={imageDetails} alt="offer photo" 
-												className={styles.offerImage} />
-									</a>
-									<div className={styles.mapBox}>
-										<p className={styles.labelMap}>Location</p>
-										<Map stylesMapContainer={styles.mapContainer} />
-									</div>
-								</div>
-								<div className={styles.secondContainer}>
-									<div className={styles.motileBox}>
-										<div className={styles.boxDescription}>
-											<p className={styles.descriptionShort}>{descriptionShort}</p>
-											<p>{concept}</p>
-											<div className={styles.information}>{information}</div>
-											<RatingItem rating={rating} />
-											<p className={styles.price}>
-												<span>Price per night</span>
-												<b>
-													{price}
-													<b className={styles.euro}>&#8364;</b>
-												</b>
-											</p>
-										</div>
-										<Link to=""
-												className={styles.linkOrder}>
-											make an order !
-										</Link>
-									</div>
-								</div>
-							</div>
-						);
+						return <ItemDetails key={id} {...data} />;
 					}
 
 					return null;
@@ -89,10 +52,8 @@ const PageDetails = (props) => {
 	);
 };
 
-const mapStateToProps = ({dataCities, visibleListOffers, filterCities}) => ({
-	dataCities,
-	visibleListOffers,
-	activeCity: filterCities
+const mapStateToProps = ({ visibleListOffers}) => ({
+	visibleListOffers
 });
 
 export default connect(mapStateToProps)(PageDetails);
