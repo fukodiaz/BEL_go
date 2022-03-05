@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import url from './login.svg';
 import styles from './user-navigation.m.less';
 
 const UserNavigation = () => {
@@ -10,6 +11,11 @@ const UserNavigation = () => {
 			<li>
 				<Link to="/" className={styles.linkLogin}>
 					My account
+					<p className={styles.svgBox}>
+						<svg width="32" height="32">
+							<use href={`${url}#login`}></use>
+						</svg>
+					</p>
 				</Link>
 			</li>
 		</ul>
