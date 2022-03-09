@@ -23,5 +23,24 @@ export default class BelgoService {
 		return res;
 	};
 
+	postData = async (url, data) => {
+		const res = await fetch(`${this._apiBase}${url}`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: data
+		});
+	
+		return res.json();
+	};
+
+	postDataForm = async (form) => {
+		const formData = new FormData(form);
+		const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
+
+		const res = await this.postData(`/datapost`, json);
+		return res;
+	};
 
 }

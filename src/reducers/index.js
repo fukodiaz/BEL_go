@@ -10,7 +10,11 @@ const initialState = {
 
 	dataCities: [],
 	dataCitiesError: false,
-	dataCitiesLoading: true
+	dataCitiesLoading: true,
+
+	dataFormPosted: {},
+	dataFormSending: false,
+	dataFormError: false
 
 };
 
@@ -110,6 +114,30 @@ const reducer = (state = initialState, action) => {
 			filterCategory: action.payload,
 			visibleListOffers: nVisibleListOffers
 		}
+
+		case 'DATA_FORM_SENDING':
+			return {
+				...state,
+				dataFormPosted: {},
+				dataFormSending: true,
+				dataFormError: false
+			}
+
+		case 'DATA_FORM_POSTED':
+			return {
+				...state,
+				dataFormPosted: action.payload,
+				dataFormSending: false,
+				dataFormError: false
+			}
+
+		case 'DATA_FORM_ERROR':
+			return {
+				...state,
+				dataFormPosted: {},
+				dataFormSending: false,
+				dataFormError: action.payload
+			}
 
 		default: 
 			return state;

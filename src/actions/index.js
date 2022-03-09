@@ -50,9 +50,33 @@ const changeFilterCategory = (payload) => ({
 });
 
 
+// post dataForm
+
+const dataFormSending = () => ({type: 'DATA_FORM_SENDING'});
+
+const dataFormPosted = (payload) => ({
+		type: 'DATA_FORM_POSTED',
+		payload
+});
+
+const dataFormError = (payload) => ({
+	type: 'DATA_FORM_ERROR',
+	payload
+});
+
+const sendDataForm = (methodService, dispatch) => (form) => {
+	dispatch(dataFormSending());
+	methodService(form)
+		.then(data => {dispatch(dataFormPosted(data)); console.log(data, 666);})
+		.catch(error => dispatch(dataFormError(error)));
+};
+
+
+
 export {
 	fetchOffers,
 	changeFilterCities,
 	changeFilterCategory,
-	fetchDataCities
+	fetchDataCities,
+	sendDataForm
 };

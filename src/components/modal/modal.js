@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
+import { compose } from '../hoc';
+import { withBelgoService } from '../hoc';
+import { sendDataForm } from '../../actions';
 
 import styles from './modal.m.less';
 import './modal.css';
@@ -19,49 +24,59 @@ function hideModal(modalSelector) {
 	document.body.style.overflow = '';
 }
 
-const modalBox = document.querySelector('[class^="modalBox"]');
-const modalContent = document.querySelector('[class^="modalContent"]');
+const onClickModalBox = (modalSelector, e) => {
+	const modal = document.querySelector(modalSelector);
 
-const onClickModalBox = (e) => {
-	if (e.target === modalBox ) {
-		hideModal('[class^="modalBox"]');
+	if (e.target == modal) {
+		hideModal(modalSelector);
 	}
 };
 
-const Modal = () => {
-
-	function clearSubmit(e) {
-		e.preventDefault();
-		console.log('clear');
-	}
-
-	const [flag, setFlag] = useState(false);
-
-
-	const modalBox = document.querySelector('[class^="modalBox"]');
+const Modal = ({dataFormPosted, sendDataForm, postDataForm}) => {
 
 	useEffect(() => {
-		document.addEventListener('keydown', (e) => {
-			setFlag(true);
+		const modalBox = document.querySelector('[class^="modalBox"]');
 
-			if (e.code === 'Escape' && modalBox.classList.contains(`${styles.modalShow}`) && flag === true) {
+		const onKeydown = (e) => {
+			if (e.code === 'Escape' && modalBox.classList.contains(`${styles.modalShow}`)) {
 				hideModal('[class^="modalBox"]');
 			}
-		});
+		};
 
-		// modalBox.addEventListener('click', (e) => {
-		// 	setFlag_2(true);
-		// 	onClickModalBox(e, flag_2);
-		// });
-	}, [flag]);
+		document.addEventListener('keydown', onKeydown);
+
+		return () => document.removeEventListener("keydown", onKeydown);
+	});
+
+	useEffect(() => {
+		const formModal = document.querySelector('form');
+
+		formModal.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			// postDataForm(formModal)
+			// 	.then(data => console.log(data, 999))
+			// 	.finally(() => {
+			// 		formModal.reset();
+			// 	});
+
+
+			sendDataForm(formModal);
+			
+			//openModal('[class^="modalBox"]');
+			console.log(dataFormPosted);
+			
+		});
+	}, []);
 
 	return (
 		<div className={styles.modalBox}
-				onClick={() => onClickModalBox(modalBox)}>
+				onClick={ (e) => onClickModalBox('[class^="modalBox"]', e) }>
+				
 			<div className={styles.modalDialog}>
 				<div className={styles.modalContent}>
-					<form method='post' action="http://localhost:3000/requests"
-							onSubmit={clearSubmit}>
+					<form action="http://localhost:3000/requests" method="post"
+							>
 						<button className={styles.modalClose} type='button'
 									onClick={() => hideModal('[class^="modalBox"]')}>
 							&times;
@@ -83,7 +98,22 @@ const Modal = () => {
 	);
 };
 
-export default Modal;
+const mapMethodsToProps = (belgoService) => ({
+	postDataForm: belgoService.postDataForm
+});
+
+const mapStateToProps = ({dataFormPosted}) => ({
+	dataFormPosted: dataFormPosted
+});
+
+const mapDispatchToProps = (dispatch, {postDataForm}) => ({
+	sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
+});
+
+export default compose(
+	withBelgoService(mapMethodsToProps),
+	connect(mapStateToProps, mapDispatchToProps)
+)(Modal);
 
 export {
 	openModal,
