@@ -54,8 +54,8 @@ const changeFilterCategory = (payload) => ({
 
 const dataFormSending = () => ({type: 'DATA_FORM_SENDING'});
 
-const dataFormPosted = (payload) => ({
-		type: 'DATA_FORM_POSTED',
+const dataFormSuccess = (payload) => ({
+		type: 'DATA_FORM_SUCCESS',
 		payload
 });
 
@@ -64,12 +64,12 @@ const dataFormError = (payload) => ({
 	payload
 });
 
-const sendDataForm = (methodService, dispatch) => (form) => {
-	dispatch(dataFormSending());
-	methodService(form)
-		.then(data => {dispatch(dataFormPosted(data)); console.log(data, 666);})
-		.catch(error => dispatch(dataFormError(error)));
-};
+// const sendDataForm = (methodService, dispatch) => (form) => {
+// 	dispatch(dataFormSending());
+// 	methodService(form)
+// 		.then(data => {dispatch(dataFormSuccess(data));})
+// 		.catch(error => dispatch(dataFormError(error)));
+// };
 
 
 
@@ -78,5 +78,8 @@ export {
 	changeFilterCities,
 	changeFilterCategory,
 	fetchDataCities,
-	sendDataForm
+	//sendDataForm,
+	dataFormSending,
+	dataFormSuccess,
+	dataFormError
 };

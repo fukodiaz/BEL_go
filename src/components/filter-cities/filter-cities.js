@@ -30,7 +30,9 @@ class FilterCities extends Component {
 						return (
 							<li key={id}>
 								<Link to="" className={styles[classLink]}
-										onClick={() => onChangeFilterCities(label)}>
+										onClick={() => {onChangeFilterCities(label); console.log(this.props.dataFormPosted);
+										console.log(this.props.dataFormSending);
+										}}>
 									{label}
 								</Link>
 							</li>
@@ -46,8 +48,10 @@ const mapMethodsToProps = (belgoService) => ({
 	getDataCities: belgoService.getDataCities
 });
 
-const mapStateToProps = ({filterCities}) => ({
-	isActiveFilter: filterCities
+const mapStateToProps = ({filterCities, dataFormPosted, dataFormSending}) => ({
+	isActiveFilter: filterCities,
+	dataFormPosted: dataFormPosted,
+	dataFormSending: dataFormSending
 });
 
 const mapDispatchToProps = (dispatch, {getDataCities}) => ({

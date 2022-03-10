@@ -12,8 +12,8 @@ const initialState = {
 	dataCitiesError: false,
 	dataCitiesLoading: true,
 
-	dataFormPosted: {},
-	dataFormSending: false,
+	dataFormPosted: null,
+	dataFormSending: undefined,
 	dataFormError: false
 
 };
@@ -42,6 +42,31 @@ const filterCateg = (filter, offers) => {
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
+		case 'DATA_FORM_SENDING':
+			return {
+				...state,
+				dataFormPosted: {},
+				dataFormSending: true,
+				dataFormError: false
+			}
+
+		case 'DATA_FORM_SUCCESS':
+			return {
+				...state,
+				dataFormPosted: action.payload,
+				dataFormSending: false,
+				dataFormError: false
+			}
+
+		case 'DATA_FORM_ERROR':
+			return {
+				...state,
+				dataFormPosted: {},
+				dataFormSending: false,
+				dataFormError: action.payload
+			}
+			//
+
 		case 'FETCH_OFFERS_REQUEST':
 			return {
 				...state,
@@ -114,30 +139,6 @@ const reducer = (state = initialState, action) => {
 			filterCategory: action.payload,
 			visibleListOffers: nVisibleListOffers
 		}
-
-		case 'DATA_FORM_SENDING':
-			return {
-				...state,
-				dataFormPosted: {},
-				dataFormSending: true,
-				dataFormError: false
-			}
-
-		case 'DATA_FORM_POSTED':
-			return {
-				...state,
-				dataFormPosted: action.payload,
-				dataFormSending: false,
-				dataFormError: false
-			}
-
-		case 'DATA_FORM_ERROR':
-			return {
-				...state,
-				dataFormPosted: {},
-				dataFormSending: false,
-				dataFormError: action.payload
-			}
 
 		default: 
 			return state;

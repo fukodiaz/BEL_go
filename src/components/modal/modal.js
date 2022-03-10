@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { compose } from '../hoc';
 import { withBelgoService } from '../hoc';
-import { sendDataForm } from '../../actions';
+import { 
+	dataFormSending,
+	dataFormSuccess,
+	dataFormError
+} from '../../actions';
 
 import styles from './modal.m.less';
-import './modal.css';
 
-function openModal(modalSelector) {
+const openModal = (modalSelector) => {
 	const modal = document.querySelector(modalSelector);
 
 	modal.classList.add(`${styles.modalShow}`);
 	modal.classList.remove(`${styles.modalHide}`);
 	document.body.style.overflow = 'hidden';
-}
+};
 
 function hideModal(modalSelector) {
 	const modal = document.querySelector(modalSelector);
@@ -32,7 +35,8 @@ const onClickModalBox = (modalSelector, e) => {
 	}
 };
 
-const Modal = ({dataFormPosted, sendDataForm, postDataForm}) => {
+function Modal(props) {
+	const {dataFormSend, dataFormSucc, dataFormErr, postDataForm, dataFormPosted} = props;
 
 	useEffect(() => {
 		const modalBox = document.querySelector('[class^="modalBox"]');
@@ -48,26 +52,39 @@ const Modal = ({dataFormPosted, sendDataForm, postDataForm}) => {
 		return () => document.removeEventListener("keydown", onKeydown);
 	});
 
+	const [dataForm, setDataForm] = useState({});
+	const [onHandleSubmit, setOnHandleSubmit] = useState(() => {});
+	const formModal = document.querySelector('form');
 	useEffect(() => {
-		const formModal = document.querySelector('form');
+		//const [dataForm, setDataForm] = useState({});
 
-		formModal.addEventListener('submit', (e) => {
-			e.preventDefault();
+		setOnHandleSubmit(() => () => {
+		// formModal.addEventListener('submit', (e) => {
+		// 	e.preventDefault();
+		//dataFormSend();
 
-			// postDataForm(formModal)
-			// 	.then(data => console.log(data, 999))
-			// 	.finally(() => {
-			// 		formModal.reset();
-			// 	});
-
-
-			sendDataForm(formModal);
-			
-			//openModal('[class^="modalBox"]');
-			console.log(dataFormPosted);
-			
+			postDataForm(formModal)
+				.then(data => {
+					setDataForm(dataForm => {
+						console.log(data);
+						return {...dataForm, data}
+					});
+					dataFormSucc({...data});
+				}).catch(error => {
+					//dataFormErr(error);
+					console.log(error);
+				});
 		});
-	}, []);
+
+		
+	}, [useCallback(() => postDataForm(formModal), [formModal])]);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		onHandleSubmit();
+		console.log(dataForm, 1111111111);
+	};
+
 
 	return (
 		<div className={styles.modalBox}
@@ -75,7 +92,7 @@ const Modal = ({dataFormPosted, sendDataForm, postDataForm}) => {
 				
 			<div className={styles.modalDialog}>
 				<div className={styles.modalContent}>
-					<form action="http://localhost:3000/requests" method="post"
+					<form onSubmit={handleSubmit} 
 							>
 						<button className={styles.modalClose} type='button'
 									onClick={() => hideModal('[class^="modalBox"]')}>
@@ -96,7 +113,7 @@ const Modal = ({dataFormPosted, sendDataForm, postDataForm}) => {
 			</div>
 		</div>
 	);
-};
+}
 
 const mapMethodsToProps = (belgoService) => ({
 	postDataForm: belgoService.postDataForm
@@ -106,9 +123,12 @@ const mapStateToProps = ({dataFormPosted}) => ({
 	dataFormPosted: dataFormPosted
 });
 
-const mapDispatchToProps = (dispatch, {postDataForm}) => ({
-	sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
+const mapDispatchToProps = (dispatch) => ({
+	dataFormSend: () => dispatch(dataFormSending()),
+	dataFormSucc: (data) => dispatch(dataFormSuccess(data)),
+	dataFormErr: (error) => dispatch(dataFormError(error))
 });
+//sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
 
 export default compose(
 	withBelgoService(mapMethodsToProps),

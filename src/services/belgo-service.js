@@ -39,7 +39,7 @@ export default class BelgoService {
 		const formData = new FormData(form);
 		const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
 
-		const res = await this.postData(`/datapost`, json);
+		const res = await this.postData(`/requests`, json);
 		return res;
 	};
 
