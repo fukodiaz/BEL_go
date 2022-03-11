@@ -35,9 +35,9 @@ export default class BelgoService {
 		return res.json();
 	};
 
-	postDataForm = async (form) => {
-		const formData = new FormData(form);
-		const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
+	postDataForm = async (json) => {
+		// const formData = new FormData(form);
+		// const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
 
 		const res = await this.postData(`/requests`, json);
 		return res;

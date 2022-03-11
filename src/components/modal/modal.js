@@ -36,7 +36,7 @@ const onClickModalBox = (modalSelector, e) => {
 };
 
 function Modal(props) {
-	const {dataFormSend, dataFormSucc, dataFormErr, postDataForm, dataFormPosted} = props;
+	const {dataFormSend, dataFormSucc, dataFormErr, postDataForm, dataFormPosted, dispatch} = props;
 
 	useEffect(() => {
 		const modalBox = document.querySelector('[class^="modalBox"]');
@@ -53,36 +53,34 @@ function Modal(props) {
 	});
 
 	const [dataForm, setDataForm] = useState({});
-	const [onHandleSubmit, setOnHandleSubmit] = useState(() => {});
-	const formModal = document.querySelector('form');
-	useEffect(() => {
-		//const [dataForm, setDataForm] = useState({});
+	//const formModal = document.querySelector('form');
 
-		setOnHandleSubmit(() => () => {
-		// formModal.addEventListener('submit', (e) => {
-		// 	e.preventDefault();
-		//dataFormSend();
-
-			postDataForm(formModal)
-				.then(data => {
-					setDataForm(dataForm => {
-						console.log(data);
-						return {...dataForm, data}
-					});
-					dataFormSucc({...data});
-				}).catch(error => {
-					//dataFormErr(error);
-					console.log(error);
-				});
-		});
-
-		
-	}, [useCallback(() => postDataForm(formModal), [formModal])]);
+	const	setOnHandleSubmit = (json) => {
+		postDataForm(json)
+			.then((data) => {
+				// setDataForm(dataForm => {
+				// 	console.log({...data, tt: 'yy'});
+				// 	return {...dataForm, data}
+				// });
+				setDataForm({...data, rr: 'uu'});
+				//console.log(data);
+				//dataFormSucc({...data});
+				dispatch({type: 'DATA_FORM_SUCCESS', payload: {...data}});
+				console.log(dataFormPosted, 33333333333333333333333333333333333333);
+			}).catch(error => {
+				dataFormErr(error);
+				console.log(error);
+			});
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		onHandleSubmit();
-		console.log(dataForm, 1111111111);
+
+		const formData = new FormData(e.target);
+		const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
+		//setJsonData(json);
+		setOnHandleSubmit(json);
+		//console.log(dataForm, 1111111111);
 	};
 
 
@@ -126,7 +124,8 @@ const mapStateToProps = ({dataFormPosted}) => ({
 const mapDispatchToProps = (dispatch) => ({
 	dataFormSend: () => dispatch(dataFormSending()),
 	dataFormSucc: (data) => dispatch(dataFormSuccess(data)),
-	dataFormErr: (error) => dispatch(dataFormError(error))
+	dataFormErr: (error) => dispatch(dataFormError(error)),
+	dispatch: (action) => dispatch(action)
 });
 //sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
 
