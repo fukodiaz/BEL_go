@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { compose } from '../hoc';
@@ -35,82 +35,89 @@ const onClickModalBox = (modalSelector, e) => {
 	}
 };
 
-function Modal(props) {
-	const {dataFormSend, dataFormSucc, dataFormErr, postDataForm, dataFormPosted, dispatch} = props;
+class Modal extends Component {
 
-	useEffect(() => {
+	state = {
+		objForm: null,
+		dataForm: null,
+		loading: true,
+		error: null
+	};
+
+	componentDidMount() {
 		const modalBox = document.querySelector('[class^="modalBox"]');
 
 		const onKeydown = (e) => {
 			if (e.code === 'Escape' && modalBox.classList.contains(`${styles.modalShow}`)) {
 				hideModal('[class^="modalBox"]');
 			}
-		};
+		}
 
 		document.addEventListener('keydown', onKeydown);
+		//return () => document.removeEventListener("keydown", onKeydown);
+	}
 
-		return () => document.removeEventListener("keydown", onKeydown);
-	});
+	componentDidUpdate(prevProps, prevState) {
+		const {postDataForm, dataFormSending, dataFormSuccess, dataFormError, dataFormPosted} = this.props;
+		const { objForm } = this.state;
 
-	const [dataForm, setDataForm] = useState({});
-	//const formModal = document.querySelector('form');
+		if (JSON.stringify(objForm) !== JSON.stringify(prevState.objForm)) {
 
-	const	setOnHandleSubmit = (json) => {
-		postDataForm(json)
-			.then((data) => {
-				// setDataForm(dataForm => {
-				// 	console.log({...data, tt: 'yy'});
-				// 	return {...dataForm, data}
-				// });
-				setDataForm({...data, rr: 'uu'});
-				//console.log(data);
-				//dataFormSucc({...data});
-				dispatch({type: 'DATA_FORM_SUCCESS', payload: {...data}});
-				console.log(dataFormPosted, 33333333333333333333333333333333333333);
-			}).catch(error => {
-				dataFormErr(error);
-				console.log(error);
-			});
-	};
-
-	const handleSubmit = (e) => {
+			const json = JSON.stringify(objForm);
+			this.setState({dataForm: null, loading: true, error:null});
+			dataFormSending();
+			postDataForm(json)
+				.then((data) => {
+					this.setState({dataForm: data, loading: false, error: null});
+					dataFormSuccess(data);
+					console.log(data, 33333333333333333333333333333333333333);
+					console.log(this.state.dataForm, 999999999999);
+					console.log(dataFormPosted, 888888888888);
+				}).catch(error => {
+					this.setState({dataForm: null, loading: false, error});
+					dataFormError(error);
+					console.log(error);
+				});
+		}
+	}
+	
+	handleSubmit = (e) => {
 		e.preventDefault();
 
 		const formData = new FormData(e.target);
-		const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
-		//setJsonData(json);
-		setOnHandleSubmit(json);
-		//console.log(dataForm, 1111111111);
-	};
+		const objForm = Object.fromEntries(formData.entries(formData));
+		this.setState({objForm});
+	}
 
-
-	return (
-		<div className={styles.modalBox}
-				onClick={ (e) => onClickModalBox('[class^="modalBox"]', e) }>
-				
-			<div className={styles.modalDialog}>
-				<div className={styles.modalContent}>
-					<form onSubmit={handleSubmit} 
-							>
-						<button className={styles.modalClose} type='button'
-									onClick={() => hideModal('[class^="modalBox"]')}>
-							&times;
-						</button>
-						<p className={styles.modalTitle}>
-							please enter your email and password
-						</p>
-						<input 	type="email" name="login" className={styles.modalInput}
-									placeholder="email@example.com" required />
-						<input 	type="password" name="password" className={styles.modalInput}
-									placeholder="password" required />
-						<button className={styles.modalEnter} type="submit">
-							sign up
-						</button>
-					</form>
+	render() {
+		return (
+			<div className={styles.modalBox}
+					onClick={ (e) => onClickModalBox('[class^="modalBox"]', e) }>
+					
+				<div className={styles.modalDialog}>
+					<div className={styles.modalContent}>
+		
+						<form onSubmit={this.handleSubmit} >
+							<button className={styles.modalClose} type='button'
+										onClick={() => hideModal('[class^="modalBox"]')}>
+								&times;
+							</button>
+							<p className={styles.modalTitle}>
+								please enter your email and password
+							</p>
+							<input 	type="email" name="login" className={styles.modalInput}
+										placeholder="email@example.com" required />
+							<input 	type="password" name="password" className={styles.modalInput}
+										placeholder="password" required />
+							<button className={styles.modalEnter} type="submit">
+								sign up
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 }
 
 const mapMethodsToProps = (belgoService) => ({
@@ -122,10 +129,9 @@ const mapStateToProps = ({dataFormPosted}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	dataFormSend: () => dispatch(dataFormSending()),
-	dataFormSucc: (data) => dispatch(dataFormSuccess(data)),
-	dataFormErr: (error) => dispatch(dataFormError(error)),
-	dispatch: (action) => dispatch(action)
+	dataFormSending: () => dispatch(dataFormSending()),
+	dataFormSuccess: (data) => dispatch(dataFormSuccess(data)),
+	dataFormError: (error) => dispatch(dataFormError(error))
 });
 //sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
 
