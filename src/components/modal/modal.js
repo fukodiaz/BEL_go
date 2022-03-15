@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 
 import { compose } from '../hoc';
 import { withBelgoService } from '../hoc';
-import { 
-	dataFormSending,
-	dataFormSuccess,
-	dataFormError
+import { dataFormSending, dataFormSuccess, dataFormError
 } from '../../actions';
 
+import ModalBox from '../modal-box';
 import Spinner from '../spinner';
 import styles from './modal.m.less';
 
@@ -28,12 +26,10 @@ function hideModal(modalSelector) {
 	document.body.style.overflow = '';
 }
 
-const onClickModalBox = (modalSelector, e) => {
-	const modal = document.querySelector(modalSelector);
+const showMessageModal = (message) => {
+	const modalDialog = document.querySelector('[class^="modalDialog"]');
 
-	if (e.target == modal) {
-		hideModal(modalSelector);
-	}
+
 };
 
 class Modal extends Component {
@@ -42,7 +38,11 @@ class Modal extends Component {
 		objForm: null,
 		dataForm: JSON.parse(window.localStorage.getItem('dataForm')) || null,
 		loadingDataForm: JSON.parse(window.localStorage.getItem('loadingDataForm')) || false,
-		errorDataForm: JSON.parse(window.localStorage.getItem('errorDataForm')) || false
+		errorDataForm: JSON.parse(window.localStorage.getItem('errorDataForm')) || false,
+		message: {
+			success: "you have been successfully logged in !",
+			failure: "Something went wrong..."
+		}
 	};
 
 	componentDidMount() {
@@ -97,38 +97,18 @@ class Modal extends Component {
 	}
 
 	render() {
-		const {dataForm} = this.state;	
+		const {dataForm, loadingDataForm} = this.state;	
+
 		const login = dataForm ? Object.entries(dataForm)[0][1] : "example@gmail.com";
-		const password = dataForm ? Object.entries(dataForm)[1][1] : "password";
+		const password = dataForm ? Object.entries(dataForm)[1][1].replace(/./ig, '*') : "password";
+
+		const isLoading = loadingDataForm ? <Spinner /> : null;
 		console.log(dataForm, 99, login, 11, password, 22);
 		
-		return (
-			<div className={styles.modalBox}
-					onClick={ (e) => onClickModalBox('[class^="modalBox"]', e) }>
-					
-				<div className={styles.modalDialog}>
-					<div className={styles.modalContent}>
-						
-						<form onSubmit={this.handleSubmit} >
-							<button className={styles.modalClose} type='button'
-										onClick={() => hideModal('[class^="modalBox"]')}>
-								&times;
-							</button>
-							<p className={styles.modalTitle}>
-								please enter your email and password
-							</p>
-							<input 	type="email" name="login" className={styles.modalInput}
-										placeholder={login} required />
-							<input 	type="password" name="password" className={styles.modalInput}
-										placeholder={password} required />
-							<button className={styles.modalEnter} type="submit">
-								sign up
-							</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
+		return <ModalBox 	handleSubmit={this.handleSubmit}
+								hideModal={hideModal}
+								login={login} password={password}
+								isLoading={isLoading} />;
 	}
 }
 
