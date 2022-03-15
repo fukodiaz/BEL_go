@@ -9,6 +9,7 @@ import {
 	dataFormError
 } from '../../actions';
 
+import Spinner from '../spinner';
 import styles from './modal.m.less';
 
 const openModal = (modalSelector) => {
@@ -39,9 +40,9 @@ class Modal extends Component {
 
 	state = {
 		objForm: null,
-		dataForm: null,
-		loading: true,
-		error: null
+		dataForm: JSON.parse(window.localStorage.getItem('dataForm')) || null,
+		loadingDataForm: JSON.parse(window.localStorage.getItem('loadingDataForm')) || false,
+		errorDataForm: JSON.parse(window.localStorage.getItem('errorDataForm')) || false
 	};
 
 	componentDidMount() {
@@ -58,24 +59,30 @@ class Modal extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const {postDataForm, dataFormSending, dataFormSuccess, dataFormError, dataFormPosted} = this.props;
+		const {postDataForm, dataFormSend, dataFormSucc, dataFormErr, dataFormPosted} = this.props;
 		const { objForm } = this.state;
 
 		if (JSON.stringify(objForm) !== JSON.stringify(prevState.objForm)) {
 
 			const json = JSON.stringify(objForm);
-			this.setState({dataForm: null, loading: true, error:null});
-			dataFormSending();
+			this.setState({dataForm: null, loadingDataForm: true, errorDataForm:false});
+			dataFormSend();
 			postDataForm(json)
 				.then((data) => {
-					this.setState({dataForm: data, loading: false, error: null});
-					dataFormSuccess(data);
-					console.log(data, 33333333333333333333333333333333333333);
-					console.log(this.state.dataForm, 999999999999);
-					console.log(dataFormPosted, 888888888888);
+					this.setState({dataForm: data, loadingDataForm: false, errorDataForm: false});
+					window.localStorage.setItem('dataForm', JSON.stringify(data));
+					window.localStorage.setItem('loadingDataForm', false);
+					window.localStorage.setItem('errorDataForm', false);
+					dataFormSucc(data);
+					// console.log(data, 333333333333333);
+					// console.log(this.state.dataForm, 999999999999);
+					// console.log(this.props.dataFormPosted, 888888888888);
 				}).catch(error => {
-					this.setState({dataForm: null, loading: false, error});
-					dataFormError(error);
+					this.setState({dataForm: null, loadingDataForm: false, errorDataForm: error});
+					window.localStorage.setItem('dataForm', null);
+					window.localStorage.setItem('loadingDataForm', false);
+					window.localStorage.setItem('errorDataForm', JSON.stringify(error));
+					dataFormErr(errorDataForm);
 					console.log(error);
 				});
 		}
@@ -90,13 +97,18 @@ class Modal extends Component {
 	}
 
 	render() {
+		const {dataForm} = this.state;	
+		const login = dataForm ? Object.entries(dataForm)[0][1] : "example@gmail.com";
+		const password = dataForm ? Object.entries(dataForm)[1][1] : "password";
+		console.log(dataForm, 99, login, 11, password, 22);
+		
 		return (
 			<div className={styles.modalBox}
 					onClick={ (e) => onClickModalBox('[class^="modalBox"]', e) }>
 					
 				<div className={styles.modalDialog}>
 					<div className={styles.modalContent}>
-		
+						
 						<form onSubmit={this.handleSubmit} >
 							<button className={styles.modalClose} type='button'
 										onClick={() => hideModal('[class^="modalBox"]')}>
@@ -106,9 +118,9 @@ class Modal extends Component {
 								please enter your email and password
 							</p>
 							<input 	type="email" name="login" className={styles.modalInput}
-										placeholder="email@example.com" required />
+										placeholder={login} required />
 							<input 	type="password" name="password" className={styles.modalInput}
-										placeholder="password" required />
+										placeholder={password} required />
 							<button className={styles.modalEnter} type="submit">
 								sign up
 							</button>
@@ -129,9 +141,9 @@ const mapStateToProps = ({dataFormPosted}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	dataFormSending: () => dispatch(dataFormSending()),
-	dataFormSuccess: (data) => dispatch(dataFormSuccess(data)),
-	dataFormError: (error) => dispatch(dataFormError(error))
+	dataFormSend: () => dispatch(dataFormSending()),
+	dataFormSucc: (data) => dispatch(dataFormSuccess(data)),
+	dataFormErr: (error) => dispatch(dataFormError(error))
 });
 //sendDataForm: (data) => sendDataForm(postDataForm, dispatch)(data)
 

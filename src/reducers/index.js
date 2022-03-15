@@ -12,9 +12,9 @@ const initialState = {
 	dataCitiesError: false,
 	dataCitiesLoading: true,
 
-	dataFormPosted: null,
-	dataFormSending: undefined,
-	dataFormError: false
+	dataFormPosted: JSON.parse(window.localStorage.getItem('dataForm')) || {},
+	dataFormSending:  window.localStorage.getItem('loadingDataForm') || false,
+	dataFormError:  JSON.parse(window.localStorage.getItem('errorDataForm')) || false
 
 };
 
