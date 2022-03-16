@@ -7,30 +7,10 @@ import { dataFormSending, dataFormSuccess, dataFormError
 } from '../../actions';
 
 import ModalBox from '../modal-box';
+import ModalMessage from '../modal-message';
 import Spinner from '../spinner';
+import {openModal, hideModal} from '../../utils';
 import styles from './modal.m.less';
-
-const openModal = (modalSelector) => {
-	const modal = document.querySelector(modalSelector);
-
-	modal.classList.add(`${styles.modalShow}`);
-	modal.classList.remove(`${styles.modalHide}`);
-	document.body.style.overflow = 'hidden';
-};
-
-function hideModal(modalSelector) {
-	const modal = document.querySelector(modalSelector);
-
-	modal.classList.add(`${styles.modalHide}`);
-	modal.classList.remove(`${styles.modalShow}`);
-	document.body.style.overflow = '';
-}
-
-// const showMessageModal = (message) => {
-// 	const modalDialog = document.querySelector('[class^="modalDialog"]');
-
-
-// };
 
 class Modal extends Component {
 
@@ -42,23 +22,8 @@ class Modal extends Component {
 		message: {
 			success: "you have been successfully logged in !",
 			failure: "Something went wrong..."
-		},
-		isSuccess: false,
-		isError: false
-	};
-
-	componentDidMount() {
-		const modalBox = document.querySelector('[class^="modalBox"]');
-
-		const onKeydown = (e) => {
-			if (e.code === 'Escape' && modalBox.classList.contains(`${styles.modalShow}`)) {
-				hideModal('[class^="modalBox"]');
-			}
 		}
-
-		document.addEventListener('keydown', onKeydown);
-		//return () => document.removeEventListener("keydown", onKeydown);
-	}
+	};
 
 	componentDidUpdate(prevProps, prevState) {
 		const {postDataForm, dataFormSend, dataFormSucc, dataFormErr, dataFormPosted} = this.props;
@@ -77,7 +42,9 @@ class Modal extends Component {
 					window.localStorage.setItem('dataForm', JSON.stringify(data));
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', false);
+					window.localStorage.setItem('resultPostRequest', "isSuccess");
 					dataFormSucc(data);
+					hideModal('[class^="modalBox"]');
 					// console.log(data, 333333333333333);
 					// console.log(this.state.dataForm, 999999999999);
 					// console.log(this.props.dataFormPosted, 888888888888);
@@ -87,8 +54,10 @@ class Modal extends Component {
 					window.localStorage.setItem('dataForm', null);
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', JSON.stringify(error));
+					window.localStorage.setItem('resultPostRequest', "isError");
 					dataFormErr(errorDataForm);
 					console.log(error);
+					hideModal('[class^="modalBox"]');
 				});
 		}
 	}
@@ -111,7 +80,6 @@ class Modal extends Component {
 		console.log(dataForm, 99, login, 11, password, 22);
 		
 		return <ModalBox 	handleSubmit={this.handleSubmit}
-								hideModal={hideModal}
 								login={login} password={password}
 								isLoading={isLoading}
 								isSuccess={isSuccess} 
@@ -138,8 +106,3 @@ export default compose(
 	withBelgoService(mapMethodsToProps),
 	connect(mapStateToProps, mapDispatchToProps)
 )(Modal);
-
-export {
-	openModal,
-	hideModal
-};

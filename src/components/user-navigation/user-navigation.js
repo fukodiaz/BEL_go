@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import  {openModal}  from '../modal';
+import  {openModal}  from '../../utils';
 import url from './login.svg';
 import styles from './user-navigation.m.less';
-
 
 const UserNavigation = () => {
 

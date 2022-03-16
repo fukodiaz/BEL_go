@@ -1,8 +1,3 @@
-import Modal, { openModal, hideModal } from './modal';
+import Modal from './modal';
 
 export default Modal;
-
-export {
-	openModal, 
-	hideModal
-};

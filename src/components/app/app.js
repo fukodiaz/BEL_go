@@ -5,6 +5,7 @@ import Header from '../header';
 import MainPage from '../main-page';
 import PageDetails from '../page-details';
 import Modal from '../modal';
+import ModalMessage from '../modal-message';
 
 import styles from './app.m.less';
 
@@ -19,6 +20,7 @@ export default class App extends Component {
 					<Route path=":id" element={<PageDetails />} />
 				</Routes>
 				<Modal />
+				<ModalMessage />
 			</div>
 		);
 	}

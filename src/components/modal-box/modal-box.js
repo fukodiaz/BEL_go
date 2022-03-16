@@ -1,24 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
+import { onClickModalBox, hideModal } from '../../utils';
 import styles from './modal-box.m.less';
 
 function ModalBox(props) {
-	const {handleSubmit, hideModal, login, password,
-			isLoading, isSuccess, isError} = props;
-
-
-	const onClickModalBox = (modalSelector, e) => {
-		const modal = document.querySelector(modalSelector);
-	
-		if (e.target == modal) {
-			hideModal(modalSelector);
-		}
-	};
-
-	const message = {
-		success: "you have been successfully logged in !",
-		failure: "Something went wrong..."
-	};
+	const {handleSubmit, login, password, isLoading} = props;
 
 	// ModalDialogue = (<ModalDialog 	handleSubmit={handleSubmit} hideModal={hideModal}
 	// 												login={login} password={password}
@@ -42,21 +28,31 @@ function ModalBox(props) {
 	// 	return null;
 	// };
 
-		
+	useEffect(() => {
+			const modalBox = document.querySelector('[class^="modalBox"]');
+	
+			const onKeydown = (e) => {
+				if (e.code === 'Escape' && modalBox.style.display === 'block') {
+					hideModal('[class^="modalBox"]');
+				}
+			}
+	
+			document.addEventListener('keydown', onKeydown);
+			return () => document.removeEventListener("keydown", onKeydown);
+	}, []);
 
 	return (
 		<div className={styles.modalBox}
 					onClick={(e) => onClickModalBox('[class^="modalBox"]', e)}>
 					
-			<ModalDialog handleSubmit={handleSubmit} hideModal={hideModal}
-							login={login} password={password} isLoading={isLoading} />
+			<ModalDialog handleSubmit={handleSubmit} login={login} 
+								password={password} isLoading={isLoading} />
 		</div>
 	);
 }
 
 const ModalDialog = (props) => {
-	const {handleSubmit, hideModal, login, password,
-			isLoading} = props;
+	const {handleSubmit, login, password, isLoading} = props;
 
 	return (
 		<div className={styles.modalDialog}>
@@ -79,23 +75,6 @@ const ModalDialog = (props) => {
 					</button>
 				</form>
 				{isLoading}
-			</div>
-		</div>
-	);
-};
-
-const ModalDialogMessage = ({message, hideModal}) => {
-
-	return (
-		<div className={styles.modalDialog}>
-			<div className={styles.modalContent}>
-				<button className={styles.modalClose} type='button'
-							onClick={() => hideModal('[class^="modalBox"]')} >
-					&times;
-				</button>
-				<p className={styles.modalTitle}>
-					{message}
-				</p>
 			</div>
 		</div>
 	);

@@ -14,7 +14,8 @@ const initialState = {
 
 	dataFormPosted: JSON.parse(window.localStorage.getItem('dataForm')) || {},
 	dataFormSending:  window.localStorage.getItem('loadingDataForm') || false,
-	dataFormError:  JSON.parse(window.localStorage.getItem('errorDataForm')) || false
+	dataFormError:  JSON.parse(window.localStorage.getItem('errorDataForm')) || false,
+	resultPostRequest: window.localStorage.getItem('resultPostRequest') || null
 
 };
 
@@ -47,7 +48,8 @@ const reducer = (state = initialState, action) => {
 				...state,
 				dataFormPosted: {},
 				dataFormSending: true,
-				dataFormError: false
+				dataFormError: false,
+				resultPostRequest: null
 			}
 
 		case 'DATA_FORM_SUCCESS':
@@ -55,7 +57,8 @@ const reducer = (state = initialState, action) => {
 				...state,
 				dataFormPosted: action.payload,
 				dataFormSending: false,
-				dataFormError: false
+				dataFormError: false,
+				resultPostRequest: "isSuccess"
 			}
 
 		case 'DATA_FORM_ERROR':
@@ -63,7 +66,8 @@ const reducer = (state = initialState, action) => {
 				...state,
 				dataFormPosted: {},
 				dataFormSending: false,
-				dataFormError: action.payload
+				dataFormError: action.payload,
+				resultPostRequest: "isError"
 			}
 			//
 

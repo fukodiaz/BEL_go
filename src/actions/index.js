@@ -64,6 +64,7 @@ const dataFormError = (payload) => ({
 	payload
 });
 
+
 // const sendDataForm = (methodService, dispatch) => (form) => {
 // 	dispatch(dataFormSending());
 // 	methodService(form)
