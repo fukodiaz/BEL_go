@@ -26,11 +26,11 @@ function hideModal(modalSelector) {
 	document.body.style.overflow = '';
 }
 
-const showMessageModal = (message) => {
-	const modalDialog = document.querySelector('[class^="modalDialog"]');
+// const showMessageModal = (message) => {
+// 	const modalDialog = document.querySelector('[class^="modalDialog"]');
 
 
-};
+// };
 
 class Modal extends Component {
 
@@ -42,7 +42,9 @@ class Modal extends Component {
 		message: {
 			success: "you have been successfully logged in !",
 			failure: "Something went wrong..."
-		}
+		},
+		isSuccess: false,
+		isError: false
 	};
 
 	componentDidMount() {
@@ -65,11 +67,13 @@ class Modal extends Component {
 		if (JSON.stringify(objForm) !== JSON.stringify(prevState.objForm)) {
 
 			const json = JSON.stringify(objForm);
-			this.setState({dataForm: null, loadingDataForm: true, errorDataForm:false});
+			this.setState({dataForm: null, loadingDataForm: true, errorDataForm:false,
+								isSuccess: false, isError: false});
 			dataFormSend();
 			postDataForm(json)
 				.then((data) => {
-					this.setState({dataForm: data, loadingDataForm: false, errorDataForm: false});
+					this.setState({dataForm: data, loadingDataForm: false, errorDataForm: false, 
+										isSuccess: true, isError: false});
 					window.localStorage.setItem('dataForm', JSON.stringify(data));
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', false);
@@ -78,7 +82,8 @@ class Modal extends Component {
 					// console.log(this.state.dataForm, 999999999999);
 					// console.log(this.props.dataFormPosted, 888888888888);
 				}).catch(error => {
-					this.setState({dataForm: null, loadingDataForm: false, errorDataForm: error});
+					this.setState({dataForm: null, loadingDataForm: false, errorDataForm: error,
+										isSuccess: false, isError: true});
 					window.localStorage.setItem('dataForm', null);
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', JSON.stringify(error));
@@ -97,7 +102,7 @@ class Modal extends Component {
 	}
 
 	render() {
-		const {dataForm, loadingDataForm} = this.state;	
+		const {dataForm, loadingDataForm, isSuccess, isError} = this.state;	
 
 		const login = dataForm ? Object.entries(dataForm)[0][1] : "example@gmail.com";
 		const password = dataForm ? Object.entries(dataForm)[1][1].replace(/./ig, '*') : "password";
@@ -108,7 +113,9 @@ class Modal extends Component {
 		return <ModalBox 	handleSubmit={this.handleSubmit}
 								hideModal={hideModal}
 								login={login} password={password}
-								isLoading={isLoading} />;
+								isLoading={isLoading}
+								isSuccess={isSuccess} 
+								isError={isError} />;
 	}
 }
 
