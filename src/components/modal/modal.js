@@ -7,9 +7,8 @@ import { dataFormSending, dataFormSuccess, dataFormError
 } from '../../actions';
 
 import ModalBox from '../modal-box';
-import ModalMessage from '../modal-message';
 import Spinner from '../spinner';
-import {openModal, hideModal} from '../../utils';
+import {hideModal} from '../../utils';
 import styles from './modal.m.less';
 
 class Modal extends Component {
@@ -18,11 +17,7 @@ class Modal extends Component {
 		objForm: null,
 		dataForm: JSON.parse(window.localStorage.getItem('dataForm')) || null,
 		loadingDataForm: JSON.parse(window.localStorage.getItem('loadingDataForm')) || false,
-		errorDataForm: JSON.parse(window.localStorage.getItem('errorDataForm')) || false,
-		message: {
-			success: "you have been successfully logged in !",
-			failure: "Something went wrong..."
-		}
+		errorDataForm: JSON.parse(window.localStorage.getItem('errorDataForm')) || false
 	};
 
 	componentDidUpdate(prevProps, prevState) {
@@ -32,13 +27,15 @@ class Modal extends Component {
 		if (JSON.stringify(objForm) !== JSON.stringify(prevState.objForm)) {
 
 			const json = JSON.stringify(objForm);
-			this.setState({dataForm: null, loadingDataForm: true, errorDataForm:false,
-								isSuccess: false, isError: false});
+			this.setState({dataForm: null, loadingDataForm: true, errorDataForm:false});
 			dataFormSend();
+			window.localStorage.setItem('dataForm', null);
+			window.localStorage.setItem('loadingDataForm', true);
+			window.localStorage.setItem('errorDataForm', false);
+			window.localStorage.setItem('resultPostRequest', null);
 			postDataForm(json)
 				.then((data) => {
-					this.setState({dataForm: data, loadingDataForm: false, errorDataForm: false, 
-										isSuccess: true, isError: false});
+					this.setState({dataForm: data, loadingDataForm: false, errorDataForm: false});
 					window.localStorage.setItem('dataForm', JSON.stringify(data));
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', false);
@@ -49,8 +46,7 @@ class Modal extends Component {
 					// console.log(this.state.dataForm, 999999999999);
 					// console.log(this.props.dataFormPosted, 888888888888);
 				}).catch(error => {
-					this.setState({dataForm: null, loadingDataForm: false, errorDataForm: error,
-										isSuccess: false, isError: true});
+					this.setState({dataForm: null, loadingDataForm: false, errorDataForm: error});
 					window.localStorage.setItem('dataForm', null);
 					window.localStorage.setItem('loadingDataForm', false);
 					window.localStorage.setItem('errorDataForm', JSON.stringify(error));
@@ -71,7 +67,7 @@ class Modal extends Component {
 	}
 
 	render() {
-		const {dataForm, loadingDataForm, isSuccess, isError} = this.state;	
+		const {dataForm, loadingDataForm} = this.state;	
 
 		const login = dataForm ? Object.entries(dataForm)[0][1] : "example@gmail.com";
 		const password = dataForm ? Object.entries(dataForm)[1][1].replace(/./ig, '*') : "password";
@@ -81,9 +77,7 @@ class Modal extends Component {
 		
 		return <ModalBox 	handleSubmit={this.handleSubmit}
 								login={login} password={password}
-								isLoading={isLoading}
-								isSuccess={isSuccess} 
-								isError={isError} />;
+								isLoading={isLoading} />;
 	}
 }
 

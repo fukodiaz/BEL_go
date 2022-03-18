@@ -1,3 +1,16 @@
+body {
+	min-width: 320px;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 24px;
+	font-family:  'Inter', 'Helvetica', sans-serif;
+	color: #000000;
+	font-style: normal;
+	background-color: #f2f2f2;
+}
+
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -21,11 +34,28 @@ ul {
 button {
 	padding: 0;
 	border: none;
+	font-family:  'Inter', 'Helvetica', sans-serif;
 	text-decoration: none;
 	outline: none;
 	cursor: pointer;
 }
 
 .box {
+	max-width: 320px;
+	margin: 0 auto;
 	background-color: #fcfcee;
+}
+
+@media (min-width: 768px) {
+
+	.box {
+		max-width: 768px;
+	}
+}
+
+@media (min-width: 1280px) {
+
+	.box {
+		max-width: 1280px;
+	}
 }

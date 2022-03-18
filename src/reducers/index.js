@@ -69,7 +69,7 @@ const reducer = (state = initialState, action) => {
 				dataFormError: action.payload,
 				resultPostRequest: "isError"
 			}
-			//
+		//
 
 		case 'FETCH_OFFERS_REQUEST':
 			return {

@@ -38,6 +38,8 @@ function ModalMessage({resultPostRequest}) {
 			setMessage("Something went wrong...");
 			document.querySelector('[class^="modalContainer"]').style.display = "block";
 		}
+
+		return null;
 	}, [resultPostRequest]);
 
 	const hideModalMessage = () => {

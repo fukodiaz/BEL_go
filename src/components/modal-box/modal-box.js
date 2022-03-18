@@ -4,29 +4,6 @@ import { onClickModalBox, hideModal } from '../../utils';
 import styles from './modal-box.m.less';
 
 function ModalBox(props) {
-	const {handleSubmit, login, password, isLoading} = props;
-
-	// ModalDialogue = (<ModalDialog 	handleSubmit={handleSubmit} hideModal={hideModal}
-	// 												login={login} password={password}
-	// 												isLoading={isLoading} />);
-
-	// const showMessage = (isSuccess, isError) => {
-	// 	if (isSuccess) {
-	// 		ModalDialogue = (
-	// 			<ModalDialogMessage message={message.success} hideModal={hideModal} />
-	// 		);
-	// 		openModal('[class^="modalBox"]');
-	// 	}
-
-	// 	if (isError) {
-	// 		ModalDialogue = (
-	// 			<ModalDialogMessage message={message.failure} hideModal={hideModal} />
-	// 		);
-	// 		openModal('[class^="modalBox"]');
-	// 	}
-
-	// 	return null;
-	// };
 
 	useEffect(() => {
 			const modalBox = document.querySelector('[class^="modalBox"]');
@@ -45,8 +22,7 @@ function ModalBox(props) {
 		<div className={styles.modalBox}
 					onClick={(e) => onClickModalBox('[class^="modalBox"]', e)}>
 					
-			<ModalDialog handleSubmit={handleSubmit} login={login} 
-								password={password} isLoading={isLoading} />
+			<ModalDialog {...props} />
 		</div>
 	);
 }
