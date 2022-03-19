@@ -1,12 +1,11 @@
 .listFiltersCateg {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-start;
-	padding: 25px 11px 35px;
+	padding: 17px 11px 25px;
 
 	& li {
 		min-width: 15%;
-		margin-right: 13px;
+		margin-right: 8px;
 		margin-bottom: 20px;
 		
 	}
@@ -14,24 +13,24 @@
 	& button {
 		display: block;
 		box-sizing: border-box;
-		padding: 6px 13px;
+		padding: 4px 8px;
 		height: 40px;
 		width: 100%;
 		border-radius: 20px 5px;
-		//border-radius: 40px 15px 40px 15px/ 40px 15px 40px 15px;
-		font-size: 19px;
+		font-size: 16px;
+		font-weight: 700;
 
-	&:hover {
-		color: rgba(78, 59, 49, 0.85);
-		background-color: rgba(137, 63, 69, 0.2);
-		border: 1px solid rgba(137, 63, 69, 0.05);
-	}
+
+		&:hover {
+			color: rgba(78, 59, 49, 0.85);
+			background-color: rgba(137, 63, 69, 0.2);
+			//border: 1px solid rgba(137, 63, 69, 0.05);
+		}
 	}
 }
 
 .isActiveButton {
 	//color: rgba(78, 59, 49, 0.9);
-	font-weight: 600;
 	color: rgba(0, 0, 0, 0.6);
 	background-color: rgba(221, 173, 175, 0.7);
 	border: 1px solid rgba(221, 173, 175, 1), 2px solid rgba(221, 173, 175, 0.9);
@@ -42,4 +41,34 @@
 	//background-color: #b94e48;
 	//background-color: #893f45;
 	background-color: rgba(137, 63, 69, 0.6);
+}
+
+@media (min-width: 768px) {
+
+	.listFiltersCateg {
+		padding: 25px 0px 30px 48px;
+
+		& li {
+			margin-right: 12px;
+			margin-bottom: 20px;
+		}
+
+		& button {
+			padding: 6px 13px;
+			font-size: 17px;
+		}
+	}
+}
+
+@media (min-width: 1280px) {
+
+	.listFiltersCateg {
+		padding: 25px 0px 35px;
+		margin-left: 80px;
+
+		& button {
+			padding: 6px 21px;
+			font-size: 18px;
+		}
+	}
 }

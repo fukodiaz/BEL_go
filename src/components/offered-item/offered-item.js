@@ -11,17 +11,24 @@ const OfferedItem = (props) => {
 			concept, descriptionShort, id } = props;
 
 	return (
-		<div>
-			<Link to={id}>
-				<img src={imageIntro} alt="photo of the proposed building" />
+		<div className={styles.boxOffer}>
+			<Link to={id} className={styles.linkOffer}>
+				<img src={imageIntro} alt="photo of the proposed building"
+						className={styles.imageOffer} />
 			</Link>
-			<p>
-				<b>&#8364;{price}</b>
-				<span>/night</span>
-			</p>
-			<RatingItem rating={rating} />
-			<p>{descriptionShort}</p>
-			<p>{concept}</p>
+			<div className={styles.infoOffer}>
+				<p className={styles.priceOffer}>
+					<b>&#8364;{price}</b>
+					<span>/</span>night
+				</p>
+				<RatingItem rating={rating} />
+				<p className={styles.descrOffer}>
+					{descriptionShort}
+				</p>
+				<p className={styles.conceptOffer}>
+					{concept}
+				</p>
+			</div>
 		</div>
 	);
 };
