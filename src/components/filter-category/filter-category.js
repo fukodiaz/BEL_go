@@ -12,7 +12,6 @@ class FilterCategory extends Component {
 		{ name: 'popular', label: 'Popular'},
 		{ name: 'priceIncr', label: 'Price: low to high'},
 		{ name: 'priceDecr', label: 'Price: high to low'},
-		{ name: 'rating', label: 'Top rated first'},
 		{ name: 'rating', label: 'Top rated first'}
 	];
 

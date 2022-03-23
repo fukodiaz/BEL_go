@@ -8,19 +8,20 @@ import styles from './item-details.m.less';
 
 const ItemDetails = (props) => {
 
-	const {imageDetails, price, rating, concept, descriptionShort, information} = props;
+	const {imageDetails, imageIntro, price, rating, concept, descriptionShort, information} = props;
 
 	return (
 		<div className={styles.mainContainer}>
 			<div className={styles.firstContainter}>
 				<a href="#" className={styles.linkImage}>
-					<img 	src={imageDetails} alt="offer photo" 
-							className={styles.offerImage} />
+					<picture className={styles.pictureDetails}>
+						<source media="(min-width: 1280px)" srcSet={imageDetails} />
+						<img 	src={imageIntro} alt="offer photo" 
+								className={styles.offerImage} />
+					</picture>
 				</a>
-				<div className={styles.mapBox}>
 					<p className={styles.labelMap}>Location</p>
 					<Map stylesMapContainer={styles.mapContainer} />
-				</div>
 			</div>
 
 			<div className={styles.secondContainer}>
@@ -44,6 +45,8 @@ const ItemDetails = (props) => {
 					</Link>
 				</div>
 			</div>
+
+			<Map stylesMapContainer={styles.mapContainer_2} />
 		</div>
 	);
 };

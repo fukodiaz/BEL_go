@@ -17,10 +17,13 @@ const PageDetails = ({visibleListOffers}) => {
 		const boxDetails = document.querySelector('[class^="boxDetails"]');
 		const paddingTopBoxDetails = window.getComputedStyle(boxDetails).paddingTop.replace(/[^\d.]/ig, '');
 		const motileBox = document.querySelector('[class^="motileBox"]');
+		const mainWrapper = document.querySelector('[class^="mainWrapper"]');
 		const offset = +heightHeader + +paddingTopBoxDetails;
 		
 		const onScroll = () => {
-			if (window.pageYOffset > offset) {
+			let mainWrapperWidth = window.getComputedStyle(mainWrapper).width.replace(/[^\d.]/ig, '');
+
+			if (window.pageYOffset > offset && +mainWrapperWidth >= 751) {
 				setFlag(true);
 				if (flag) {
 					motileBox.style.top = `${window.pageYOffset - offset}px`;

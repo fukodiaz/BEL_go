@@ -13,7 +13,7 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<div className={styles.box}>
+			<div className={styles.mainWrapper}>
 				<Header />
 				<Routes>
 					<Route path="/" exact element={<MainPage />} />
