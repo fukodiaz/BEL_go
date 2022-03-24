@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import Map from '../map';
 import RatingItem from '../rating-item';
 
+import  {openModal}  from '../../utils';
 import styles from './item-details.m.less';
 
 const ItemDetails = (props) => {
@@ -40,7 +41,8 @@ const ItemDetails = (props) => {
 						</p>
 					</div>
 					<Link to=""
-							className={styles.linkOrder}>
+							className={styles.linkOrder}
+							onClick={() => openModal('[class^="modalBox"]')} >
 						make an order !
 					</Link>
 				</div>

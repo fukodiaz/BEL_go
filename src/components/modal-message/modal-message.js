@@ -58,9 +58,7 @@ function ModalMessage({resultPostRequest}) {
 			<div className={styles.modalDialog}>
 				<div className={styles.modalContent}>
 					<button className={styles.modalClose} type='button'
-								onClick={hideModalMessage} >
-						&times;
-					</button>
+								onClick={hideModalMessage} />
 					<p className={styles.modalTitle}>
 						{message}
 					</p>

@@ -36,9 +36,7 @@ const ModalDialog = (props) => {
 				
 				<form onSubmit={handleSubmit} >
 					<button className={styles.modalClose} type='button'
-								onClick={() => hideModal('[class^="modalBox"]')}>
-						&times;
-					</button>
+								onClick={() => hideModal('[class^="modalBox"]')} />
 					<p className={styles.modalTitle}>
 						please enter your email and password
 					</p>
