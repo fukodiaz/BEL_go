@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const conf = {
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname),
+		path: path.resolve(__dirname, './dist'),
 		filename: 'main.js',
 		//publicPath: ''
 	},
@@ -45,10 +45,26 @@ const conf = {
 					{
 						loader: 'css-loader',
 						options: {
+							importLoaders: 1,
 							modules: {
 								localIdentName: '[local]__[sha1:hash:hex:7]'
 							}
 						}
+					},
+					{
+						loader: "postcss-loader",
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										"autoprefixer",
+										{
+									 	// Options
+										},
+									],
+								],
+							},
+						},
 					}
 				]
 			},
@@ -56,7 +72,27 @@ const conf = {
 				test: /^((?!\.m).)*css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader'
+					{
+						loader: 'css-loader',
+						options: {
+							importLoaders: 1
+						}
+					},
+					{
+						loader: "postcss-loader",
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										"autoprefixer",
+										{
+									 	// Options
+										},
+									],
+								],
+							},
+						},
+					}
 				]
 			},
 
@@ -73,7 +109,21 @@ const conf = {
 							}
 						}
 					},
-					'postcss-loader',
+					{
+						loader: "postcss-loader",
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										"autoprefixer",
+										{
+									 	// Options
+										},
+									],
+								],
+							},
+						},
+					},
 					'less-loader'
 				]
 			},
@@ -87,7 +137,21 @@ const conf = {
 							importLoaders: 2
 						}
 					},
-					'postcss-loader',
+					{
+						loader: "postcss-loader",
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										"autoprefixer",
+										{
+									 	// Options
+										},
+									],
+								],
+							},
+						},
+					},
 					'less-loader'
 				]
 			},
