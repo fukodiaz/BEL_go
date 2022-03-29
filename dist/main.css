@@ -866,8 +866,7 @@
 	height: 100%;
 	position: relative;
 	transform: translateZ(0) scale(0.78);
-	-webkit-backface-visibility: hidden;
-	        backface-visibility: hidden;
+	backface-visibility: hidden;
 	transform-origin: 0 0; /* see note above */
 }
 .ldio-5ubrib4iwwf div { box-sizing: content-box; }
