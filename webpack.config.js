@@ -49,14 +49,16 @@ const conf = {
 								localIdentName: '[local]__[sha1:hash:hex:7]'
 							}
 						}
-					}
+					},
+					'postcss-loader'
 				]
 			},
 			{
 				test: /^((?!\.m).)*css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader'
+					'css-loader',
+					'postcss-loader'
 				]
 			},
 
