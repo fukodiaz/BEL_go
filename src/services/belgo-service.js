@@ -1,6 +1,7 @@
 export default class BelgoService {
 
-	_apiBase= 'http://localhost:3000';
+	//_apiBase= 'http://localhost:3000';
+	_apiBase='https://bel-go.herokuapp.com/api';
 
 	getResource = async (url) => {
 		const res = await fetch(`${this._apiBase}${url}`);
