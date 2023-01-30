@@ -5,10 +5,11 @@
 	"license": "ISC",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js",
+		"start": "NODE_ENV=production node server.js",
 		"rest-api": "json-server db.json"
 	},
 	"dependencies": {
+		"clone": "^2.1.2",
 		"json-server": "^0.17.1",
 		"nodemon": "^2.0.20"
 	}
