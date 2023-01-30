@@ -18,16 +18,16 @@ const conf = {
 		},
 		historyApiFallback: true,
 		port: 8080,
-		proxy: {
-			"*": {
-				target: "http://localhost:1777/4cities/",
-				secure: false, 
-				changeOrigin: true,
-			// 	pathRewrite: {
-			// 	"^/4cities": ""
-			// },
-			}
-		},
+		// proxy: {
+		// 	"*": {
+		// 		target: "http://localhost:1777/4cities/",
+		// 		secure: false, 
+		// 		changeOrigin: true,
+		// 	// 	pathRewrite: {
+		// 	// 	"^/4cities": ""
+		// 	// },
+		// 	}
+		// },
 
 	},
 
