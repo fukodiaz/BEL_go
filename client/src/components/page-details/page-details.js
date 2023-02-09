@@ -11,32 +11,32 @@ const PageDetails = ({visibleListOffers}) => {
 	const {id: idPage} = useParams();
 	const [flag, setFlag] = useState(false);
 
-	useEffect(() => {
-		const header = document.querySelector('header');
-		const heightHeader = window.getComputedStyle(header).height.replace(/[^\d.]/ig, '');
-		const boxDetails = document.querySelector('[class^="boxDetails"]');
-		const paddingTopBoxDetails = window.getComputedStyle(boxDetails).paddingTop.replace(/[^\d.]/ig, '');
-		const motileBox = document.querySelector('[class^="motileBox"]');
-		const mainWrapper = document.querySelector('[class^="mainWrapper"]');
-		const offset = +heightHeader + +paddingTopBoxDetails;
+	// useEffect(() => {
+	// 	const header = document.querySelector('header');
+	// 	const heightHeader = window.getComputedStyle(header).height.replace(/[^\d.]/ig, '');
+	// 	const boxDetails = document.querySelector('[class^="boxDetails"]');
+	// 	const paddingTopBoxDetails = window.getComputedStyle(boxDetails).paddingTop.replace(/[^\d.]/ig, '');
+	// 	const motileBox = document.querySelector('[class^="motileBox"]');
+	// 	const mainWrapper = document.querySelector('[class^="mainWrapper"]');
+	// 	const offset = +heightHeader + +paddingTopBoxDetails;
 		
-		const onScroll = () => {
-			let mainWrapperWidth = window.getComputedStyle(mainWrapper).width.replace(/[^\d.]/ig, '');
+	// 	const onScroll = () => {
+	// 		let mainWrapperWidth = window.getComputedStyle(mainWrapper).width.replace(/[^\d.]/ig, '');
 
-			if (window.pageYOffset > offset && +mainWrapperWidth >= 751) {
-				setFlag(true);
-				if (flag) {
-					motileBox.style.top = `${window.pageYOffset - offset}px`;
-				}
-			} else {
-				setFlag((flag) => flag = false);
-				motileBox.style.top = 0;
-			}
-		};
+	// 		if (window.pageYOffset > offset && +mainWrapperWidth >= 751) {
+	// 			setFlag(true);
+	// 			if (flag) {
+	// 				motileBox.style.top = `${window.pageYOffset - offset}px`;
+	// 			}
+	// 		} else {
+	// 			setFlag((flag) => flag = false);
+	// 			motileBox.style.top = 0;
+	// 		}
+	// 	};
 
-		window.addEventListener('scroll', onScroll);
-		return () => window.removeEventListener('scroll', onScroll);
-	}, [flag]);
+	// 	window.addEventListener('scroll', onScroll);
+	// 	return () => window.removeEventListener('scroll', onScroll);
+	// }, [flag]);
 
 	return (
 		<div className={styles.boxDetails}>
