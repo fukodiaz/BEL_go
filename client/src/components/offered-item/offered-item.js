@@ -13,7 +13,7 @@ const OfferedItem = (props) => {
 
 	return (
 		<div className={styles.boxOffer}>
-			<Link to={id} className={styles.linkOffer}>
+			<Link to={`/${id}`} className={styles.linkOffer}>
 				<img src={imageIntro} alt="photo of the proposed building"
 						className={styles.imageOffer} />
 			</Link>
