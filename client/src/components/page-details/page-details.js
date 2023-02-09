@@ -11,6 +11,10 @@ const PageDetails = ({visibleListOffers}) => {
 	const {id: idPage} = useParams();
 	//const [flag, setFlag] = useState(false);
 
+	useEffect(() => {
+		window.scrollTo(0, 315);
+	}, []);
+
 	// useEffect(() => {
 	// 	const header = document.querySelector('header');
 	// 	const heightHeader = window.getComputedStyle(header).height.replace(/[^\d.]/ig, '');

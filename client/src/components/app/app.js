@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {Routes, Route} from 'react-router-dom';
 
 import Header from '../header';
@@ -10,20 +10,24 @@ import ModalMessage from '../modal-message';
 
 import styles from './app.m.less';
 
-export default class App extends Component {
+const App = () => {
+	
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
-	render() {
-		return (
-			<div className={styles.mainWrapper}>
-				<Header />
-				<Routes>
-					<Route path="/" exact element={<MainPage />} />
-					<Route path=":id" element={<PageDetails />} />
-					<Route path="/likes" element={<ListLikedOffers />} />
-				</Routes>
-				<Modal />
-				<ModalMessage />
-			</div>
-		);
-	}
-}
+	return (
+		<div className={styles.mainWrapper} id='wrapper'>
+			<Header />
+			<Routes>
+				<Route path="/" exact element={<MainPage />} />
+				<Route path=":id" element={<PageDetails />} />
+				<Route path="/likes" element={<ListLikedOffers />} />
+			</Routes>
+			<Modal />
+			<ModalMessage />
+		</div>
+	);
+};
+
+export default App;
