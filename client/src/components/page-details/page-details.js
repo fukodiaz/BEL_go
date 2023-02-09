@@ -9,7 +9,7 @@ import styles from './page-details.m.less';
 const PageDetails = ({visibleListOffers}) => {
 
 	const {id: idPage} = useParams();
-	const [flag, setFlag] = useState(false);
+	//const [flag, setFlag] = useState(false);
 
 	// useEffect(() => {
 	// 	const header = document.querySelector('header');
