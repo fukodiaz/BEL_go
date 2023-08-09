@@ -1,0 +1,11 @@
+{
+	"require": {
+		"php": "^8.0.2",
+		"slim/slim": "^4.10.0",
+		"slim/psr7": "^1.6",
+		"doctrine/dbal": "^3.6",
+		"php-di/php-di": "6.*",
+		"justinrainbow/json-schema": "5.2.0",
+		"symfony/dotenv": "^6.0"
+	}
+}
