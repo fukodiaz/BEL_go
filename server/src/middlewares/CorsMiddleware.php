@@ -11,7 +11,7 @@ class CorsMiddleware implements Middleware {
 	//invoke middleware
 	public function process(Request $req, RequestHandler $handler): Response {
 		$url = 'http://' . $_ENV['CLIENT_HOST'] . ':' . $_ENV['CLIENT_PORT'];
-		echo 'url-client: ' . $url;
+		//echo 'url-client: ' . $url;
 		header("Access-Control-Allow-Origin: $url");
 		header('Access-Control-Allow-Credentials: false');
 		header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Origin, Authorization');

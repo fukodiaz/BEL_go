@@ -35,11 +35,14 @@
 
 		private function setDBName($dbName) {
 			switch ($dbName) {
-				case 'users': 
+				case 'users':
 					$this -> dbName = $_ENV['DB_NAME_USERS'];
 					break;
+				case 'offers':
+					$this -> dbName = $_ENV['DB_NAME_OFFERS'];
+					break;
 				default:
-					$this -> dbName = null;
+					$this -> dbName = 'users';
 			}
 			$this -> dbSettings['dbname'] = $this -> dbName;
 		}

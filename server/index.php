@@ -26,8 +26,6 @@ $middlewares($app);
 //add routes
 $routes = require_once __DIR__ . '/config/routes.php';
 $routes($app);
-$app -> addBodyParsingMiddleware();
-$app->addRoutingMiddleware();
 
 // require_once __DIR__ . '/src/controllers/HomeController.php';
 // $app -> get('/', App\Controller\HomeController::class . ':index');
