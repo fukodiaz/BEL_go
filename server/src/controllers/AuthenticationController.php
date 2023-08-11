@@ -18,7 +18,7 @@ abstract class AuthenticationController extends BaseController {
 		return password_verify($password, $hash);
 	}
 
-	//checking existence	of the user in db
+	//checking existence	of the user in db (if he exists - return userData, else false)
 	protected function userExists(string $login) {
 		$userEntity = new \Slim\App\Entity\User($this -> container);
 		return $userEntity -> getUser($login);
@@ -29,5 +29,11 @@ abstract class AuthenticationController extends BaseController {
 		$session['logged'] = false;
 		unset($session['userData']);
 		return $res -> withStatus(302) -> withHeader('Location', '/');
+	}
+
+	function sendResponse(Response $res, $msg, int $codeRes) {
+		$res -> getBody() -> write(json_encode($msg));
+		$newResponse = $res -> withStatus($codeRes);
+		return $newResponse -> withHeader('Content-Type', 'application/json');
 	}
 }

@@ -38,10 +38,4 @@ class SignUpController extends AuthenticationController {
 			}
 		}
 	}
-
-	function sendResponse(Response $res, $msg, int $codeRes) {
-		$res -> getBody() -> write(json_encode($msg));
-		$newResponse = $res -> withStatus($codeRes);
-		return $newResponse -> withHeader('Content-Type', 'application/json');
-	}
 }
