@@ -6,13 +6,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Container\ContainerInterface;
 
 require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '/../models/Offers.php';
+require_once __DIR__ . '/../models/Offer.php';
 require_once __DIR__ . '/../../utils/convertBase64Image.php';
 
 class OffersController extends BaseController {
 
 	function getOffers(Request $req, Response $res): Response {
-		$offerEntity = new \Slim\App\Entity\Offers($this -> container); 
+		$offerEntity = new \Slim\App\Entity\Offer($this -> container); 
 		$offers = $offerEntity -> fetchAllOffers();
 		//add src for images in item of offer
 		$redefinePathToImg = function($item) {

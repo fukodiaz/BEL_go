@@ -7,7 +7,7 @@
 
 		function __construct() {
 			$this -> dbSettings = array_merge(
-				['dbname' => $_ENV['DB_NAME_USERS']],
+				['dbname' => $_ENV['DB_NAME_BELGO']],
 				$this -> getCommonDbSettings() 
 			);
 
@@ -34,7 +34,10 @@
 		}
 
 		private function setDBName($dbName) {
-			switch ($dbName) {
+			switch ($dbName) {//DB_NAME_BELGO
+				case 'bel_go':
+					$this -> dbName = $_ENV['DB_NAME_BELGO'];
+					break;
 				case 'users':
 					$this -> dbName = $_ENV['DB_NAME_USERS'];
 					break;
@@ -42,7 +45,7 @@
 					$this -> dbName = $_ENV['DB_NAME_OFFERS'];
 					break;
 				default:
-					$this -> dbName = 'users';
+					$this -> dbName = 'bel_go';
 			}
 			$this -> dbSettings['dbname'] = $this -> dbName;
 		}
