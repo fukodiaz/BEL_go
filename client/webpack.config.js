@@ -14,13 +14,13 @@ const conf = {
 
 	devServer: {
 		static: {
-			directory: path.join(__dirname)
+			directory: path.join(__dirname, 'dist')
 		},
 		historyApiFallback: true,
-		port: 8080,
+		port: 8081,
 		// proxy: {
 		// 	"*": {
-		// 		target: "http://localhost:1777/4cities/",
+		// 		target: "http://localhost:3000/",//"http://localhost:1777/4cities/",
 		// 		secure: false, 
 		// 		changeOrigin: true,
 		// 	// 	pathRewrite: {

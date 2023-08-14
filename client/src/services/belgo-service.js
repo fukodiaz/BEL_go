@@ -1,8 +1,8 @@
 export default class BelgoService {
 
-	//_apiBase= 'http://localhost:3000';
+	_apiBase= 'http://localhost:3000';
 	//_apiBase='https://bel-go.herokuapp.com/api';
-	_apiBase='https://bel-go-api.vercel.app/api';
+	//_apiBase='https://bel-go-api.vercel.app/api';
 
 	getResource = async (url) => {
 		const res = await fetch(`${this._apiBase}${url}`);
@@ -28,8 +28,10 @@ export default class BelgoService {
 	postData = async (url, data) => {
 		const res = await fetch(`${this._apiBase}${url}`, {
 			method: 'POST',
+			mode: 'cors',
 			headers: {
-				'Content-type': 'application/json'
+				'Content-type': 'application/json',
+				'Access-Control-Allow-Origin': '*'
 			},
 			body: data
 		});
@@ -37,11 +39,13 @@ export default class BelgoService {
 		return res.json();
 	};
 
-	postDataForm = async (json) => {
-		// const formData = new FormData(form);
-		// const json = JSON.stringify(Object.fromEntries(formData.entries(formData)));
+	postLogin = async (json) => {
+		const res = await this.postData(`/login`, json);
+		return res;
+	};
 
-		const res = await this.postData(`/requests`, json);
+	postSignUp = async (json) => {
+		const res = await this.postData(`/signup`, json);
 		return res;
 	};
 

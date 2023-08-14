@@ -23,7 +23,7 @@ const UserNavigation = () => {
 			</li>
 			<li>
 				<Link to="/" className={styles.linkLogin}
-						onClick={() => openModal('[class^="modalBox"]')}>
+						onClick={() => openModal('[class^="modalContainer"]')}>
 					<span>My account</span>
 					
 					<p className={styles.svgBox}>

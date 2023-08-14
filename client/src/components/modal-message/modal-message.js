@@ -4,23 +4,16 @@ import { connect } from 'react-redux';
 import {onClickModalBox, hideModal} from '../../utils';
 import styles from './modal-message.m.less';
 
-function ModalMessage({resultPostRequest}) {
+function ModalMessage({authenSending, authData}) {
 
 	const [message, setMessage] = useState("modal message");
 
-	const clearLocalStorage = () => {
-		if (window.localStorage.getItem('resultPostRequest')) {
-			window.localStorage.removeItem('resultPostRequest');
-		}
-	};
-
 	useEffect(() => {
-		const modalContainer = document.querySelector('[class^="modalContainer"]');
+		const modalContainer = document.querySelector('[class^="modalBox"]');
 
 		const onKeydown = (e) => {
 			if (e.code === 'Escape' && modalContainer.style.display === 'block') {
-				hideModal('[class^="modalContainer"]');
-				clearLocalStorage();
+				hideModal('[class^="modalBox"]');
 			}
 		}
 
@@ -29,36 +22,25 @@ function ModalMessage({resultPostRequest}) {
 	}, []);
 
 	useEffect(() => {
-		if (resultPostRequest === "isSuccess") {
-			setMessage("you have been successfully logged in !");
-			document.querySelector('[class^="modalContainer"]').style.display = "block";
+		if (typeof authData === 'object' && authData.hasOwnProperty('msg')) {
+			if (authData['msg'] != '') 
+				setMessage(authData['msg'])
+			else
+				setMessage('Something has gonna wrong...');
+			document.querySelector('[class^="modalBox"]').style.display = "block";
 		}
 
-		if (resultPostRequest === "isError") {
-			setMessage("Something went wrong...");
-			document.querySelector('[class^="modalContainer"]').style.display = "block";
-		}
+	}, [authenSending, authData]);
 
-		return null;
-	}, [resultPostRequest]);
-
-	const hideModalMessage = () => {
-		hideModal('[class^="modalContainer"]');
-		clearLocalStorage();
-	};
-
-	const onClickModalMessage = (e) => {
-		onClickModalBox('[class^="modalContainer"]', e);
-		clearLocalStorage();
-	};
+	const onClickModalMessage = (e) => onClickModalBox('[class^="modalBox"]', e)
 
 	return (
-		<div className={styles.modalContainer} 
+		<div className={styles.modalBox} 
 				onClick={onClickModalMessage}>
 			<div className={styles.modalDialog}>
 				<div className={styles.modalContent}>
 					<button className={styles.modalClose} type='button'
-								onClick={hideModalMessage} />
+								onClick={() => hideModal('[class^="modalBox"]')} />
 					<p className={styles.modalTitle}>
 						{message}
 					</p>
@@ -68,8 +50,9 @@ function ModalMessage({resultPostRequest}) {
 	);
 }
 
-const mapStateToProps = ({resultPostRequest}) => ({
-	resultPostRequest: resultPostRequest
+const mapStateToProps = ({authenDataPosted, authenSending}) => ({
+	authData: authenDataPosted,
+	authenSending
 });
 
 export default connect(mapStateToProps)(ModalMessage);

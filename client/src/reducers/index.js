@@ -12,10 +12,11 @@ const initialState = {
 	dataCitiesError: false,
 	dataCitiesLoading: true,
 
-	dataFormPosted: JSON.parse(window.localStorage.getItem('dataForm')) || {},
-	dataFormSending:  window.localStorage.getItem('loadingDataForm') || false,
-	dataFormError:  JSON.parse(window.localStorage.getItem('errorDataForm')) || false,
-	resultPostRequest: window.localStorage.getItem('resultPostRequest') || null,
+	authenSending:  false,
+	authenDataPosted: [],
+	authenError:  false,
+	isLogged: false,
+	authStatus: 'login', //login or signup
 
 	listLikedOffers: JSON.parse(window.localStorage.getItem('listLikedOffers')) || [],
 	//listLikedOffers: []
@@ -65,35 +66,47 @@ const createListLikedOffers = (state, idOffer) => {
 	}
 };
 
-
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		case 'DATA_FORM_SENDING':
+		//authentication
+		case 'AUTHEN_SENDING':
 			return {
 				...state,
-				dataFormPosted: {},
-				dataFormSending: true,
-				dataFormError: false,
-				resultPostRequest: null
+				authenSending: true,
+				authenDataPosted: [],
+				authenError:  false
 			}
 
-		case 'DATA_FORM_SUCCESS':
+		case 'LOGIN_SUCCESS':
 			return {
 				...state,
-				dataFormPosted: action.payload,
-				dataFormSending: false,
-				dataFormError: false,
-				resultPostRequest: "isSuccess"
+				authenSending: false,
+				authenDataPosted: action.payload,
+				authenError:  false,
+				isLogged: true
 			}
 
-		case 'DATA_FORM_ERROR':
+		case 'SIGNUP_SUCCESS':
 			return {
 				...state,
-				dataFormPosted: {},
-				dataFormSending: false,
-				dataFormError: action.payload,
-				resultPostRequest: "isError"
+				authenSending: false,
+				authenDataPosted: action.payload,
+				authenError:  false
+			}
+
+		case 'AUTHEN_ERROR':
+			return {
+				...state,
+				authenSending: false,
+				authenDataPosted: [],
+				authenError:  action.payload
+			}
+
+		case 'ON_AUTH_STATUS':
+			return {
+				...state,
+				authStatus: action.payload
 			}
 		//
 

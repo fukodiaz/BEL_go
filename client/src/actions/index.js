@@ -50,28 +50,30 @@ const changeFilterCategory = (payload) => ({
 });
 
 
-// post dataForm
+// post form eith authentication
 
-const dataFormSending = () => ({type: 'DATA_FORM_SENDING'});
+const authenSending = () => ({type: 'AUTHEN_SENDING'});
 
-const dataFormSuccess = (payload) => ({
-		type: 'DATA_FORM_SUCCESS',
+const loginSuccess = (payload) => ({
+		type: 'LOGIN_SUCCESS',
 		payload
 });
 
-const dataFormError = (payload) => ({
-	type: 'DATA_FORM_ERROR',
+const signUpSuccess = (payload) => ({
+	type: 'SIGNUP_SUCCESS',
 	payload
 });
 
+const authenError = (payload) => ({
+	type: 'AUTHEN_ERROR',
+	payload
+});
 
-// const sendDataForm = (methodService, dispatch) => (form) => {
-// 	dispatch(dataFormSending());
-// 	methodService(form)
-// 		.then(data => {dispatch(dataFormSuccess(data));})
-// 		.catch(error => dispatch(dataFormError(error)));
-// };
-
+//switch between signup and login
+const onAuthStatus = (payload) => ({
+	type: 'ON_AUTH_STATUS',
+	payload
+});
 
 // Likes
 const pressLike = (payload) => ({
@@ -86,9 +88,10 @@ export {
 	changeFilterCities,
 	changeFilterCategory,
 	fetchDataCities,
-	//sendDataForm,
-	dataFormSending,
-	dataFormSuccess,
-	dataFormError,
+	authenSending,
+	loginSuccess,
+	signUpSuccess,
+	authenError,
+	onAuthStatus,
 	pressLike
 };
