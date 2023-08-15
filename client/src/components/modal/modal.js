@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { hideModal } from '../../utils';
 import styles from './modal.m.less';
 
 const Modal = (props) => {
@@ -10,22 +9,30 @@ const Modal = (props) => {
 		setTimeout(() => onSwitch(), timerHide);
 	}
 
+	//switch ability of body-scroll in mounted/unmounted state
 	useEffect(() => {
-		const modalBox = document.querySelector('[class^="modalContainer"]');
+		document.body.scroll = 'no';
+		return () => {
+			document.body.scroll = 'yes';
+		}
+	}, [])
 
+	useEffect(() => {	
 		const onKeydown = (e) => {
-			if (e.code === 'Escape' && modalBox.style.display === 'block') {
-				hideModal('[class^="modalContainer"]');
+			if (e.code === 'Escape') {
+				document.body.style.overflow = ''
+				onSwitch()
 			}
 		}
 
 		document.addEventListener('keydown', onKeydown);
 		return () => document.removeEventListener("keydown", onKeydown);
-}, []);
+	}, []);
 
 	return (
 		<section className={styles.modalContainer}
-			onClick={onSwitch}>
+					onClick={onSwitch}
+					>
 			<div className={styles.modalDialog}
 					onClick={(e) => e.stopPropagation()}>
 				{children}
