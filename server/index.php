@@ -24,6 +24,7 @@ $middlewares = require_once __DIR__ . '/config/middlewares.php';
 $middlewares($app);
 
 //add routes
+
 $routes = require_once __DIR__ . '/config/routes.php';
 $routes($app);
 

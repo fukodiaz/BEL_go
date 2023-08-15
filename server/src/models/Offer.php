@@ -37,9 +37,11 @@ class Offer {
 	function fetchAllOffers() {
 		$queryBuilder = $this -> container -> get('DB') -> getQueryBuilder('bel_go');
 		$queryBuilder
-			->select('id', 'city', 'imageIntro', 'imageDetails', 'price', 'rating',
-						'concept', 'descriptionShort', 'information', 'lat', 'lng')
-			->from('offers');
+			->select('o.id', 'c.label as city', 'o.imageIntro', 'o.imageDetails', 'o.price', 
+						'o.rating', 'o.concept', 'o.descriptionShort', 'o.information', 
+						'o.lat', 'o.lng')
+			->from('offers', 'o')
+			->innerJoin('o', 'cities', 'c', 'o.city = c.id');
 
 		$results = $queryBuilder -> executeQuery() -> fetchAll();
 		return  $results;
