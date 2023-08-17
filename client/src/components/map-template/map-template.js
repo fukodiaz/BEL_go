@@ -1,12 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 
 import styles from './map-template.m.less';
 
 const MapTemplate = ({center, dataSpots, activeCity, stylesMapContainer}) => {
-	
 	const zoom = activeCity === 'Antwerp' ? 11 : 12;
+	//to preserve query params
+	const { search } = useLocation();
 
 	return (
 		<MapContainer center={center} 
@@ -26,7 +27,7 @@ const MapTemplate = ({center, dataSpots, activeCity, stylesMapContainer}) => {
 						<Marker 	key={id}
 									position={position}>
 							<Popup className={styles.popup}>
-								<Link to={`/${id}`}>
+								<Link to={`/${id}${search}`}>
 									<img src={imageIntro} alt="offer image" />
 								</Link>
 								<p className={styles.price}>

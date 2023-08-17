@@ -10,9 +10,9 @@ const offersError = (payload) => ({
 	payload
 });
 
-const fetchOffers = (methodService, dispatch) => () => {
+const fetchOffers = (methodService, dispatch) => (qParams='?id=1') => {
 	dispatch(offersRequested());
-	methodService()
+	methodService(qParams)
 		.then(data => dispatch(offersLoaded(data)))
 		.catch(error => dispatch(offersError(error)));
 };
@@ -31,9 +31,9 @@ const dataCitiesError = (payload) => ({
 	payload
 });
 
-const fetchDataCities = (methodService, dispatch) => () => {
+const fetchDataCities = (methodService, dispatch) => (qParams='') => {
 	dispatch(dataCitiesRequested());
-	methodService()
+	methodService(qParams)
 		.then(data => dispatch(dataCitiesLoaded(data)))
 		.catch(error => dispatch(dataCitiesError(error)));
 };

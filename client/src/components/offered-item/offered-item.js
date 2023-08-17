@@ -8,12 +8,12 @@ import styles from './offered-item.m.less';
 
 const OfferedItem = (props) => {
 
-	const { imageIntro, price, rating, 
-			concept, descriptionShort, id, onPressLike, colorLike} = props;
+	const { imageIntro, price, rating, concept, descriptionShort, 
+				id, onPressLike, colorLike, idCity } = props;
 
 	return (
 		<div className={styles.boxOffer}>
-			<Link to={`/${id}`} className={styles.linkOffer}>
+			<Link to={`/${id}?idCity=${idCity}`} className={styles.linkOffer}>
 				<img src={imageIntro} alt="photo of the proposed building"
 						className={styles.imageOffer} />
 			</Link>

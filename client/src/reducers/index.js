@@ -3,7 +3,7 @@ const initialState = {
 	error: false,
 	loading: true,
 
-	filterCities: 'Antwerp',
+	idCityActive: 1,
 	visibleListOffers: [],
 
 	filterCategory: 'all',
@@ -23,13 +23,13 @@ const initialState = {
 
 };
 
-const filterCity = (offers, filter) => {
+const filterCity = (offers=[], filter) => {
 	return offers.filter( offer => offer.city === filter);
 };
 
 const sortOffers = (prop) => (prev, next) => +prev[prop] - +next[prop];
 
-const filterCateg = (filter, offers) => {
+const filterCateg = (filter, offers=[]) => {
 	switch(filter) {
 		case 'all':
 			return offers;
@@ -41,6 +41,8 @@ const filterCateg = (filter, offers) => {
 			return offers.sort(sortOffers('price')).reverse();
 		case 'rating':
 			return offers.sort(sortOffers('rating')).reverse();
+		default:
+			return offers;
 	}
 };
 
@@ -108,8 +110,8 @@ const reducer = (state = initialState, action) => {
 				...state,
 				authStatus: action.payload
 			}
-		//
 
+		//data-offers
 		case 'FETCH_OFFERS_REQUEST':
 			return {
 				...state,
@@ -120,8 +122,8 @@ const reducer = (state = initialState, action) => {
 
 		case 'FETCH_OFFERS_SUCCESS':
 			const visibleListOffers = filterCateg(
-				state.filterCategory,
-				filterCity(action.payload, state.filterCities));
+				state.filterCategory, action.payload);
+			
 			return {
 				...state,
 				listOffers: action.payload,
@@ -139,7 +141,6 @@ const reducer = (state = initialState, action) => {
 			}
 
 		//Likes
-
 		case 'PRESS_LIKE':
 			return {
 				...state,
@@ -170,20 +171,22 @@ const reducer = (state = initialState, action) => {
 				dataCitiesLoading: false
 			}
 
-
+		//id of chosen city
 		case 'CHANGE_FILTER_CITIES':
-			const newVisibleListOffers = filterCity(state.listOffers, action.payload);
+			//const newVisibleListOffers = filterCity(state.listOffers, action.payload);
 
 			return {
 				...state,
-				filterCities: action.payload,
-				visibleListOffers: newVisibleListOffers,
+				idCityActive: action.payload,
+				//visibleListOffers: newVisibleListOffers,
 				filterCategory: 'all'
 			}
 
 		case 'CHANGE_FILTER_CATEGORY':
-			const nVisibleListOffers = filterCateg(action.payload, 
-				filterCity(state.listOffers, state.filterCities));
+			// const nVisibleListOffers = filterCateg(action.payload, 
+			// 	filterCity(state.listOffers, state.idCityActive));
+			const nVisibleListOffers = filterCateg(
+				action.payload, state.listOffers);
 				
 		return {
 			...state,

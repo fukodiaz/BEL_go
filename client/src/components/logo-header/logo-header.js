@@ -9,7 +9,7 @@ import urlDesk from './logo-desktop-belgium.svg';
 const LogoHeader = () => {
 
 	return (
-		<Link to="/"
+		<Link to="/?idCity=1"
 				className={styles.linkLogo}>
 			<picture>
 				<source media="(min-width: 1280px)" srcSet={urlDesk} />

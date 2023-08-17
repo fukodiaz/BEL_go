@@ -12,8 +12,9 @@ require_once __DIR__ . '/../../utils/convertBase64Image.php';
 class OffersController extends BaseController {
 
 	function getOffers(Request $req, Response $res): Response {
+		$idCity = $req -> getQueryParams()['idCity'];
 		$offerEntity = new \Slim\App\Entity\Offer($this -> container); 
-		$offers = $offerEntity -> fetchAllOffers();
+		$offers = $offerEntity -> fetchOffers($idCity);
 		//add src for images in item of offer
 		$redefinePathToImg = function($item) {
 			$item['imageIntro'] = convertBase64Image($item['imageIntro']);

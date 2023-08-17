@@ -34,14 +34,16 @@ class Offer {
 		return $this -> jsonSchema;
 	}
 
-	function fetchAllOffers() {
+	function fetchOffers($idCity=1) {
 		$queryBuilder = $this -> container -> get('DB') -> getQueryBuilder('bel_go');
 		$queryBuilder
 			->select('o.id', 'c.label as city', 'o.imageIntro', 'o.imageDetails', 'o.price', 
 						'o.rating', 'o.concept', 'o.descriptionShort', 'o.information', 
 						'o.lat', 'o.lng')
 			->from('offers', 'o')
-			->innerJoin('o', 'cities', 'c', 'o.city = c.id');
+			->where('o.city = ?')
+			->innerJoin('o', 'cities', 'c', 'o.city = c.id')
+			->setParameter(1, $idCity);
 
 		$results = $queryBuilder -> executeQuery() -> fetchAll();
 		return  $results;

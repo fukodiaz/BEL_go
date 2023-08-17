@@ -15,8 +15,8 @@ export default class BelgoService {
 		return res.json();
 	}; 
 
-	getListOffers = async () => {
-		const res = await this.getResource(`/offers`);
+	getListOffers = async (qParams='') => {
+		const res = await this.getResource(`/offers${qParams}`);
 		return res;
 	};
 

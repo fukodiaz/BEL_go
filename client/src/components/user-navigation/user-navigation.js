@@ -22,7 +22,7 @@ const UserNavigation = () => {
 				</Link>
 			</li>
 			<li>
-				<Link to='/auth' 
+				<Link to={`/auth${location.search}`} //preserve query params
 						state={{previousLocation: location}}
 						className={styles.linkLogin}
 						>

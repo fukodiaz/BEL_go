@@ -1,58 +1,69 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Link, useSearchParams, 
+			useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {compose} from '../hoc';
 import { withBelgoService } from '../hoc';
-import {fetchDataCities, changeFilterCities} from '../../actions';
+import { fetchDataCities, changeFilterCities, 
+			fetchOffers } from '../../actions';
 
 import styles from './filter-cities.m.less';
 
-class FilterCities extends Component {
-	cities = [
-		{ id: 'antwerp', label: 'Antwerp' },
-		{ id: 'bruges', label: 'Bruges' },
-		{ id: 'charleroi', label: 'Charleroi' },
-		{ id: 'liege', label: 'Liege' }
-	];
+const FilterCities = (props) => {
+	const {onSwitchCity, idCityActive, fetchDataCities,
+			dataCities, fetchOffers} = props;
 
-	componentDidMount() {
-		this.props.fetchDataCities();
-	}
+	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+	useEffect(() => {
+		let idCity = searchParams.get('idCity')
+		if (!idCity) 
+			navigate('/?idCity=1');
+		fetchDataCities();
+	}, []);
 
-	render() {
-		const {onChangeFilterCities, isActiveFilter} = this.props;
-		return (
-			<ul className={styles.navigation}>
-				{
-					this.cities.map(({id, label}) => {
-						let classLink = isActiveFilter === label ? 'isActiveLink' : 'linkCity';
-						return (
-							<li key={id}>
-								<Link to="" className={styles[classLink]}
-										onClick={() => { onChangeFilterCities(label) }}>
-									{label}
-								</Link>
-							</li>
-						);
-					})
-				}
-			</ul>
-		);
-	}
+	useEffect(() => {
+		let idCity = searchParams.get('idCity')
+		//update id of chosen city by query param
+		onSwitchCity(idCity);
+		//update list-offers by query param (idCity)
+		fetchOffers(`?idCity=${idCity}`)
+	}, [searchParams])
+
+	return (
+		<ul className={styles.navigation}>
+			{
+				dataCities.map(({id, label}) => {
+					let classLink = idCityActive == id ? 'isActiveLink' : 'linkCity';
+					return (
+						<li key={id}>
+							<Link to={`/?idCity=${id}`} className={styles[classLink]}
+									onClick={() => { onSwitchCity(id) }}>
+								{label}
+							</Link>
+						</li>
+					);
+				})
+			}
+		</ul>
+	);
 }
 
 const mapMethodsToProps = (belgoService) => ({
-	getDataCities: belgoService.getDataCities
+	getDataCities: belgoService.getDataCities,
+	getListOffers: belgoService.getListOffers
 });
 
-const mapStateToProps = ({filterCities}) => ({
-	isActiveFilter: filterCities
+const mapStateToProps = ({idCityActive, dataCities}) => ({
+	idCityActive,
+	dataCities
 });
 
-const mapDispatchToProps = (dispatch, {getDataCities}) => ({
-	onChangeFilterCities: (filter) => dispatch(changeFilterCities(filter)),
-	fetchDataCities: fetchDataCities(getDataCities, dispatch)
+const mapDispatchToProps = (dispatch, {getDataCities, getListOffers}) => ({
+	onSwitchCity: (filter) => dispatch(changeFilterCities(filter)),
+	fetchDataCities: fetchDataCities(getDataCities, dispatch),
+	fetchOffers: fetchOffers(getListOffers, dispatch)
 });
 
 export default compose(

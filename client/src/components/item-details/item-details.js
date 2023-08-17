@@ -40,11 +40,11 @@ const ItemDetails = (props) => {
 							</b>
 						</p>
 					</div>
-					<Link to=""
+					{/* <Link to=""
 							className={styles.linkOrder}
 							onClick={() => openModal('[class^="modalBox"]')} >
 						make an order !
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 

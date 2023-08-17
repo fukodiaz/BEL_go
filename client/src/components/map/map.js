@@ -9,7 +9,8 @@ import styles from './map.m.less';
 
 const Map = (props) => {
 
-	const {dataCities, loading, error, activeCity, dataSpots, stylesMapContainer} = props;
+	const {dataCities, loading, error, idCityActive,
+			dataSpots, stylesMapContainer} = props;
 	const {id: idPage} = useParams();
 	
 	const filterDataSpots = (data) => {
@@ -33,14 +34,14 @@ const Map = (props) => {
 	return (
 		<Fragment>
 			{
-				dataCities.map(({label, lat, lng}) => {
-					if (label === activeCity) {
+				dataCities.map(({id, label, lat, lng}) => {
+					if ( id == idCityActive) {
 						const center = [lat, lng];
 						
 						return <MapTemplate 	key={label} 
 													center={center} 
 													dataSpots={dataSpots.filter(filterDataSpots)}
-													activeCity={activeCity}
+													activeCity={label}
 													stylesMapContainer={stylesMapContainer}
 													/>;
 					}
@@ -50,11 +51,11 @@ const Map = (props) => {
 	);
 };
 
-const mapStateToProps = ({dataCities, dataCitiesLoading, dataCitiesError, filterCities, visibleListOffers}) => ({
+const mapStateToProps = ({dataCities, dataCitiesLoading, dataCitiesError, idCityActive, visibleListOffers}) => ({
 	dataCities,
 	loading: dataCitiesLoading,
 	error: dataCitiesError,
-	activeCity: filterCities,
+	idCityActive,
 	dataSpots: visibleListOffers
 });
 
