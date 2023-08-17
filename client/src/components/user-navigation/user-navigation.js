@@ -26,7 +26,7 @@ const UserNavigation = () => {
 						state={{previousLocation: location}}
 						className={styles.linkLogin}
 						>
-					<span>My account</span>
+					{/* <span>My account</span> */}
 					
 					<p className={styles.svgBox}>
 						<svg width="32" height="32">

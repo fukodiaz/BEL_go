@@ -19,8 +19,6 @@ const initialState = {
 	authStatus: 'login', //login or signup
 
 	listLikedOffers: JSON.parse(window.localStorage.getItem('listLikedOffers')) || [],
-	//listLikedOffers: []
-
 };
 
 const filterCity = (offers=[], filter) => {
@@ -35,7 +33,7 @@ const filterCateg = (filter, offers=[]) => {
 			return offers;
 		case 'popular':
 			return offers.filter(offer => +offer.rating >= 4.5);
-		case 'priceIncr': 
+		case 'priceIncr':
 			return offers.sort(sortOffers('price'));
 		case 'priceDecr':
 			return offers.sort(sortOffers('price')).reverse();
@@ -173,12 +171,9 @@ const reducer = (state = initialState, action) => {
 
 		//id of chosen city
 		case 'CHANGE_FILTER_CITIES':
-			//const newVisibleListOffers = filterCity(state.listOffers, action.payload);
-
 			return {
 				...state,
 				idCityActive: action.payload,
-				//visibleListOffers: newVisibleListOffers,
 				filterCategory: 'all'
 			}
 

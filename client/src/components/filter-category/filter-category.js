@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
 import {changeFilterCategory} from '../../actions';
 
 import styles from './filter-category.m.less';
 
-class FilterCategory extends Component {
+const FilterCategory = (props) => {
+	const {onFilterCategory, isActiveFilter} = props;
 
-	filterButtons = [
+	const filterButtons = [
 		{name: 'all', label: 'All'},
 		{ name: 'popular', label: 'Popular'},
 		{ name: 'priceIncr', label: 'Price: low to high'},
@@ -15,14 +16,12 @@ class FilterCategory extends Component {
 		{ name: 'rating', label: 'Top rated first'}
 	];
 
-	createListButtons = ({name, label}) => {
-		const {onFilterCategory, isActiveFilter} = this.props;
+	const createListButtons = ({name, label}) => {
 		const stylesButtonCategory = isActiveFilter === name ? 'isActiveButton'
 												: 'buttonCategory';
-
 		return (
 			<li key={name}>
-				<button 	type='button' 
+				<button 	type='button'
 							className={styles[stylesButtonCategory]}
 							onClick={() => onFilterCategory(name)}>
 					{label}
@@ -31,16 +30,11 @@ class FilterCategory extends Component {
 		);
 	}
 
-	render() {
-
-		return (
-			<ul className={styles.listFiltersCateg}>
-				{
-					this.filterButtons.map(this.createListButtons)
-				}
-			</ul>
-		);
-	}
+	return (
+		<ul className={styles.listFiltersCateg}>
+			{ filterButtons.map(createListButtons) }
+		</ul>
+	);
 }
 
 const mapStateToProps = ({filterCategory}) => ({

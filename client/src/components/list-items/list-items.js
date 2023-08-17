@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -11,8 +11,8 @@ import ErrorIndicator from '../error-indicator';
 import styles from './list-items.m.less';
 
 const ListItems = (props) => {
-	const { visibleListOffers, loading, error, fetchOffers,
-			listLikedOffers, onPressLike, dataCities } = props;
+	const { visibleListOffers=[], loading, error, fetchOffers,
+			listLikedOffers=[], onPressLike, dataCities, filterCategory } = props;
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	//getting list of offers
@@ -22,6 +22,11 @@ const ListItems = (props) => {
 			fetchOffers('?idCity=1')
 		}
 	}, [])
+
+	const [shownOffers, setShownOffers] = useState(visibleListOffers);
+	useEffect(() => {
+		setShownOffers(visibleListOffers)
+	}, [filterCategory, visibleListOffers])
 
 	const createListItems = (data) => {
 		const {id} = data;
@@ -46,7 +51,7 @@ const ListItems = (props) => {
 					loading ? <p>Loading...</p> : 
 					error ? <ErrorIndicator /> : 
 						(<ul className={styles.listOffers}>
-							{visibleListOffers.map(createListItems)}
+							{shownOffers.map(createListItems)}
 						</ul>)
 				}
 			</>);
@@ -62,6 +67,7 @@ const mapStateToProps = (state) => ({
 	error: state.error, 
 	loading: state.loading, 
 	listLikedOffers: state.listLikedOffers,
+	filterCategory: state.filterCategory,
 	dataCities: state.dataCities
 });
 
