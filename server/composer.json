@@ -9,6 +9,6 @@
 		"symfony/dotenv": "^6.0"
 	},
 	"scripts": {
-		"dev": "php -S localhost:3000 -t . index.php"
+		"dev": "php -S localhost:3000 -t api api/index.php"
 	}
 }
