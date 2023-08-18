@@ -28,7 +28,8 @@ class City {
 	}
 
 	function fetchDataCities() {
-		$queryBuilder = $this -> container -> get('DB') -> getQueryBuilder('bel_go');
+		$queryBuilder = $this -> container-> get('DB') 
+													-> getQueryBuilder($_ENV['DB_NAME_BELGO']);
 		$queryBuilder
 			->select('id', 'label', 'lat', 'lng')
 			->from('cities');

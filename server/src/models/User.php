@@ -10,7 +10,8 @@ class User {
 
 	function __construct(ContainerInterface $container) {
 		$this -> container = $container;
-		$this -> queryBuilder = $this -> container -> get('DB') -> getQueryBuilder('bel_go');
+		$this -> queryBuilder = $this -> container-> get('DB') 
+																-> getQueryBuilder($_ENV['DB_NAME_BELGO']);
 		$this -> jsonSchema = <<<'JSON'
 			{
 				"type": "object",

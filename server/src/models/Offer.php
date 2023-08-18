@@ -35,7 +35,8 @@ class Offer {
 	}
 
 	function fetchOffers($idCity=1) {
-		$queryBuilder = $this -> container -> get('DB') -> getQueryBuilder('bel_go');
+		$queryBuilder = $this -> container-> get('DB') 
+													-> getQueryBuilder($_ENV['DB_NAME_BELGO']);
 		$queryBuilder
 			->select('o.id', 'c.label as city', 'o.imageIntro', 'o.imageDetails', 'o.price', 
 						'o.rating', 'o.concept', 'o.descriptionShort', 'o.information', 
