@@ -6,7 +6,8 @@
 		"doctrine/dbal": "^3.6",
 		"php-di/php-di": "6.*",
 		"justinrainbow/json-schema": "5.2.0",
-		"symfony/dotenv": "^6.0"
+		"symfony/dotenv": "^6.0",
+		"vlucas/phpdotenv": "^5.5"
 	},
 	"scripts": {
 		"dev": "php -S localhost:3000 -t api api/index.php"
