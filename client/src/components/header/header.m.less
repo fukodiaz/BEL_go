@@ -1,7 +1,8 @@
-
-.mainheader {
+.mainHeader {
 	position: relative;
 	//margin-bottom: 35px;
+	min-height: 318px;
+	background-color: #f0d698;
 	& picture {
 		display: block;
 	}
@@ -9,5 +10,17 @@
 	& img {
 		display: block;
 		width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.mainHeader {
+		min-height: 310px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.mainHeader {
+		min-height: 364px;
 	}
 }
