@@ -4,18 +4,16 @@ import {connect} from 'react-redux';
 import styles from './inner-heading.m.less';
 
 const InnerHeading = ({idCityActive, dataCities, visibleListOffers}) => {
-	const activeCity = dataCities.map(({id, label}) => {
-		if (id == idCityActive) 
-			return label;
-		return null;
-	})
+	const activeCity = dataCities?.filter(({id}) => {
+		return id == idCityActive
+	})[0]?.label;
 
 	return (<h2 className={styles.innerHeading}>
 				{
-					activeCity ? `${visibleListOffers.length} places to stay in ` 
-										: 'Please, choose some city'
+					activeCity ? 
+						`${visibleListOffers.length} places to stay in ${activeCity}` 
+						: "Offers aren't defined"
 				}
-				{ activeCity && activeCity}
 			</h2>);
 };
 

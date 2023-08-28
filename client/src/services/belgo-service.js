@@ -1,7 +1,8 @@
 export default class BelgoService {
 
-	//_apiBase= 'http://localhost:3000';
-	_apiBase= 'https://bel-go-api.vercel.app';
+	_apiBase='https://bel-go-api.onrender.com';
+	//_apiBase= 'http://localhost:8080';
+	//_apiBase= 'https://bel-go-api.vercel.app';
 	//_apiBase='https://bel-go.herokuapp.com/api';
 	//_apiBase='https://bel-go-api.vercel.app/api';
 

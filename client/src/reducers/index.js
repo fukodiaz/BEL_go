@@ -47,8 +47,8 @@ const filterCateg = (filter, offers=[]) => {
 
 const createListLikedOffers = (state, idOffer) => {
 	const {listOffers, listLikedOffers} = state;
-	const offer = listOffers.find(({id}) => id === idOffer);
-	const itemIndex = listLikedOffers.findIndex(({id}) => id === idOffer);
+	const offer = listOffers.find(({id}) => id == idOffer);
+	const itemIndex = listLikedOffers.findIndex(({id}) => id == idOffer);
 	let newListLikedOffers = [];
 
 	if (itemIndex < 0) {
@@ -114,6 +114,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				listOffers: [],
+				visibleListOffers: [],
 				error: false,
 				loading: true
 			}

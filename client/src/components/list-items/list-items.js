@@ -35,8 +35,8 @@ const ListItems = (props) => {
 										id === idOffer);
 		const colorLike = flagLikedOffer ? {color: 'rgba(230,57,5, 1)'} 
 													: {color: 'rgba(190,190,190, 0.3)'};
-		const idCity = dataCities.filter(({label}) => 
-							label == data.city)[0]['id']
+		const idCity = dataCities?.filter(({label}) => 
+							label == data.city)[0]?.id
 
 		return (<li key={id} className={styles.itemOffered}>
 					<OfferedItem {...data} 
@@ -48,7 +48,7 @@ const ListItems = (props) => {
 
 	return (<>
 				{
-					loading ? <p>Loading...</p> : 
+					loading ? <p className={styles.loadOffers}>Loading...</p> : 
 					error ? <ErrorIndicator /> : 
 						(<ul className={styles.listOffers}>
 							{shownOffers.map(createListItems)}

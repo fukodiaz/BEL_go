@@ -11,12 +11,12 @@ const ListLikedOffers = (props) => {
 
 	const createListItems = (data) => {
 		const {id} = data;
-		const idCity = dataCities.filter(({label}) => 
-							label == data.city)[0]['id']
+		const idCity = dataCities?.filter(({label}) => 
+							label == data.city)[0]?.id
 		return (
 			<li key={id} className={styles.itemOffered}>
 				<OfferedItem {...data} 
-									onPressLike={() => this.props.onPressLike(id)}
+									onPressLike={() => props.onPressLike(id)}
 									colorLike={{color: 'rgba(230,57,5, 1)'}}
 									idCity={idCity} />
 			</li>
@@ -24,7 +24,7 @@ const ListLikedOffers = (props) => {
 	}
 
 	return (
-		<div>
+		<div className={styles.blockFavorites}>
 			<h2 className={styles.headerListLikes}>
 				My list of favorite offers (
 					<span>{listLikedOffers.length}</span>

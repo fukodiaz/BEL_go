@@ -34,7 +34,7 @@ const FilterCities = (props) => {
 	return (
 		<ul className={styles.navigation}>
 			{
-				dataCities.map(({id, label}) => {
+				dataCities?.map(({id, label}) => {
 					let classLink = idCityActive == id ? 'isActiveLink' : 'linkCity';
 					return (
 						<li key={id}>

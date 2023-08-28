@@ -19,8 +19,7 @@ const PageDetails = (props) => {
 			{
 				visibleListOffers.map((data) =>{
 					const { id } = data;
-
-					if (idPage === id) {
+					if (idPage == id) {
 						return <ItemDetails key={id} {...data} />;
 					}
 

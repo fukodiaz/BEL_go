@@ -14,10 +14,10 @@ const Map = (props) => {
 	const {id: idPage} = useParams();
 	
 	const filterDataSpots = (data) => {
-		if (idPage === data.id) {
+		if (idPage == data.id) {
 			return data;
 		} else {
-			if (idPage === undefined) {
+			if (idPage == undefined) {
 				return data;
 			}
 		}
