@@ -22,7 +22,7 @@ function ModalMessage({authenSending, authData}) {
 	}, []);
 
 	useEffect(() => {
-		if (typeof authData === 'object' && authData.hasOwnProperty('msg')) {
+		if (typeof authData === 'object' && authData?.hasOwnProperty('msg')) {
 			if (authData['msg'] != '') 
 				setMessage(authData['msg'])
 			else

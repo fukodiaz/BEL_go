@@ -28,6 +28,7 @@ const AuthModal = (props) => {
 	const [logValid, setLogValid] = useState(true);
 	const [pwValid, setPWValid] = useState(true);
 	const [rpwValid, setRPWValid] = useState(true);
+	const [errModal, setErrModal] = useState(null);
 	
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -48,8 +49,10 @@ const AuthModal = (props) => {
 					loginSuccess(data);
 					onClose();
 				}).catch(err => {
+					// console.log('err-login: ', err)
 					authenError(err);
-					onClose();
+					setErrModal(err?.response?.data?.message  ? err?.response?.data?.message : err?.message);
+					// onClose();
 				})
 		} else {
 			postSignUp(json)
@@ -57,8 +60,10 @@ const AuthModal = (props) => {
 					signUpSuccess(data);
 					onClose();
 				}).catch(err => {
+					// console.log('err-signup')
 					authenError(err);
-					onClose();
+					setErrModal(err?.response?.data?.message  ? err?.response?.data?.message : err?.message);
+					// onClose();
 				})
 		}
 	}
@@ -70,6 +75,7 @@ const AuthModal = (props) => {
 					handleSubmit={handleSubmit} isLoading={isLoading} 
 					onLogValid={setLogValid} onPWValid={setPWValid} 
 					onRPWValid={setRPWValid} onSwitch={onClose}
+					errModal={errModal} setErrModal={setErrModal}
 					/>
 			</Modal>
 		);

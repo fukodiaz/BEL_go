@@ -18,7 +18,12 @@ const RatingItem = ({ rating }) => {
 					<input type='radio' className={styles.ratingItem} value='5' name='rating' />
 				</div>
 			</div>
-			<div className={styles.ratingValue}>({rating})</div>	
+			{
+				rating != undefined && rating !=null && rating > 0 ? (
+					<div className={styles.ratingValue}>({rating})</div>
+				) : null
+			}
+			{/* <div className={styles.ratingValue}>({rating})</div>	 */}
 		</div>
 	);
 };

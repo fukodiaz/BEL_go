@@ -1,0 +1,77 @@
+.customSelect {
+  position: relative;
+  width: 183px;
+  font-family: Arial, sans-serif;
+}
+
+.customSelectTrigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #ccc;
+//   padding: 10px;
+  padding: 7px 10px;
+  padding-left: 23px;
+  max-height: 40px;
+  background-color: rgba(137, 63, 69, 0.6);
+  cursor: pointer;
+//   border-radius: 4px;
+  border-radius: 20px 5px;
+  user-select: none;
+  color: #fff;
+  font-weight: 700;
+}
+
+.customSelectOptions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: -8px;
+}
+
+.customSelectOption {
+  // padding: 10px;
+  padding: 0px 10px;
+  cursor: pointer;
+  margin-bottom: 0 !important;
+}
+
+.customSelectOption:hover {
+  background-color: #f0f0f0;
+}
+
+
+.customSelectLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px;
+}
+
+.customSelectLink:hover {
+  background-color: #f0f0f0;
+}
+
+.customSelectArrow {
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 2px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #fff;
+  transition: transform 0.3s ease;
+}

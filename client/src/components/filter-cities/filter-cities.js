@@ -14,22 +14,9 @@ const FilterCities = (props) => {
 	const {onSwitchCity, idCityActive, fetchDataCities,
 			dataCities, fetchOffers} = props;
 
-	const navigate = useNavigate();
-	const [searchParams, setSearchParams] = useSearchParams();
 	useEffect(() => {
-		let idCity = searchParams.get('idCity')
-		if (!idCity) 
-			navigate('/?idCity=1');
 		fetchDataCities();
 	}, []);
-
-	useEffect(() => {
-		let idCity = searchParams.get('idCity')
-		//update id of chosen city by query param
-		onSwitchCity(idCity);
-		//update list-offers by query param (idCity)
-		fetchOffers(`?idCity=${idCity}`)
-	}, [searchParams])
 
 	return (
 		<ul className={styles.navigation}>
@@ -38,10 +25,10 @@ const FilterCities = (props) => {
 					let classLink = idCityActive == id ? 'isActiveLink' : 'linkCity';
 					return (
 						<li key={id}>
-							<Link to={`/?idCity=${id}`} className={styles[classLink]}
+							<button className={styles[classLink]}
 									onClick={() => { onSwitchCity(id) }}>
 								{label}
-							</Link>
+							</button>
 						</li>
 					);
 				})

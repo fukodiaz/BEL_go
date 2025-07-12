@@ -8,6 +8,7 @@ import MapMainPage from '../map-main-page';
 
 import styles from './main-page.m.less';
 
+
 const MainPage = ({idCityActive}) => {
 
 	return (

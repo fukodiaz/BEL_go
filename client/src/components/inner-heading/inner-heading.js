@@ -3,24 +3,22 @@ import {connect} from 'react-redux';
 
 import styles from './inner-heading.m.less';
 
-const InnerHeading = ({idCityActive, dataCities, visibleListOffers}) => {
-	const activeCity = dataCities?.filter(({id}) => {
-		return id == idCityActive
-	})[0]?.label;
+const InnerHeading = ({idCityActive, dataCities, listOffers, cityForOffers}) => {
 
 	return (<h2 className={styles.innerHeading}>
 				{
-					activeCity ? 
-						`${visibleListOffers.length} places to stay in ${activeCity}` 
+					cityForOffers ? 
+						`${listOffers?.length} places to stay in ${cityForOffers}` 
 						: "Offers aren't defined"
 				}
 			</h2>);
 };
 
-const mapStateToProps = ({idCityActive, visibleListOffers, dataCities}) => ({
+const mapStateToProps = ({idCityActive, listOffers, dataCities, cityForOffers}) => ({
 	idCityActive,
-	visibleListOffers,
-	dataCities
+	listOffers,
+	dataCities,
+	cityForOffers
 });
 
 export default connect(mapStateToProps)(InnerHeading);

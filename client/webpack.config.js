@@ -1,6 +1,6 @@
 let path = require('path');
 
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const conf = {
@@ -8,27 +8,29 @@ const conf = {
 	output: {
 		path: path.resolve(__dirname,'dist'),
 		filename: 'main.js',
-		//publicPath: ''
+		publicPath: '/'
 	},
 
 
 	devServer: {
 		static: {
 			directory: path.join(__dirname, 'dist')
+			// directory: path.join(__dirname, 'public')
 		},
 		historyApiFallback: true,
 		port: 8081,
-		// proxy: {
-		// 	"*": {
-		// 		target: "http://localhost:3000/",//"http://localhost:1777/4cities/",
-		// 		secure: false, 
-		// 		changeOrigin: true,
-		// 	// 	pathRewrite: {
-		// 	// 	"^/4cities": ""
-		// 	// },
-		// 	}
-		// },
 
+		proxy: {
+			"/api": {
+				target: 'http://bel_go-api.dvl.to/',
+				changeOrigin: true
+			}
+		}
+
+	},
+
+	resolve: {
+		extensions: ['.js', '.jsx', '.mjs', '.json']
 	},
 
 	module: {
@@ -37,6 +39,11 @@ const conf = {
 				test: /\.js$/,
 				exclude: '/node_modules/',
 				loader: 'babel-loader'
+			},
+			{
+				test: /\.mjs$/,
+				include: /node_modules/,
+				type: 'javascript/auto'
 			},
 			{
 				test: /\.m\.css$/,
@@ -124,10 +131,12 @@ const conf = {
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: 'main.css'
+		}),
+		new HtmlWebpackPlugin({
+			// template: 'index.html'
+			// template: path.resolve(__dirname, 'index.html'),
+			template: path.resolve(__dirname, 'public/index.html'),
 		})
-		// new HtmlWebpackPlugin({
-		// 	template: 'index.html'
-		// })
 	]
 };
 

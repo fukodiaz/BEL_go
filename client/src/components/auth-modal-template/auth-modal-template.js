@@ -5,7 +5,8 @@ import styles from './auth-modal-template.m.less';
 
 const AuthModalTemplate = (props) => {
 	const {handleSubmit, isLoading, authStatus, onAuthStatus,
-			onLogValid, onPWValid, onRPWValid, onSwitch=()=>{}} = props;
+			onLogValid, onPWValid, onRPWValid, onSwitch=()=>{},
+			errModal, setErrModal} = props;
 
 	//switch to signup/login
 	const [isLog, setIsLog] = useState(true);
@@ -32,6 +33,14 @@ const AuthModalTemplate = (props) => {
 		if (!isLog)
 			refRepeat.current.value = '';
 	}, [isLog])
+
+	useEffect(() => {
+		if (errModal) {
+			setTimeout(function() {
+				setErrModal(null);
+			}, 4000)
+		}
+	}, [errModal])
 
 	const onChangeLogin = (e) => {
 		setLogin(e.target.value)
@@ -83,10 +92,11 @@ const AuthModalTemplate = (props) => {
 				<button className={styles.modalClose} type='button'
 							onClick={onSwitch} />
 				<p className={styles.modalTitle}>
-					please enter your login and password
+					please enter your email and password
 				</p>
-				<input 	type="text" name="login" value={login} 
-							onChange={onChangeLogin} placeholder="your login" required
+				{/* placeholder="your login" */}
+				<input 	type="text" name="email" value={login} 
+							onChange={onChangeLogin} placeholder="your email" required
 							className={logValid ? styles.modalInput : styles.modalInvalid} />
 				<input 	type="password" name="password" value={password} 
 							onChange={onChangePW} placeholder="password" required
@@ -119,6 +129,13 @@ const AuthModalTemplate = (props) => {
 				</button>
 			</form>
 			{isLoad ? <Spinner /> : null}
+			{errModal ? 
+				<p class={styles.boxErrModal}>
+					<span class={styles.textErrModal}>
+						{errModal}
+					</span>
+				</p> 
+				:null}
 		</div>
 	);
 };

@@ -81,9 +81,24 @@ const pressLike = (payload) => ({
 	payload
 });
 
+const likedRequested = () => ({type: 'FETCH_LIKED_REQUEST'});
+
+const likedLoaded = (payload) => ({
+		type: 'FETCH_LIKED_SUCCESS',
+		payload
+});
+
+const likedError = (payload) => ({
+	type: 'FETCH_LIKED_FAILURE',
+	payload
+});
+
 
 
 export {
+	offersRequested,
+	offersLoaded,
+	offersError,
 	fetchOffers,
 	changeFilterCities,
 	changeFilterCategory,
@@ -93,5 +108,8 @@ export {
 	signUpSuccess,
 	authenError,
 	onAuthStatus,
-	pressLike
+	pressLike,
+	likedRequested,
+	likedLoaded,
+	likedError
 };

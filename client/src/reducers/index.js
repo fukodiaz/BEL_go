@@ -2,9 +2,9 @@ const initialState = {
 	listOffers: [],
 	error: false,
 	loading: true,
+	cityForOffers: '',
 
 	idCityActive: 1,
-	visibleListOffers: [],
 
 	filterCategory: 'all',
 
@@ -13,12 +13,14 @@ const initialState = {
 	dataCitiesLoading: true,
 
 	authenSending:  false,
-	authenDataPosted: [],
+	authenDataPosted: null,
 	authenError:  false,
 	isLogged: false,
 	authStatus: 'login', //login or signup
 
-	listLikedOffers: JSON.parse(window.localStorage.getItem('listLikedOffers')) || [],
+	likedOffers: [],
+	errorLiked: false,
+	loadingLiked: false,
 };
 
 const filterCity = (offers=[], filter) => {
@@ -26,23 +28,6 @@ const filterCity = (offers=[], filter) => {
 };
 
 const sortOffers = (prop) => (prev, next) => +prev[prop] - +next[prop];
-
-const filterCateg = (filter, offers=[]) => {
-	switch(filter) {
-		case 'all':
-			return offers;
-		case 'popular':
-			return offers.filter(offer => +offer.rating >= 4.5);
-		case 'priceIncr':
-			return offers.sort(sortOffers('price'));
-		case 'priceDecr':
-			return offers.sort(sortOffers('price')).reverse();
-		case 'rating':
-			return offers.sort(sortOffers('rating')).reverse();
-		default:
-			return offers;
-	}
-};
 
 
 const createListLikedOffers = (state, idOffer) => {
@@ -74,7 +59,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				authenSending: true,
-				authenDataPosted: [],
+				authenDataPosted: null,
 				authenError:  false
 			}
 
@@ -99,7 +84,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				authenSending: false,
-				authenDataPosted: [],
+				authenDataPosted: null,
 				authenError:  action.payload
 			}
 
@@ -111,39 +96,67 @@ const reducer = (state = initialState, action) => {
 
 		//data-offers
 		case 'FETCH_OFFERS_REQUEST':
+			// console.log('fffff');
 			return {
 				...state,
 				listOffers: [],
-				visibleListOffers: [],
 				error: false,
-				loading: true
+				loading: true,
+				cityForOffers: ''
 			}
 
 		case 'FETCH_OFFERS_SUCCESS':
-			const visibleListOffers = filterCateg(
-				state.filterCategory, action.payload);
-			
+			// console.log('offers_suc: ', action.payload);
+			const cityForOffers = action?.payload[0]?.city['label'] ? action?.payload[0]?.city['label'] : '';
+
 			return {
 				...state,
 				listOffers: action.payload,
 				loading: false,
 				error: false,
-				visibleListOffers: visibleListOffers
+				cityForOffers
 			}
 		
 		case 'FETCH_OFFERS_FAILURE':
+			// console.log('offers_errr: ', action.payload);
 			return {
 				...state,
 				loading: false,
 				listOffers: [],
-				error: action.payload
+				error: action.payload,
+				cityForOffers: ''
 			}
 
 		//Likes
 		case 'PRESS_LIKE':
 			return {
 				...state,
-				listLikedOffers: createListLikedOffers(state, action.payload)
+				// likedOffers: createListLikedOffers(state, action.payload)
+			}
+
+		case 'FETCH_LIKED_REQUEST':
+			return {
+				...state,
+				likedOffers: [],
+				errorLiked: false,
+				loadingLiked: true,
+			}
+
+		case 'FETCH_LIKED_SUCCESS':
+			return {
+				...state,
+				likedOffers: action.payload,
+				loadingLiked: false,
+				errorLiked: false,
+			}
+		
+		case 'FETCH_LIKED_FAILURE':
+			// console.log('offers_errr: ', action.payload);
+			return {
+				...state,
+				loadingLiked: false,
+				likedOffers: [],
+				errorLiked: action.payload,	
 			}
 
 		case 'FETCH_DATA_CITIES_REQUEST': 
@@ -175,20 +188,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				idCityActive: action.payload,
-				filterCategory: 'all'
 			}
-
-		case 'CHANGE_FILTER_CATEGORY':
-			// const nVisibleListOffers = filterCateg(action.payload, 
-			// 	filterCity(state.listOffers, state.idCityActive));
-			const nVisibleListOffers = filterCateg(
-				action.payload, state.listOffers);
-				
-		return {
-			...state,
-			filterCategory: action.payload,
-			visibleListOffers: nVisibleListOffers
-		}
 
 		default: 
 			return state;
