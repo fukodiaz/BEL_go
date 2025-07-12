@@ -1,3 +1,9 @@
 {
-	"outputDirectory": "dist"
+	"outputDirectory": "dist",
+	"rewrites": [
+		{
+			"source": "/api/:match*",
+			"destination": "https://bel-go-larv.onrender.com/api/:match*"
+		}
+  ]
 }
