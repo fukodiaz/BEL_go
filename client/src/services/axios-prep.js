@@ -2,7 +2,8 @@ import axiosLib from 'axios';
 import Cookies from 'js-cookie';
 
 // const url = 'http://bel_go-api.dvl.to/api';
-export const apiBase = 'http://bel_go-api.dvl.to';
+// export const apiBase = 'http://bel_go-api.dvl.to';
+export const apiBase = 'https://bel-go-larv.onrender.com';
 const url = '/api';
 
 export const axios = axiosLib.create({
