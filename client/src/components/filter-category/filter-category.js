@@ -17,16 +17,22 @@ const FilterCategory = (props) => {
 	const {idConcep} = useParams();
 
 	const filterButtons = [
-		{name: 'all', label: 'All'},
-		{ name: 'popular', label: 'Popular'},
+		// {name: 'all', label: 'All'},
+		// pupular i.e. rating > 3
+		// { name: 'popular', label: 'Popular'},
+		{ name: 'rating', label: 'Top rated first'},
 		{ name: 'price_asc', label: 'Price: low to high'},
 		{ name: 'price_desc', label: 'Price: high to low'},
-		{ name: 'rating', label: 'Top rated first'}
+		// rating - orderby (desc)
+		// { name: 'rating', label: 'Top rated first'},
+		{ name: 'popular', label: 'Popular'},
 	];
 
 	const [conceptions, setConceptions] = useState([]);
 	const [priceAsc, setPriceAsc] = useState(false);
 	const [priceDesc, setPriceDesc] = useState(false);
+	const [ratingDesc, setRatingDesc] = useState("");
+	const [popular, setPopular] = useState(null);
 
 	useEffect(() => {
 		filterItems();
@@ -64,6 +70,14 @@ const FilterCategory = (props) => {
 			data['price_order'] = 'desc';
 		}
 
+		if (ratingDesc == 'desc') {
+			data['rating_order'] = 'desc';
+		}
+
+		if (popular != undefined && popular != null) {
+			data['popular'] = popular;
+		}
+
 		offersRequested();
 		postRealEstate(url, JSON.stringify(data))
 			.then(data => {
@@ -85,6 +99,12 @@ const FilterCategory = (props) => {
 				setPriceDesc(!priceDesc);
 				setPriceAsc(false);
 				break;
+			case 'rating':
+				setRatingDesc(prev => prev != 'desc' ? 'desc' : '');
+				break;
+			case 'popular':
+				setPopular(prev => prev != undefined && prev != null ? null : 3);
+				break;
 			// default:
 			// 	setPriceAsc(false);
 			// 	setPriceDesc(false);
@@ -94,7 +114,9 @@ const FilterCategory = (props) => {
 
 
 	const createListButtons = ({name, label}) => {
-		const stylesButtonCategory = ('price_asc' == name && priceAsc) || ('price_desc' == name && priceDesc)
+		const stylesButtonCategory = ('price_asc' == name && priceAsc) || ('price_desc' == name && priceDesc) ||
+									 ('rating' == name && ratingDesc != "") || 
+									 ('popular' == name && popular != null && popular != undefined)
 												? 'isActiveButton'
 												: 'buttonCategory';
 		return (
