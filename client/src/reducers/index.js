@@ -24,33 +24,6 @@ const initialState = {
 	isMain: false
 };
 
-const filterCity = (offers=[], filter) => {
-	return offers.filter( offer => offer.city === filter);
-};
-
-const sortOffers = (prop) => (prev, next) => +prev[prop] - +next[prop];
-
-
-const createListLikedOffers = (state, idOffer) => {
-	const {listOffers, listLikedOffers} = state;
-	const offer = listOffers.find(({id}) => id == idOffer);
-	const itemIndex = listLikedOffers.findIndex(({id}) => id == idOffer);
-	let newListLikedOffers = [];
-
-	if (itemIndex < 0) {
-		const newItemLiked = {...offer, like: true};
-		newListLikedOffers = [...listLikedOffers, newItemLiked];
-		window.localStorage.setItem('listLikedOffers', JSON.stringify(newListLikedOffers));
-
-		return newListLikedOffers;
-	} else {
-		newListLikedOffers =  [...listLikedOffers.slice(0, itemIndex), 
-									...listLikedOffers.slice(itemIndex + 1)];
-		window.localStorage.setItem('listLikedOffers', JSON.stringify(newListLikedOffers));
-		
-		return newListLikedOffers;
-	}
-};
 
 const reducer = (state = initialState, action) => {
 

@@ -89,7 +89,7 @@ const ListItems = (props) => {
 					loading ? <p className={styles.loadOffers}>Loading...</p> : 
 					error ? <ErrorIndicator /> : 
 						(<ul className={styles.listOffers}>
-							{shownOffers.map(createListItems)}
+							{shownOffers?.map(createListItems)}
 						</ul>)
 				}
 			</>);

@@ -18,11 +18,11 @@ function Header({getUser, loginSuccess, authenError, isMain}) {
 		getUser()
 			.then(data => {
 				loginSuccess(data);
-				console.log('logSucc', data)
+				// console.log('logSucc', data)
 			})
 			.catch(err => {
 				authenError(err);
-				console.log('errlog: ', err)
+				// console.log('errlog: ', err)
 			})
 	}, []);
 		
