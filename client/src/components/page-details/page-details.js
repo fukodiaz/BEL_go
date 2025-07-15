@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { withBelgoService, compose } from '../hoc';
 
 import ItemDetails from '../item-details';
+import ErrorIndicator from '../error-indicator';
 
 import styles from './page-details.m.less';
 
@@ -29,7 +30,7 @@ const PageDetails = (props) => {
 			{
 				offer != null ? (	
 					<ItemDetails key={offer.id} {...offer} />
-				) : null		
+				) : <ErrorIndicator />		
 			}
 		</div>
 	);

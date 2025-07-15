@@ -13,7 +13,7 @@ import imgMobil from './back-main-mobile.jpg';
 import imgTab from './back-main-tablet.jpg';
 import imgDesk from './back-main-desktop.jpg';
 
-function Header({getUser, loginSuccess, authenError}) {
+function Header({getUser, loginSuccess, authenError, isMain}) {
 	useEffect(()=> {
 		getUser()
 			.then(data => {
@@ -35,7 +35,10 @@ function Header({getUser, loginSuccess, authenError}) {
 			</picture>
 			<LogoHeader />
 			<UserNavigation />
-			<FilterCities />
+			{
+				isMain ? <FilterCities /> : null
+			}
+			 {/* <FilterCities /> */}
 		</header>
 	);
 
@@ -50,8 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
 	authenError: (err) => dispatch(authenError(err)),
 });
 
-const mapStateToProps = ({filterCategory, idCityActive}) => ({
-	idCityActive
+const mapStateToProps = ({filterCategory, idCityActive, isMain}) => ({
+	idCityActive,
+	isMain
 });
 
 //export default Header;

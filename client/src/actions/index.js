@@ -17,6 +17,11 @@ const fetchOffers = (methodService, dispatch) => (qParams='?id=1') => {
 		.catch(error => dispatch(offersError(error)));
 };
 
+const isMainPage = (payload) => ({
+	type: 'IS_MAIN_PAGE',
+	payload
+});
+
 //dataCities
 
 const dataCitiesRequested = () => ({type: 'FETCH_DATA_CITIES_REQUEST'});
@@ -99,6 +104,7 @@ export {
 	offersRequested,
 	offersLoaded,
 	offersError,
+	isMainPage,
 	fetchOffers,
 	changeFilterCities,
 	changeFilterCategory,

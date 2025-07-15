@@ -5,11 +5,20 @@ import ListItems from '../list-items';
 import FilterCategory from '../filter-category';
 import InnerHeading from '../inner-heading';
 import MapMainPage from '../map-main-page';
+import {isMainPage} from '../../actions';
 
 import styles from './main-page.m.less';
 
 
-const MainPage = ({idCityActive}) => {
+const MainPage = ({idCityActive, isMainPage}) => {
+	//flag for render cities-filters
+	useEffect(() => {
+		isMainPage(true);
+
+		return () => {
+			isMainPage(false);
+		};
+	}, []);
 
 	return (
 		<main>
@@ -35,4 +44,8 @@ const mapStateToProps = ({idCityActive}) => ({
 	idCityActive
 });
 
-export default connect(mapStateToProps)(MainPage);
+const mapDispatchToProps = (dispatch) => ({
+	isMainPage: (flag) => dispatch(isMainPage(flag)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

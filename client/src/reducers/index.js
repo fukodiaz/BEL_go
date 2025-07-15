@@ -21,6 +21,7 @@ const initialState = {
 	likedOffers: [],
 	errorLiked: false,
 	loadingLiked: false,
+	isMain: false
 };
 
 const filterCity = (offers=[], filter) => {
@@ -54,6 +55,11 @@ const createListLikedOffers = (state, idOffer) => {
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
+		case 'IS_MAIN_PAGE':
+			return {
+				...state,
+				isMain: action.payload,
+			}
 		//authentication
 		case 'AUTHEN_SENDING':
 			return {

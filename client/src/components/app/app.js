@@ -34,7 +34,6 @@ const App = () => {
 					<Route path="/" exact element={<Navigate to="/real_estate" replace />} />
 					<Route path="/real_estate" exact element={<MainPage />} />
 					<Route path="/real_estate/category/:idConcep" element={<MainPage />} />
-					{/* <Route path="/real_estate/category" element={<div>Welcome Home!</div>} /> */}
 					
 					<Route path="/real_estate/:id" element={<PageDetails />} />
 					<Route path="/likes" element={<ListLikedOffers />} />
