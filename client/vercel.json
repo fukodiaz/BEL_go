@@ -4,6 +4,10 @@
 		{
 			"source": "/api/(.*)",
 			"destination": "https://bel-go-larv.onrender.com/api/$1"
-		}
+		},
+		{
+      		"source": "/(.*)",
+      		"destination": "/index.html"
+    	}
   ]
 }
