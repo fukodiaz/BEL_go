@@ -1,6 +1,15 @@
 services:
   - type: web
-    name: backend
-    runtime: docker
-    dockerContext: .
+    name: laravel-app
+    env: docker
+    plan: free
     dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_NAME
+        value: bel_go
