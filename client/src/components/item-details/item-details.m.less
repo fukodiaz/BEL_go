@@ -74,12 +74,33 @@
 	margin-left: 2px;
 }
 
-.linkOrder {
+.boxPay {
 	display: flex;
+	justify-content: end;
+	padding-right: 9px;
+	padding-left: 9px;
+}
+
+.boxConfirmPay {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.boxSpinner {
+	margin-top: -7px;
+	margin-right: 6px;
+}
+
+.btnPay,
+.linkConfirmPay,
+.btnCanceledPay {
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	margin: 0 auto;
-	width: 92%;
+	// margin: 0 auto;
+	// width: 92%;
+	padding: 0 77px;
 	height: 47px;
 	font-size: 18px;
 	color: #fff;
@@ -90,6 +111,34 @@
 	&:hover {
 		color: rgba(78, 59, 49, 0.6);
 		background-color: rgba(137, 63, 69, 0.7);
+	}
+}
+
+// .linkConfirmPay,
+// .btnCanceledPay {
+// 	padding: 0 13px;
+// }
+
+.linkConfirmPay {
+	padding: 0 15px;
+	background-color:#73b463;
+	&:hover {
+		color: rgba(78, 59, 49, 0.6);
+		background-color:#73b463;
+	}
+}
+
+.btnCanceledPay {
+	// margin-left: auto;
+	padding: 0 11px;
+	// background-color: rgb(224, 151, 156);
+	background-color: rgba(206, 99, 108, 0.7);
+	// color: rgba(239, 51, 64);
+	color: #fcf2f2;
+
+	&:hover {
+		color: rgba(41, 40, 40, 0.6);
+		background-color: rgb(224, 151, 156);
 	}
 }
 
@@ -188,10 +237,17 @@
 		text-transform: uppercase;
 	}
 
-	.linkOrder {
-		width: 85%;
+	.btnPay,
+	.linkConfirmPay,
+	.btnCanceledPay {
+		// width: 85%;
 		height: 52px;
 		font-size: 20px;
+	}
+
+	.linkConfirmPay,
+	.btnCanceledPay {
+		padding: 0 23px;
 	}
 }
 

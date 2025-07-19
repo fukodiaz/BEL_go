@@ -1,12 +1,15 @@
 import styles from './utils.m.less';
 
-const openModal = (modalSelector) => {
+const openModal = (modalSelector, message='') => {
 	const modal = document.querySelector(modalSelector);
 
 	modal.style.display = 'block';
-	// modal.classList.add(`${styles.modalShow}`);
-	// modal.classList.remove(`${styles.modalHide}`);
 	document.body.style.overflow = 'hidden';
+
+	const modalTitle =  document.querySelector('[class^="modalTitle"]');
+	if (message != '') {
+		modalTitle.textContent = message;
+	}
 };
 
 function hideModal(modalSelector) {

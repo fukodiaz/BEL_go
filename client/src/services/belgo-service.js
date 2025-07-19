@@ -78,4 +78,10 @@ export default class BelgoService {
 
 		return res.data;
 	};
+
+	payment = async (json) => {
+		const res = await this.postData(`/payment`, json);
+
+		return res.data;
+	};
 }

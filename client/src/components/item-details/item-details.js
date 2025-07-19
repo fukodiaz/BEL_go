@@ -1,15 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import Map from '../map';
 import RatingItem from '../rating-item';
 import {BelgoServiceConsumer} from '../belgo-service-context';
+import Spinner from '../spinner';
 
 import  {openModal}  from '../../utils';
 import styles from './item-details.m.less';
 
 const ItemDetails = (props) => {
-	const {imageDetails, imageIntro, price, rating, concept, descriptionShort, information, conception, address} = props;
+	const {imageDetails, imageIntro, price, rating, concept, descriptionShort,
+			information, conception, address, handlePayment, slug, isLoadPay,
+			cancelPay, isConfirmPay, urlConfirm } = props;
+	const paymentDesc = `Payment for ${conception?.label} - ${slug}`;
+	const [filterLoadPay, setFilterLoadPay] = useState(isLoadPay);
+	const [filterConfirmPay, setFilterConfirmPay] = useState(isConfirmPay);
+	const [urlPay, setUrlPay] = useState(urlConfirm); 
+
+	useEffect(() => {
+		setFilterLoadPay(isLoadPay);
+		setFilterConfirmPay(isConfirmPay);
+		setUrlPay(urlConfirm);
+	}, [isLoadPay, isConfirmPay, urlConfirm]);
+
 
 	return (
 		<BelgoServiceConsumer.Consumer>
@@ -47,6 +61,40 @@ const ItemDetails = (props) => {
 									onClick={() => openModal('[class^="modalBox"]')} >
 								make an order !
 							</Link> */}
+							<div className={styles.boxPay}>
+								{
+									filterLoadPay ? (
+										<div className={styles.boxSpinner}>
+											<Spinner />
+										</div>
+									) : null
+								}
+								{
+									!filterConfirmPay ? (
+										<button className={styles.btnPay}
+												onClick={()=>handlePayment(price, paymentDesc)}
+												>
+											Pay
+										</button>
+									) : null
+								}
+							    {
+									filterConfirmPay ? (
+										<div className={styles.boxConfirmPay}>
+											<Link   to={urlPay}
+													className={styles.linkConfirmPay}
+													>
+												Confirm
+											</Link>
+											<button className={styles.btnCanceledPay}
+													onClick={cancelPay}
+													>
+												Cancel
+											</button>
+										</div>
+									) : null
+								}
+							</div>
 						</div>
 					</div>
 
