@@ -5,12 +5,14 @@ import { withBelgoService, compose } from '../hoc';
 
 import ItemDetails from '../item-details';
 import ErrorIndicator from '../error-indicator';
-import  {openModal}  from '../../utils';
+import {openModal}  from '../../utils';
+import { fetchDataCities, changeFilterCities, } from '../../actions';
 
 import styles from './page-details.m.less';
 
 const PageDetails = (props) => {
-	const {getOffer, payment, authenDataPosted, } = props;
+	const {getOffer, payment, authenDataPosted, dataCities, fetchDataCities,
+			onSwitchCity } = props;
 	const {id: idPage} = useParams();
 	let location = useLocation();
 	const navigate = useNavigate();
@@ -27,9 +29,15 @@ const PageDetails = (props) => {
 		window.scrollTo(0, 315);
 
 		setLoad(true);
+		if (dataCities?.length == 0) {
+			fetchDataCities();
+		}
+
 		getOffer(idPage)
 			.then(data => {		
 				setOffer(data);
+				if (data?.city_id)
+					onSwitchCity(data?.city_id);
 				setError(null);
 			})
 			.catch(err => {
@@ -102,18 +110,23 @@ const PageDetails = (props) => {
 
 const mapMethodsToProps = (belgoService) => ({
 	getOffer: belgoService.getOffer,
-	payment: belgoService.payment
+	payment: belgoService.payment,
+	getDataCities: belgoService.getDataCities,
 });
 
-const mapStateToProps = ({ listOffers, idCityActive, authenDataPosted }) => ({
+const mapStateToProps = ({ listOffers, idCityActive, authenDataPosted, dataCities }) => ({
 	listOffers,
 	idCityActive,
-	authenDataPosted
+	authenDataPosted,
+	dataCities
 });
 
-
+const mapDispatchToProps = (dispatch, {getDataCities}) => ({
+	onSwitchCity: (filter) => dispatch(changeFilterCities(filter)),
+	fetchDataCities: fetchDataCities(getDataCities, dispatch),
+});
 
 export default compose(
 	withBelgoService(mapMethodsToProps),
-	connect(mapStateToProps)
+	connect(mapStateToProps, mapDispatchToProps)
 )(PageDetails);
