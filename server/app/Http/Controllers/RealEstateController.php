@@ -12,6 +12,9 @@ use App\Filters\RealEstateFilter;
 
 class RealEstateController extends Controller
 {
+    /**
+     * receive all filtered real estate
+     */
     public function receiveItems(Conception $category = null, RealEstateFilter $filter) {
         //  dd(request()->all());
         if ($category && $category->exists) {
@@ -41,11 +44,14 @@ class RealEstateController extends Controller
         return $items;
     }
 
+    /**
+     * receive instance of real estate by slug
+     */
     public function getItem(RealEstate $slug) {
         // $item = RealEstate::where('slug', $slug)->firstOrFail();
         $item = $slug;
         $data_rating = RealEstateUser::getAvgRating($item->id);
-        $item['rating'] = $data_rating['rating'];
+        $item['rating'] = !empty($data_rating) ? $data_rating['rating'] : null;
 
         return $item;
     }

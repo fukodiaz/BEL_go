@@ -8,6 +8,9 @@ use App\Http\Controllers\RealEstateController;
 
 class LikesController extends Controller
 {
+    /**
+     * update like for real estate
+     */
     public function alterLike(Request $req) {
         $idOffer = $req->idOffer;
 
@@ -33,6 +36,9 @@ class LikesController extends Controller
         return ['id' => $idOffer, 'liked' => true];
     }
 
+    /**
+     * receive liked real estate
+     */
     public function getLikes(Request $req) {
         $items = $req->user()->real_estate()->wherePivot('liked', 1)->get();
 

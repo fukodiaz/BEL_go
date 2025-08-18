@@ -21,6 +21,9 @@ abstract class BaseFilter
     public function apply(Builder $builder): Builder {
         $this->builder = $builder;
 
+        /**
+         * enumeration filter params with dynamic method call
+         */
         foreach($this->receiveFilters() as $method => $val) {
             $methodName = Str::camel($method);
 
