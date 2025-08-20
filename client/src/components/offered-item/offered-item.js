@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 // import RatingItem from '../rating-item';
@@ -6,6 +6,7 @@ import CustomRating from '../custom-rating';
 import {BelgoServiceConsumer} from '../belgo-service-context';
 
 import like from './like_2.svg';
+import home from './home.png';
 import styles from './offered-item.m.less';
 
 const OfferedItem = (props) => {
@@ -13,14 +14,32 @@ const OfferedItem = (props) => {
 	const { imageIntro, price, rating, concept, descriptionShort, 
 			id, onPressLike, colorLike, idCity, slug, pageLikes=false,
 			handleRating, authData, navigate, location } = props;
+	const [isImgErr, setIsImgErr] = useState(false);
+
+	const handleImgError = (e) => {
+		e.currentTarget.src = home;
+		setIsImgErr(true);
+	};
 
 	return (
 		<BelgoServiceConsumer.Consumer>
 			{ (belgoService) => (
 				<div className={styles.boxOffer}>
 					<Link to={`/real_estate/${slug}/`} className={styles.linkOffer}>
-						<img src={`${belgoService._apiImages}${imageIntro}`} alt="photo of the proposed building"
-								className={styles.imageOffer} />
+						{
+							imageIntro ? (
+								<img 
+									 src={`${belgoService._apiImages}${imageIntro}`} 	
+									 alt="photo of the proposed building"
+									 className={`${styles.imageOffer} ${isImgErr ? styles.imgErr : ''}`} 
+									 onError={handleImgError}
+							 	/>
+								) : (
+									<img src={home} 
+										 alt="crushed image"
+										 className={styles.imgError} />
+								)
+ 						}
 					</Link>
 					<div className={styles.infoOffer}>
 						{

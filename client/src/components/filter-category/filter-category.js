@@ -33,6 +33,8 @@ const FilterCategory = (props) => {
 	const [priceDesc, setPriceDesc] = useState(false);
 	const [ratingDesc, setRatingDesc] = useState("");
 	const [popular, setPopular] = useState(null);
+	const [search, setSearch] = useState("");
+
 
 	useEffect(() => {
 		filterItems();
@@ -78,6 +80,9 @@ const FilterCategory = (props) => {
 			data['popular'] = popular;
 		}
 
+		if (search != "") 
+			data['search'] = search;
+
 		offersRequested();
 		postRealEstate(url, JSON.stringify(data))
 			.then(data => {
@@ -112,6 +117,11 @@ const FilterCategory = (props) => {
 
 	};
 
+	const handleSearch = (e) => {
+		e.preventDefault();
+		setSearch(e.target.value);
+	}
+
 
 	const createListButtons = ({name, label}) => {
 		const stylesButtonCategory = ('price_asc' == name && priceAsc) || ('price_desc' == name && priceDesc) ||
@@ -131,20 +141,32 @@ const FilterCategory = (props) => {
 	}
 
 	return (
-		<ul className={styles.listFiltersCateg}>
-			{ filterButtons.map(createListButtons) }
-			{conceptions?.length ? (
-				<CustomSelect options={conceptions}  />
-			) : null}
+		<div>
+			<p className={styles.boxInputSearch}>
+				<input 
+					type="search" 
+					name="search"
+					placeholder="Search"
+					className={styles.inputSearch}
+					value={search}
+					onChange={(e) => handleSearch(e)}
+					 />
+			</p>
+			<ul className={styles.listFiltersCateg}>
+				{ filterButtons.map(createListButtons) }
+				{conceptions?.length ? (
+					<CustomSelect options={conceptions}  />
+				) : null}
 
-			<li className={styles.itemBtnFilter}>
-				<button className={styles.btnFilter}
-						onClick={() => filterItems()}
-						>
-					Find
-				</button>
-			</li>
-		</ul>
+				<li className={styles.itemBtnFilter}>
+					<button className={styles.btnFilter}
+							onClick={() => filterItems()}
+							>
+						Find
+					</button>
+				</li>
+			</ul>
+		</div>
 	);
 
 

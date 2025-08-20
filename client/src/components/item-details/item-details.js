@@ -71,11 +71,24 @@ const ItemDetails = (props) => {
 								}
 								{
 									!filterConfirmPay ? (
-										<button className={styles.btnPay}
-												onClick={()=>handlePayment(price, paymentDesc)}
+										<div className={styles.innerBoxPay}>
+											<button 
+												className={styles.btnDating}
 												>
-											Pay
-										</button>
+												Dating
+											</button>
+
+											<button className={styles.btnPay}
+													onClick={()=>handlePayment(price, paymentDesc)}
+											>
+												Pay
+											</button>
+										</div>
+										// <button className={styles.btnPay}
+										// 		onClick={()=>handlePayment(price, paymentDesc)}
+										// 		>
+										// 	Pay
+										// </button>
 									) : null
 								}
 							    {
