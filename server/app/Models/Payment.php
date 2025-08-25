@@ -21,5 +21,6 @@ class Payment extends Model
         'currency',
         'status',
         'description',
+        'booking_id'
     ];
 }

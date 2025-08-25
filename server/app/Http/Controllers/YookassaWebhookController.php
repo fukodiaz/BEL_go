@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Payment;
+use App\Models\Booking;
 
 class YookassaWebhookController extends Controller
 {
@@ -33,6 +34,13 @@ class YookassaWebhookController extends Controller
             if ($payment) {
                 $payment->status = $status;
                 $payment->save();
+
+                //update related booking record
+                $booking = Booking::find($payment->booking_id);
+                if ($booking) {
+                    $booking->status = 'confirm';
+                    $booking->save();
+                }
             }
         }
 

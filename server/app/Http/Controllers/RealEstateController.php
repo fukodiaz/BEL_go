@@ -7,6 +7,7 @@ use App\Models\Conception;
 use App\Models\RealEstate;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RealEstateUser;
+use App\Services\BookingService;
 
 use App\Filters\RealEstateFilter;
 
@@ -47,12 +48,15 @@ class RealEstateController extends Controller
     /**
      * receive instance of real estate by slug
      */
-    public function getItem(RealEstate $slug) {
+    public function getItem(RealEstate $slug, BookingService $bookService) {
         // $item = RealEstate::where('slug', $slug)->firstOrFail();
         $item = $slug;
         $data_rating = RealEstateUser::getAvgRating($item->id);
         $item['rating'] = !empty($data_rating) ? $data_rating['rating'] : null;
 
+        //get confirmed bookings
+        $item['bookings'] = $bookService->receiveBookings($item->id);
+        
         return $item;
     }
 
