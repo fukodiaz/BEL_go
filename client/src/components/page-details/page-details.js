@@ -54,15 +54,25 @@ const PageDetails = (props) => {
 		setAuthData(authenDataPosted);
 	}, [authenDataPosted])
 
-	const handlePayment = ($amount, $description) => {
+	const handlePayment = ($amount, $description, range) => {
 		// console.log('absUrl: ', absURL, 'dop: ', $dop);
 		if (authData == null) {
 			navigate('/auth', {state: {previousLocation: location}});
 		} else {
+			//logic with date-range
+			if (range == null || range?.endDate ==null) {
+				openModal('[class^="modalBox"]', 'Choose some booking dates');
+
+				return null;
+			}
+
 			let data = {
 				'amount': $amount, 
 				'description': $description,
-				'urlReturn': absURL
+				'urlReturn': absURL,
+				'startDate': range?.startDate,
+				'endDate': range?.endDate,
+				'real_estate_id': offer.id
 				};
 
 			setIsLoadPay(true);
@@ -70,10 +80,10 @@ const PageDetails = (props) => {
 				.then(payment => {
 					setIsConfirmPay(true);
 					setUrlConfirm(payment?.urlConfirm)
-					console.log('data-payment', payment);
+					// console.log('data-payment', payment);
 				})
 				.catch(err => {
-					console.log('errPayment', err)
+					// console.log('errPayment', err)
 					openModal('[class^="modalBox"]', 'Something is wrong with payment');
 				})
 				.finally(() => {

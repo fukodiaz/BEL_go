@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './modal.m.less';
 
 const Modal = (props) => {
-	const { onSwitch = ()=>{}, timerHide = 0, children } = props;
+	const { onSwitch = ()=>{}, timerHide = 0, classDialog=false, children } = props;
 
 	if (timerHide) {
 		setTimeout(() => onSwitch(), timerHide);
@@ -31,10 +31,11 @@ const Modal = (props) => {
 
 	return (
 		<section className={styles.modalContainer}
-					onClick={onSwitch}
-					>
-			<div className={styles.modalDialog}
-					onClick={(e) => e.stopPropagation()}>
+				 onClick={onSwitch}
+				 >
+			<div 
+				className={`${styles.modalDialog} ${classDialog ? styles.classDialog : ''}`} 
+				onClick={(e) => e.stopPropagation()}>
 				{children}
 			</div>
 		</section>

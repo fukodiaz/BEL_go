@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import { format } from "date-fns";
 
 import Map from '../map';
 import RatingItem from '../rating-item';
 import {BelgoServiceConsumer} from '../belgo-service-context';
 import Spinner from '../spinner';
+import Modal from '../modal';
+import BookingCalendar from '../booking-calendar';
 
 import  {openModal}  from '../../utils';
 import styles from './item-details.m.less';
@@ -12,18 +15,50 @@ import styles from './item-details.m.less';
 const ItemDetails = (props) => {
 	const {imageDetails, imageIntro, price, rating, concept, descriptionShort,
 			information, conception, address, handlePayment, slug, isLoadPay,
-			cancelPay, isConfirmPay, urlConfirm } = props;
+			cancelPay, isConfirmPay, urlConfirm, bookings } = props;
 	const paymentDesc = `Payment for ${conception?.label} - ${slug}`;
 	const [filterLoadPay, setFilterLoadPay] = useState(isLoadPay);
 	const [filterConfirmPay, setFilterConfirmPay] = useState(isConfirmPay);
 	const [urlPay, setUrlPay] = useState(urlConfirm); 
+	const [open, setOpen] = useState(false);
+	const [range, setRange] = useState([
+		{
+			startDate: new Date(),
+			endDate: null,
+			key: 'selection',
+		}
+	]);
+
+	const startOfDay = (date) => {
+		if (!date) return null;
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0);
+
+        return d;
+    };
+
+	const defRange = (newRange) => {
+		const selection = newRange.selection || range[0];
+		
+		setRange([
+			{
+				startDate: startOfDay(selection.startDate),
+				endDate: selection.endDate ? startOfDay(selection.endDate) : null,
+				key: 'selection'
+			}
+		]);
+	}
+
+	const formattedRange = {
+		startDate: format(range[0].startDate, "yyyy-MM-dd"),
+		endDate: range[0].endDate != null ? format(range[0].endDate, "yyyy-MM-dd") : null,
+	};
 
 	useEffect(() => {
 		setFilterLoadPay(isLoadPay);
 		setFilterConfirmPay(isConfirmPay);
 		setUrlPay(urlConfirm);
 	}, [isLoadPay, isConfirmPay, urlConfirm]);
-
 
 	return (
 		<BelgoServiceConsumer.Consumer>
@@ -74,21 +109,17 @@ const ItemDetails = (props) => {
 										<div className={styles.innerBoxPay}>
 											<button 
 												className={styles.btnDating}
+												onClick={() => setOpen(!open)}
 												>
 												Dating
 											</button>
 
 											<button className={styles.btnPay}
-													onClick={()=>handlePayment(price, paymentDesc)}
+													onClick={()=>handlePayment(price, paymentDesc, formattedRange)}
 											>
 												Pay
 											</button>
 										</div>
-										// <button className={styles.btnPay}
-										// 		onClick={()=>handlePayment(price, paymentDesc)}
-										// 		>
-										// 	Pay
-										// </button>
 									) : null
 								}
 							    {
@@ -112,6 +143,22 @@ const ItemDetails = (props) => {
 					</div>
 
 					<Map stylesMapContainer={styles.mapContainer_2} address_detail={props} />
+					{
+						open && (
+							<Modal
+								onSwitch={() => setOpen(false)}
+								classDialog={true}
+							>
+								<BookingCalendar
+									range={range}
+									setRange={defRange}
+									bookings={bookings}
+									startOfDay={startOfDay}
+									onClose={() => setOpen(false)}
+								/>
+							</Modal>
+						)
+					}
 				</div>
 			)}
 		</BelgoServiceConsumer.Consumer>

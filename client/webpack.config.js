@@ -22,8 +22,8 @@ const conf = {
 
 		proxy: {
 			"/api": {
-				target: 'http://bel_go-api.dvl.to/',
-				// target: 'http://localhost:8080',
+				// target: 'http://bel_go-api.dvl.to/',
+				target: 'http://localhost:8080',
 				changeOrigin: true
 			}
 		}
