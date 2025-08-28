@@ -54,9 +54,9 @@ const FilterCategory = (props) => {
 
 	const filterItems = () => {
 		let data = {},
-			url = '/real_estate/';
+			url = '/real_estate';
 		if (idConcep !== undefined && idConcep !== null) {
-			url =`${url}category/${idConcep}/`;
+			url =`${url}/category/${idConcep}/`;
 		}
 		// console.log('url: ', url)
 		// console.log('idCityActive: ', idCityActive)

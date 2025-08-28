@@ -30,7 +30,7 @@ export default class BelgoService {
 	};
 
 	getOffer = async (slug='') => {
-		const res = await this.getResource(`/real_estate/${slug}/`);
+		const res = await this.getResource(`/real_estate/${slug}`);
 		return res.data;
 	};
 
