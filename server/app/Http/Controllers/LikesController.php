@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RealEstateUser;
 use App\Http\Controllers\RealEstateController;
+use App\Services\RealEstateService;
 
 class LikesController extends Controller
 {
@@ -44,7 +45,7 @@ class LikesController extends Controller
 
         //receive avg-rating from pivot table
         $data_rating = RealEstateUser::getAvgRatings();
-        $items = RealEstateController::mapWithRating($items, $data_rating);
+        $items = RealEstateService::mapWithRating($items, $data_rating);
 
         return $items;
     }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 use App\Http\Controllers\Api\Auth\Spa\LoginController;
 use App\Http\Controllers\Api\Auth\Spa\SignupController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\RealEstateController;
 use App\Http\Controllers\ConceptionController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\AdminRealEstateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('admin')->group(function() {
+    Route::get('/', fn() => Inertia::render('Admin/Main'))->name('admin.main');
+    Route::prefix('real_estate')->group(function() {
+        Route::get('/', [AdminRealEstateController::class, 'getRealEstate'])->name('admin.real_estate');
+    });
+    // Route::get('/real_estate', fn() => Inertia::render('Admin/RealEstate'))->name('admin.real_estate');
+    Route::get('/bookings', fn() => Inertia::render('Admin/Bookings'))->name('admin.bookings');
+});
+
+// Route::get('/admin/{any?}', function () {
+//     return view('admin');
+// })->where('any', '.*');
+
+// Route::prefix('admin')->group(function() {
+//     Route::get('/', fn() => Inertia::render('Admin/Main'))->name('admin.main');
+//     Route::get('/real_estate', fn() => Inertia::render('Admin/RealEstate'))->name('admin.real_estate');
+//     Route::get('/bookings', fn() => Inertia::render('Admin/Bookings'))->name('admin.bookings');
+// });
+
 Route::prefix('api')->group(function() {
     Route::post('/signup', SignupController::class)->middleware('guest');
     Route::post('/login', LoginController::class)->middleware('guest');
@@ -38,6 +60,8 @@ Route::prefix('api')->group(function() {
         Route::post('/like', [LikesController::class, 'alterLike']);
         Route::get('/likes', [LikesController::class, 'getLikes']);
         Route::post('/rating', [RatingController::class, 'addRating']);
+
+        Route::post('/payment', [PaymentController::class, 'payment']);
     });
     
     // Route::post('/like', LikesController::class)->middleware('auth:sanctum');

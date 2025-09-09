@@ -1,0 +1,41 @@
+# Используем официальный PHP с Apache
+FROM php:8.2-apache
+
+# Устанавливаем системные зависимости
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    curl \
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo_mysql zip \
+    && a2enmod rewrite
+
+# Копируем Composer из официального образа
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Устанавливаем рабочую директорию
+WORKDIR /var/www/html
+
+# Копируем весь проект Laravel в контейнер
+COPY . .
+
+# Устанавливаем PHP-зависимости
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Устанавливаем Node-зависимости и собираем фронтенд
+RUN npm install
+RUN npm run build
+
+# Настройка DocumentRoot на public (важно для Laravel)
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
+# Права на storage и bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Экспонируем порт Apache
+EXPOSE 80
+
+# Запуск Apache в foreground
+CMD ["apache2-foreground"]

@@ -7,7 +7,7 @@ use App\Models\Payment;
 class YooKassaService {
     protected $client;
 
-    public function __construct () {
+    public function __construct() {
         /**
          * create object of client
          */
@@ -18,7 +18,7 @@ class YooKassaService {
     /**
      * receive instance of payment
      */
-    public function createPayment($amount, $description, $urlReturn) {
+    public function createPayment($amount, $description, $urlReturn, $booking_id) {
         // create payment
         $payment = $this->client->createPayment([
             'amount' => [
@@ -35,15 +35,17 @@ class YooKassaService {
         ], uniqid('', true));
 
         //save payment in table
-        Payment::create([
+        $payment_record = Payment::create([
             'payment_id'=>$payment->getId(),
             'user_id'=> request()->user()->id,
             'amount'=>$payment->getAmount()->getValue(),
             'currency'=>$payment->getAmount()->getCurrency(),
             'status'=>$payment->getStatus(),
-            'description'=>$description
-
+            'description'=>$description,
+            'booking_id'=> $booking_id
         ]);
+
+        $payment['id_primary'] = $payment_record->id;
 
         return $payment;
     }
