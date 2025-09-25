@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Auth\Spa\LoginController;
+use App\Http\Controllers\YookassaWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ use App\Http\Controllers\Api\Auth\Spa\LoginController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/yookassa/notification', [YookassaWebhookController::class, 'handleWebhook']);

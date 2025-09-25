@@ -3,6 +3,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp, Link } from '@inertiajs/vue3';
 // import { ZiggyVue } from 'ziggy-js';
 // import { Ziggy } from './ziggy'
+import components from './components/UI';
 import 'virtual:svg-icons-register'
 
 const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
@@ -10,11 +11,13 @@ const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
 createInertiaApp({
     resolve: name => pages[`./Pages/${name}.vue`],
     setup({el, App, props, plugin}) {
-        createApp({render: () => h(App, props)})
+        const app = createApp({render: () => h(App, props)})
             .use(plugin)
             // .use(ZiggyVue, Ziggy)
-            .component('Link', Link)
-            .mount(el)
+            .component('Link', Link);
+
+        components.forEach(component => app.component(component.name, component));
+        app.mount(el);
     }
 });
 

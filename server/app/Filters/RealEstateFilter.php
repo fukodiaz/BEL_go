@@ -56,6 +56,17 @@ class RealEstateFilter extends BaseFilter {
         return $this->builder;
     }
 
+     /**
+     * search by descriptionShort
+     * @param string $val
+     * @return Builder
+     */
+    public function search($val):Builder {
+        if (!empty($val)) {
+            return $this->builder->where('descriptionShort', 'LIKE', "%{$val}%");
+        }
+    }
+
 
     /**
      * joining with average rating query

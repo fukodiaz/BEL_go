@@ -6,12 +6,14 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\Api\Auth\Spa\LoginController;
 use App\Http\Controllers\Api\Auth\Spa\SignupController;
+use App\Http\Controllers\Api\Auth\Admin\SigninController;
 use App\Http\Controllers\RealEstateController;
 use App\Http\Controllers\ConceptionController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\AdminRealEstateController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +33,24 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function() {
-    Route::get('/', fn() => Inertia::render('Admin/Main'))->name('admin.main');
-    Route::prefix('real_estate')->group(function() {
-        Route::get('/', [AdminRealEstateController::class, 'getRealEstate'])->name('admin.real_estate');
+    Route::middleware(['auth.sanctum.redirect'])->group(function() {
+        Route::get('/', fn() => Inertia::render('Admin/Main'))->name('admin.main');
+        Route::prefix('real_estate')->group(function() {
+            Route::get('/', [AdminRealEstateController::class, 'getRealEstate'])->name('admin.real_estate');
+        });
+        // Route::get('/real_estate', fn() => Inertia::render('Admin/RealEstate'))->name('admin.real_estate');
+        Route::get('/bookings', fn() => Inertia::render('Admin/Bookings'))->name('admin.bookings');
+        Route::prefix('users')->group(function() {
+            Route::get('/', [AdminUserController::class, 'showPage'])->name('admin.users.show');
+            Route::post('/', [AdminUserController::class, 'createUser'])->name('admin.user.create');
+            Route::put('/', [AdminUserController::class, 'editUser'])->name('admin.user.edit');
+        });
     });
-    // Route::get('/real_estate', fn() => Inertia::render('Admin/RealEstate'))->name('admin.real_estate');
-    Route::get('/bookings', fn() => Inertia::render('Admin/Bookings'))->name('admin.bookings');
+
+    Route::prefix('login')->group(function() {
+        Route::get('/', [SigninController::class, 'showPage'])->name('admin.index');
+        Route::post('/', [SigninController::class, 'signin'])->name('admin.signin');
+    });
 });
 
 // Route::get('/admin/{any?}', function () {

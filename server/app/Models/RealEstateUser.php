@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -21,6 +20,9 @@ class RealEstateUser extends Pivot
         return self::avgRatingQuery()->get();
     }
 
+     /**
+     * receive average ratings for certain real_estate
+     */
     public static function getAvgRating(int $id) {
         return self::avgRatingQuery()
                     ->having('real_estate_id', $id)

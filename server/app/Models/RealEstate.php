@@ -11,7 +11,8 @@ use App\Traits\HasFilter;
 
 class RealEstate extends Model
 {
-    use HasFactory, HasFilter;
+    use HasFactory;
+    use HasFilter;
 
     protected $table = 'real_estate';
     protected $with = ['address', 'conception', 'city'];

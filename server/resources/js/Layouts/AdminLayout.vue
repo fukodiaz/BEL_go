@@ -14,14 +14,29 @@
           <slot />
         </div>
       </main>
+
+      <Modal>
+        <component 
+          :is="defContentModal"
+          v-bind="modalProps"
+        />
+      </Modal>
     </div>
   </div>
 </template>
 
 <script setup>
 // import { Link } from '@inertiajs/vue3'
+import { computed } from 'vue';
 import MainHeader from '@/components/MainHeader.vue';
 import Menu from '@/components/Menu.vue';
+import Modal from '@/components/Modal.vue';
+import AuthForm from '@/components/AuthForm.vue';
+import UserForm from '@/components/UserForm.vue';
+import MessageModal from '@/components/MessageModal.vue';
+import {useModal} from '@/composables/useModal.js';
+
+const {isModal, contentModal, modalProps} = useModal();
 
 defineProps({
   title: {
@@ -29,6 +44,20 @@ defineProps({
     default: 'Админка'
   }
 })
+
+const defContentModal = computed(() => {
+  switch(contentModal.value) {
+    case 'authForm':
+      return AuthForm;
+    case 'userForm':
+      return UserForm;
+    case 'message':
+      return MessageModal;
+
+    default:
+      return AuthForm;
+  }
+});
 
 </script>
 
@@ -96,8 +125,6 @@ defineProps({
   .boxMenu {
     background-color:  rgba(247, 148, 60, 0.3);
   }
-
-
 
   @media (min-width: 847px) {
     .mainWrapper {
