@@ -18,7 +18,7 @@
 
             <tbody>
                 <tr class="trBodyUser"
-                    v-for="(user, idx) in users"
+                    v-for="(user, idx) in arrUsers"
                     :key="user.id"
                 >
                     <td class="tdUser"
@@ -58,12 +58,10 @@ import { useUtils } from '@/composables/useUtils';
 import {useModal} from '@/composables/useModal.js';
 
 const {isMobile} = useUtils();
-const {openModal} = useModal();
+const {openModal, closeModal} = useModal();
 
 export default {
     data() {
-
-
         return {
             columnsMobil: [
                 {id: 'id', label: '#'},
@@ -75,10 +73,16 @@ export default {
                 {id: 'name', label: 'name'},
                 {id: 'role', label: 'role'}
             ],
+            arrUsers: [...this.users],
         }
     },
     props: {
         users: {type: Array, default: () => []}
+    },
+    watch: {
+        users(newVal) {
+            this.arrUsers =  [...newVal];
+        }
     },
     methods: {
         defColumns() {
@@ -89,12 +93,59 @@ export default {
             }
         },
         editUser(user) {
-            user = {...user, action: 'update'};
+            user = {...user,
+                    action: 'update', 
+                    updateUsers:(user) => this.updateUsers(user)
+                   };
             openModal('userForm', {user});
-            console.log('edit.user: ', user);
+            //console.log('edit.user: ', user);
         },
         deleteUser(id) {
-            console.log('delete.user: ', id)
+            const message = 'Do you really want to delete this user?';
+            openModal('confirm', {
+                data: {
+                    message,
+                    action: () => this.onDelete('/admin/users', id)
+                }
+            });
+
+            // console.log('delete.user: ', id);
+        },
+        async onDelete(url, id) {
+            try {
+                const response = await axios.delete(url, { data: {id} });
+
+                this.showMessage('User was deleted', 'success');
+                this.arrUsers = this.arrUsers.filter(user => user.id != id);
+            } catch (e) {
+                console.log('errUser: ', e)
+                const mess = e?.message;
+                if (mess) {
+                    this.showMessage("Couldn't delete user", 'failed');
+                }
+            }
+        },
+        updateUsers(newUser) {
+            const index = this.arrUsers.findIndex(u => u.id === newUser.id);
+
+            if (index !== -1) {
+                // update existing user
+                this.arrUsers.splice(index, 1, newUser);
+            } else {
+                //add new user
+                this.arrUsers.push(newUser);
+            }
+        },
+        showMessage(message, status) {
+            openModal('message', {data: {message, status}});
+
+            setTimeout(() => {
+                closeModal();
+            }, 3000);
+        },
+        provideFn() {
+            // emit function to parent
+            this.$emit("provide-fn", this.updateUsers);
         }
     }
 } 

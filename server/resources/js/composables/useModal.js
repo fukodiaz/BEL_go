@@ -14,12 +14,21 @@ const openModal = (content, props={}) => {
     modalProps.value = props;
 };
 
+const showMessage = (message, status) => {
+    openModal('message', {data: {message, status}});
+
+    setTimeout(() => {
+        closeModal();
+    }, 4000);
+}
+
 export function useModal() {
     return {
         isModal,
         closeModal,
         openModal,
         contentModal,
-        modalProps
+        modalProps,
+        showMessage,
     };
 }

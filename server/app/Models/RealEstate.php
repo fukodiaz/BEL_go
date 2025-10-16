@@ -14,6 +14,23 @@ class RealEstate extends Model
     use HasFactory;
     use HasFilter;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'city_id',
+        'imageIntro',
+        'imageDetails',
+        'price',
+        'conception_id',
+        'descriptionShort',
+        'information',
+        'address_id',
+        'slug',
+    ];
+
     protected $table = 'real_estate';
     protected $with = ['address', 'conception', 'city'];
 

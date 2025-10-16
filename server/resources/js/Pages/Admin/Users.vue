@@ -5,6 +5,7 @@
             <h2 class="headingUsers">
                 Users
             </h2>
+
             <p class="boxAddUser">
                 <button class="addUser"
                         @click="addUser"
@@ -15,6 +16,7 @@
         </div>
         <users-table
             :users="users"
+            ref="childRef"
         >
         </users-table>
     </section>
@@ -22,10 +24,12 @@
 </template>
 
 <script setup>
+  import { ref } from "vue";
   import AdminLayout from '@/Layouts/AdminLayout.vue'
   import UsersTable from '@/components/UsersTable.vue';
   import {useModal} from '@/composables/useModal.js';
 
+  const childRef = ref(null);
   const {openModal} = useModal();
 
   const props = defineProps({
@@ -33,8 +37,14 @@
   });
 
   const addUser = () => {
-    const user = {action: 'create'};
+    const user = {action: 'create', updateUsers: (users) => useUpdateUsers(users)};
     openModal('userForm', {user});
+  };
+
+  const useUpdateUsers = (users) => {
+    if (childRef.value?.updateUsers) {
+        childRef.value.updateUsers(users);
+    }
   };
 
   console.log('users: ', props.users);

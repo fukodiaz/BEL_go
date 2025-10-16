@@ -40,12 +40,22 @@
             </span>
         </p>
 
-        <input 
+        <!-- <input 
             v-model="role"
             placeholder="role" 
             class="modalInput"
             :class="{inputRoleErr: roleError}"
+        /> -->
+
+        <CustomSelect 
+            name="role"
+            :options="[
+                {label: 'admin', value: 'admin'},
+                {label: 'renter', value: 'renter'},
+                {label: 'landlord', value: 'landlord'}
+            ]"
         />
+
         <!-- <p class='boxErrMess'>
             <span class='errMess'>
                 {{ roleError }}
@@ -62,7 +72,7 @@
             type="submit"
             class="modalEnter"
             >
-            Login
+            {{ props.user?.action != 'update' ? 'create' : 'edit' }}
         </button>
     </form>
     <spinner :isLoading="isLoading"></spinner>
@@ -82,11 +92,12 @@
     import * as yup from 'yup';
 
     interface User {
-        id?: number,
-        name?: string,
-        email?: string,
-        role?: string,
-        action: string
+        id?: number;
+        name?: string;
+        email?: string;
+        role?: string;
+        action?: string;
+        updateUsers?: (newUser: User) => void;
     }
 
     const { openModal, closeModal } = useModal();
@@ -113,7 +124,7 @@
                                          'Minimum number of characters is 6',
                                          value => !value || value.length >= 6)
         })
-   });
+    });
 
     const {handleSubmit, values} = useForm({
         validationSchema: schema,
@@ -121,7 +132,7 @@
             name: props.user.name || '',
             email: props.user.email || '',
             password: '',
-            role: props.user.role || '',
+            role: props.user.role || 'renter',
             id: userId.value
         }
     });
@@ -129,7 +140,7 @@
     const {value: name, errorMessage: nameError} = useField('name');
     const {value: email, errorMessage: emailError} = useField('email');
     const {value: password, errorMessage: passwordError} = useField('password');
-    const {value: role, errorMessage: roleError} = useField('role');
+    // const {value: role, errorMessage: roleError} = useField('role');
     const isLoading = ref(false);
     const isError = ref(false);
 
@@ -139,12 +150,20 @@
             Object.entries(value).filter(([key, value]) => value !== '')
         );
 
+        //console.log('filteredValues: ', filteredValues);
+        // return null;
+
         try {
             isLoading.value = true;
             const url = '/admin/users';
             const method = props.user.action == 'create' ? 'post' : 'put';
             const messageSuccessed = method == 'post' ? 'User was created' : 'User was edited';
             const response = await axios[method](url, filteredValues);
+            // console.log('res11: ', response?.data?.user)
+            //change array with users
+            if (props.user.updateUsers) {
+                props.user.updateUsers(response?.data?.user);
+            }
 
             closeModal();
             showMessage(messageSuccessed, 'success');
@@ -179,7 +198,7 @@
 <style lang="less" scoped>
 .headingUserForm {
     margin-top: -11px;
-    padding-bottom: 3px;
+    padding-bottom: 23px;
     font-size: 26px;
     font-weight: 500;
     text-align: center;
@@ -187,7 +206,7 @@
 
 .modalInput {
 	display: block;
-	margin: 20px auto 20px auto;
+	margin: 0px auto 20px auto;
 	padding: 0 20px;
 	font-size: 17px; 
 	text-align: center;
@@ -241,8 +260,14 @@
     text-align: center;
 }
 
-.boxErrMess ~ input {
-    margin-top: 15px;
+// .boxErrMess ~ input.inputPassErr,
+// .boxErrMess ~ input.inputEmailErr {
+//     margin-top: 15px;
+// }
+
+.inputPassErr ~ .boxErrMess,
+.inputEmailErr ~ .boxErrMess {
+    margin-bottom: 10px;
 }
 
 .modalEnter {

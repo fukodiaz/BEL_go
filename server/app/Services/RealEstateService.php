@@ -6,13 +6,17 @@ use App\Models\RealEstate;
 use App\Models\Conception;
 use Illuminate\Support\Facades\Auth;
 use App\Filters\RealEstateFilter;
+use App\Filters\AdminRealEstateFilter;
 
 class RealEstateService
 {
     /**
      * receive all filtered real estate
      */
-    public function receiveItems(Conception $category = null, RealEstateFilter $filter, $isPagin =false) {
+    public function receiveItems(
+        Conception $category = null, 
+        RealEstateFilter|AdminRealEstateFilter $filter, 
+        $isPagin =false) {
         //  dd(request()->all());
         if ($category && $category->exists) {
             // $items = $category->real_estate->dump();
@@ -66,5 +70,11 @@ class RealEstateService
         }
 
         return $items;
+    }
+
+    public function getItemBySlug(string $slug) {
+        $item = RealEstate::where('slug', $slug)->first();
+
+        return $item;
     }
 }

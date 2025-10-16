@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;  
 use App\Services\Admin\UserService;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
@@ -23,12 +24,22 @@ class AdminUserController extends Controller
         $user = $service->createUser($req);
 
         //return response()->json(['createUser' => $req->all()]);
-        return response()->json(['createdUser' => $user]);
+        return response()->json(['user' => $user]);
     }
 
     public function editUser(EditUserRequest $req, UserService $service) {
         $editedUser = $service->editUser($req);
 
-        return response()->json(['editedUser' => $editedUser]);
+        return response()->json(['user' => $editedUser]);
+    }
+
+    public function delete(Request $req, UserService $service) {
+        $id = (int)$req->id;
+        if (empty($id)) 
+            throw ValidationException::withMessages([ 'id' => __('Something is wrong with id of user') ]);
+
+        $deleted = $service->delete($id);
+
+        return response()->json(['deleted' => $deleted]);
     }
 }

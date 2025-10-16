@@ -39,14 +39,20 @@
 
 			<ul class="boxPanelHome">
 				<li class="boxEditHome">
-					<button class="btnEditHome">
+					<button
+						@click="onEditHome" 
+						class="btnEditHome"
+					>
 						<svg width="28" height="28">
                     		<use href="#pencil"></use>
                 		</svg>
 					</button>
 				</li>
 				<li class="boxDeleteHome">
-					<button class="btnDeleteHome">
+					<button 
+						@click="()=>onDeleteHome(id)"
+						class="btnDeleteHome"
+					>
 						<svg width="28" height="28">
                     		<use href="#trash"></use>
                 		</svg>
@@ -58,6 +64,11 @@
 </template>
 
 <script>
+import { router } from '@inertiajs/vue3';
+import { useModal } from '@/composables/useModal';
+
+const {showMessage, openModal} = useModal();
+
 export default {
     props: {
         imageIntro: {type: String},
@@ -66,7 +77,42 @@ export default {
         // concept_label: {type: String},
         descriptionShort: {type: String},
 		slug: {type: String},
-    }
+		id: {type: Number, required: true},
+		updateHomes: {type: Function, default: () => {}},
+    },
+	methods: {
+		onEditHome() {
+			console.log('slug: ', this.slug);
+			router.visit('/admin/real_estate/form', {
+				data: {slug: this.slug}
+			});
+			// router.visit(`/admin/real_estate/form/${this.slug}`);
+		},
+		onDeleteHome(id) {
+			// console.log('delete_id: ', id);
+			const message = 'Do you really want to delete this real estate?';
+			openModal('confirm', {
+                data: {
+                    message,
+                    action: () => this.onDelete('/admin/real_estate', id)
+                }
+            });
+		},
+		async onDelete(url, id) {
+            try {
+                const response = await axios.delete(url, { data: {id} });
+
+				this.updateHomes(id);
+                showMessage('Real estate was deleted', 'success');
+                // this.arrUsers = this.arrUsers.filter(user => user.id != id);
+            } catch (e) {
+                // console.log('real_estate: ', e)
+                //const mess = e?.message;
+                showMessage("Couldn't delete real estate", 'failed');
+                
+            }
+        },
+	}
 }
 </script>
 

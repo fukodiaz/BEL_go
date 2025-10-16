@@ -1,15 +1,27 @@
 <template>
   <AdminLayout title="Real estate">
-    <h2 class="text-2xl font-bold mb-4">RealEstateee</h2>
+    <div class="boxHeadEstate">
+      <h2 class="headingEstate">Real Estate</h2>
+
+      <p class="boxAddEstate">
+        <button class="addEstate"
+                @click="addEstate"
+        >
+            +addItem
+        </button>
+      </p>
+    </div>
+
+    <div class="boxFilters">
+      <FiltersHomes 
+        :updateItems="updateItems"
+      />
+    </div>
     
     <div class="boxHomes">
-      <ul class="listHomes">
-        <li v-for="(item, idx) in stateItems" :key="idx"
-            class="itemHome"
-            >
-          <ItemHome v-bind="item" :concept_label="item?.concept?.label" />
-        </li>
-      </ul>
+      <ListHomes 
+        :items="stateItems"
+      />
     </div>
     <div class="boxPagination">
       <Pagination
@@ -22,8 +34,10 @@
 
 <script setup>
   import AdminLayout from '@/Layouts/AdminLayout.vue'
-  import ItemHome from '@/components/ItemHome.vue';
+  import FiltersHomes from '@/components/FiltersHomes.vue';
+  import ListHomes from '@/components/ListHomes.vue';
   import Pagination from '@/components/Pagination.vue';
+  import { router } from '@inertiajs/vue3'
   import {ref} from 'vue';
 
   const props = defineProps({ 
@@ -33,22 +47,53 @@
   // const stateItems = ref([...props.items]);  
   const stateItems = ref([...props.items.data]);  
 
+  const updateItems = (newItems) => {
+    stateItems.value = newItems;
+  };
 
-  function save() {
-    // console.log('items: ', stateItems.value);
-    console.log('items: ', stateItems.data);
-  }
+  const addEstate = () => {
+    router.visit('/admin/real_estate/form');
+  };
 
   // console.log('newArrItems: ', props.items);
   console.log('items: ', props.items);
-
-  console.log('prev: ', props.items.prev_page_url);
-
-  //next_page_url
-  //prev_page_url
 </script>
 
 <style lang="less">
+  .boxHeadEstate {
+    display: flex;
+    align-items: center;
+    margin-bottom: 9px;
+  }
+
+  .headingEstate {
+    display: inline-flex;
+    margin-bottom: 10px;
+    margin-left: 17px;
+    padding-top: 15px;
+    font-size: 25px;
+    font-weight: 600;
+    color: rgba(0,0,0,.8);
+  }
+
+  .boxAddEstate {
+    position: relative;
+    margin-top: 4px;
+  }
+
+  .addEstate {
+    margin-left: 11px;
+    padding: 4px 13px 5px;
+    font-size: 15px;
+    color: #fff;
+    border-radius: 13px;
+    background: #4abe50;
+  }
+
+  .boxFilters {
+    margin-bottom: 18px;
+  }
+
   .listHomes {
     padding: 0 10px;
   }
@@ -59,6 +104,15 @@
   }
 
   @media (min-width: 847px) {
+    .boxHeadEstate {
+      margin-bottom: 15px;
+    }
+
+    .headingEstate {
+      margin-bottom: 10px;
+      margin-left: 25px;
+    }
+
     .listHomes {
       display: grid;
       //grid-template-columns: repeat(2, 1fr);
@@ -69,9 +123,9 @@
     }
   }
 
-@media (min-width: 1280px) {
-  .listHomes {
-    gap: 18px;
+  @media (min-width: 1280px) {
+    .listHomes {
+      gap: 18px;
+    }
   }
-}
 </style>

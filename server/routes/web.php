@@ -36,7 +36,13 @@ Route::prefix('admin')->group(function() {
     Route::middleware(['auth.sanctum.redirect'])->group(function() {
         Route::get('/', fn() => Inertia::render('Admin/Main'))->name('admin.main');
         Route::prefix('real_estate')->group(function() {
-            Route::get('/', [AdminRealEstateController::class, 'getRealEstate'])->name('admin.real_estate');
+            Route::get('/', [AdminRealEstateController::class, 'showPage'])->name('admin.real_estate');
+            Route::get('/items', [AdminRealEstateController::class, 'getRealEstate']);
+            Route::get('/form', [AdminRealEstateController::class, 'showFormPage'])->name('admin.real_estate.form.page');
+
+            Route::post('/', [AdminRealEstateController::class, 'createEstate'])->name('admin.real_estate.create');
+            Route::put('/', [AdminRealEstateController::class, 'editEstate'])->name('admin.real_estate.edit');
+            Route::delete('/', [AdminRealEstateController::class, 'delete'])->name('admin.real_estate.delete');
         });
         // Route::get('/real_estate', fn() => Inertia::render('Admin/RealEstate'))->name('admin.real_estate');
         Route::get('/bookings', fn() => Inertia::render('Admin/Bookings'))->name('admin.bookings');
@@ -44,6 +50,7 @@ Route::prefix('admin')->group(function() {
             Route::get('/', [AdminUserController::class, 'showPage'])->name('admin.users.show');
             Route::post('/', [AdminUserController::class, 'createUser'])->name('admin.user.create');
             Route::put('/', [AdminUserController::class, 'editUser'])->name('admin.user.edit');
+            Route::delete('/', [AdminUserController::class, 'delete'])->name('admin.user.delete');
         });
     });
 

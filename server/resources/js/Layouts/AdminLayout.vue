@@ -34,6 +34,7 @@ import Modal from '@/components/Modal.vue';
 import AuthForm from '@/components/AuthForm.vue';
 import UserForm from '@/components/UserForm.vue';
 import MessageModal from '@/components/MessageModal.vue';
+import ConfirmModal from '@/components/ConfirmModal.vue';
 import {useModal} from '@/composables/useModal.js';
 
 const {isModal, contentModal, modalProps} = useModal();
@@ -53,6 +54,8 @@ const defContentModal = computed(() => {
       return UserForm;
     case 'message':
       return MessageModal;
+    case 'confirm':
+      return ConfirmModal;
 
     default:
       return AuthForm;

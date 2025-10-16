@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Admin;
 
+use Illuminate\Validation\ValidationException;
 use App\Models\User;
 
 class UserService 
@@ -30,7 +31,7 @@ class UserService
      * edit user
      */
     public function editUser($data) {
-        $user = User::find($data->id);
+        $user = User::findOrFail($data->id);
         $user->name = !empty($data->name) ? $data->name : $user->name;
         $user->email = !empty($data->email) ? $data->email : $user->email;
         $user->password = !empty($data->password) ? bcrypt($data->password) : $user->password;
@@ -38,5 +39,19 @@ class UserService
         $user->save();
         
         return $user;
+    }
+
+    /**
+     * delete user
+     */
+    public function delete($id) {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return ['data' => true];
+        }
+
+        throw ValidationException::withMessages([ 'message' => __("Couldn't delete user") ]);
     }
 }
